@@ -229,7 +229,7 @@ public class CategorySelector<A extends AbstractActivity> {
     }
 
     private boolean isListPick() {
-        return false;
+        return true;
     }
 
     private void addCategory() {
