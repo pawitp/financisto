@@ -115,34 +115,5 @@
                 a:layout_alignParentEnd="true" />
         </RelativeLayout>
 
-        <RelativeLayout
-            a:id="@+id/toggleSmsWrap"
-            a:layout_width="match_parent"
-            a:layout_height="wrap_content"
-            a:orientation="vertical"
-            a:padding="10dp">
-
-            <TextView
-                a:id="@+id/toggleSmsTitle"
-                style="@android:style/TextAppearance.Large"
-                a:layout_width="match_parent"
-                a:layout_height="wrap_content"
-                a:layout_alignEnd="@id/toggleSms"
-                a:layout_alignParentStart="true"
-                a:text="@string/request_permissions_receive_sms_title" />
-
-            <TextView
-                style="@android:style/TextAppearance.Small"
-                a:layout_width="match_parent"
-                a:layout_height="wrap_content"
-                a:layout_below="@id/toggleSmsTitle"
-                a:text="@string/request_permissions_receive_sms_description" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                a:id="@+id/toggleSms"
-                a:layout_width="wrap_content"
-                a:layout_height="wrap_content"
-                a:layout_alignParentEnd="true" />
-        </RelativeLayout>
     </LinearLayout>
 </ScrollView>

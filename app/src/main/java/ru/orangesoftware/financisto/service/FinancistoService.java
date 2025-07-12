@@ -30,16 +30,11 @@ import ru.orangesoftware.financisto.blotter.BlotterFilter;
 import ru.orangesoftware.financisto.db.DatabaseAdapter;
 import ru.orangesoftware.financisto.export.Export;
 import ru.orangesoftware.financisto.filter.WhereFilter;
-import ru.orangesoftware.financisto.model.Transaction;
 import ru.orangesoftware.financisto.model.TransactionInfo;
 import ru.orangesoftware.financisto.model.TransactionStatus;
 import ru.orangesoftware.financisto.recur.NotificationOptions;
 import static ru.orangesoftware.financisto.service.DailyAutoBackupScheduler.scheduleNextAutoBackup;
-import static ru.orangesoftware.financisto.service.SmsReceiver.SMS_TRANSACTION_BODY;
-import static ru.orangesoftware.financisto.service.SmsReceiver.SMS_TRANSACTION_NUMBER;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import static ru.orangesoftware.financisto.utils.MyPreferences.getSmsTransactionStatus;
-import static ru.orangesoftware.financisto.utils.MyPreferences.shouldSaveSmsToTransactionNote;
 
 public class FinancistoService extends JobIntentService {
 
@@ -50,13 +45,11 @@ public class FinancistoService extends JobIntentService {
     public static final String ACTION_SCHEDULE_ONE = "ru.orangesoftware.financisto.SCHEDULE_ONE";
     public static final String ACTION_SCHEDULE_AUTO_BACKUP = "ru.orangesoftware.financisto.ACTION_SCHEDULE_AUTO_BACKUP";
     public static final String ACTION_AUTO_BACKUP = "ru.orangesoftware.financisto.ACTION_AUTO_BACKUP";
-    public static final String ACTION_NEW_TRANSACTION_SMS = "ru.orangesoftware.financisto.NEW_TRANSACTON_SMS";
 
     private static final int RESTORED_NOTIFICATION_ID = 0;
 
     private DatabaseAdapter db;
     private RecurrenceScheduler scheduler;
-    private SmsTransactionProcessor smsProcessor;
 
     public static void enqueueWork(Context context, Intent work) {
         enqueueWork(context, FinancistoService.class, JOB_ID, work);
@@ -68,7 +61,6 @@ public class FinancistoService extends JobIntentService {
         db = new DatabaseAdapter(this);
         db.open();
         scheduler = new RecurrenceScheduler(db);
-        smsProcessor = new SmsTransactionProcessor(db);
     }
 
     @Override
@@ -96,31 +88,10 @@ public class FinancistoService extends JobIntentService {
                 case ACTION_AUTO_BACKUP:
                     doAutoBackup();
                     break;
-                case ACTION_NEW_TRANSACTION_SMS:
-                    processSmsTransaction(intent);
-                    break;
             }
         }
     }
 
-    private void processSmsTransaction(Intent intent) {
-        String number = intent.getStringExtra(SMS_TRANSACTION_NUMBER);
-        String body = intent.getStringExtra(SMS_TRANSACTION_BODY);
-        if (number != null && body != null) {
-            Transaction t = smsProcessor.createTransactionBySms(number, body, getSmsTransactionStatus(this),
-                shouldSaveSmsToTransactionNote(this));
-            if (t != null) {
-                TransactionInfo transactionInfo = db.getTransactionInfo(t.id);
-                if (transactionInfo != null) {
-                    Notification notification = createSmsTransactionNotification(transactionInfo, number);
-                    notifyUser(notification, (int) t.id);
-                    AccountWidget.updateWidgets(this);
-                } else {
-                    Log.e("Financisto", "Transaction info does not exist for "+t.id);
-                }
-            }
-        }
-    }
 
     private void scheduleAll() {
         int restoredTransactionsCount = scheduler.scheduleAll(this);
@@ -201,14 +172,6 @@ public class FinancistoService extends JobIntentService {
                 .setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .build();
-    }
-
-    private Notification createSmsTransactionNotification(TransactionInfo t, String number) {
-        String tickerText = getString(R.string.new_sms_transaction_text, number);
-        String contentTitle = getString(R.string.new_sms_transaction_title, number);
-        String text = t.getNotificationContentText(this);
-
-        return generateNotification(t, tickerText, contentTitle, text);
     }
 
     private Notification createScheduledNotification(TransactionInfo t) {

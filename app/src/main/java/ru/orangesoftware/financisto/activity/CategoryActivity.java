@@ -23,14 +23,10 @@ import java.util.List;
 import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.db.DatabaseHelper.AttributeColumns;
 import ru.orangesoftware.financisto.db.DatabaseHelper.CategoryColumns;
-import ru.orangesoftware.financisto.db.DatabaseHelper.SmsTemplateColumns;
 import ru.orangesoftware.financisto.model.Attribute;
 import ru.orangesoftware.financisto.model.Category;
-import ru.orangesoftware.financisto.model.SmsTemplate;
 
-import static android.Manifest.permission.RECEIVE_SMS;
 import static ru.orangesoftware.financisto.activity.CategorySelector.SelectorType.PARENT;
-import static ru.orangesoftware.financisto.activity.RequestPermission.isRequestingPermission;
 import static ru.orangesoftware.financisto.utils.Utils.checkEditText;
 import static ru.orangesoftware.financisto.utils.Utils.text;
 
@@ -39,8 +35,6 @@ public class CategoryActivity extends AbstractActivity implements CategorySelect
     public static final String CATEGORY_ID_EXTRA = "categoryId";
     public static final int NEW_ATTRIBUTE_REQUEST = 1;
     public static final int EDIT_ATTRIBUTE_REQUEST = 2;
-    public static final int NEW_SMS_TEMPLATE_REQUEST = 3;
-    public static final int EDIT_SMS_TEMPLATE_REQUEST = 4;
 
     private String[] types;
 
@@ -53,7 +47,6 @@ public class CategoryActivity extends AbstractActivity implements CategorySelect
 
     private ScrollView scrollView;
     private LinearLayout attributesLayout;
-    private LinearLayout smsTemplatesLayout;
     private LinearLayout parentAttributesLayout;
 
     private Category category = new Category(-1);
@@ -95,10 +88,6 @@ public class CategoryActivity extends AbstractActivity implements CategorySelect
         categoryTitle = titleLayout.findViewById(R.id.primary);
         LinearLayout layout = findViewById(R.id.layout);
         x.addEditNode(layout, R.string.title, titleLayout);
-
-        smsTemplatesLayout = x.addTitleNodeNoDivider(layout, R.string.sms_templates).findViewById(R.id.layout);
-        x.addInfoNodePlus(smsTemplatesLayout, R.id.new_sms_template, R.id.new_sms_template, R.string.add_sms_template);
-        addSmsTemplates();
 
         attributesLayout = x.addTitleNodeNoDivider(layout, R.string.attributes).findViewById(R.id.layout);
         x.addInfoNodePlus(attributesLayout, R.id.new_attribute, R.id.add_attribute, R.string.add_attribute);
@@ -178,35 +167,6 @@ public class CategoryActivity extends AbstractActivity implements CategorySelect
         }
     }
 
-    private void addSmsTemplates() {
-        long categoryId = category.id;
-        List<SmsTemplate> templates = db.getSmsTemplatesForCategory(categoryId);
-        for (SmsTemplate t : templates) {
-            addSmsTemplate(t);
-        }
-    }
-
-    /**
-     * todo.mb: consider refactoring to common logic with attributes and so on.
-     */
-    private void addSmsTemplate(SmsTemplate t) {
-        View v = x.inflater.new Builder(smsTemplatesLayout, R.layout.select_entry_simple_minus).withId(R.id.edit_sms_template, this).create();
-        setSmsTemplateData(v, t);
-        ImageView minusImageView = v.findViewById(R.id.plus_minus);
-        minusImageView.setId(R.id.remove_sms_template);
-        minusImageView.setOnClickListener(this);
-        minusImageView.setTag(t.id);
-        v.setTag(t);
-        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-    }
-
-    private void setSmsTemplateData(View v, SmsTemplate t) {
-        TextView labelView = v.findViewById(R.id.label);
-        labelView.setText(t.title);
-        TextView dataView = v.findViewById(R.id.data);
-        dataView.setText(t.template);
-    }
-
     private void addAttributes() {
         long categoryId = category.id;
         if (categoryId == -1) {
@@ -284,49 +244,6 @@ public class CategoryActivity extends AbstractActivity implements CategorySelect
                 attributesLayout.removeView((View) v.getParent());
                 scrollView.fullScroll(ScrollView.FOCUS_DOWN);
                 break;
-
-            // Sms templates >>
-            case R.id.new_sms_template: {
-                if (!isRequestingPermission(this, RECEIVE_SMS)) {
-                    Intent intent = new Intent(this, SmsTemplateActivity.class);
-                    intent.putExtra(SmsTemplateColumns.category_id.name(), category.id);
-                    startActivityForResult(intent, NEW_SMS_TEMPLATE_REQUEST);
-                }
-            }
-            break;
-            case R.id.edit_sms_template: {
-                if (!isRequestingPermission(this, RECEIVE_SMS)) {
-                    Object o = v.getTag();
-                    if (o instanceof SmsTemplate) {
-                        final SmsTemplate clickedItem = (SmsTemplate) o;
-                        Intent intent = new Intent(this, SmsTemplateActivity.class);
-                        intent.putExtra(SmsTemplateColumns._id.name(), clickedItem.id);
-                        intent.putExtra(SmsTemplateColumns.category_id.name(), clickedItem.categoryId);
-                        startActivityForResult(intent, EDIT_SMS_TEMPLATE_REQUEST);
-                    }
-                }
-            }
-            break;
-            case R.id.remove_sms_template:
-                Object o = v.getTag();
-                if (o instanceof Long) {
-                    final long clickedItemId = (Long) o;
-                    new AlertDialog.Builder(this)
-                            .setTitle(R.string.delete)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setMessage(R.string.sms_delete_alert)
-                            .setPositiveButton(R.string.delete,
-                                    (arg0, arg1) -> {
-                                        db.delete(SmsTemplate.class, clickedItemId);
-
-                                        smsTemplatesLayout.removeView((View) v.getParent());
-                                    })
-                            .setNegativeButton(R.string.cancel, null)
-                            .show();
-
-
-                }
-                break;
         }
     }
 
@@ -373,23 +290,6 @@ public class CategoryActivity extends AbstractActivity implements CategorySelect
                     }
                 }
                 break;
-
-                case NEW_SMS_TEMPLATE_REQUEST: {
-                    long smsTemplateId = data.getLongExtra(SmsTemplateColumns._id.name(), -1);
-                    if (smsTemplateId != -1) {
-                        SmsTemplate t = db.load(SmsTemplate.class, smsTemplateId);
-                        addSmsTemplate(t);
-                    }
-                }
-                break;
-                case EDIT_SMS_TEMPLATE_REQUEST: {
-                    long smsTemplateId = data.getLongExtra(SmsTemplateColumns._id.name(), -1);
-                    if (smsTemplateId != -1) {
-                        SmsTemplate t = db.load(SmsTemplate.class, smsTemplateId);
-                        updateSmsTemplate(smsTemplatesLayout, t);
-                    }
-                }
-                break;
                 case R.id.category_pick: {
                     parentCatSelector.onActivityResult(requestCode, resultCode, data);
                 }
@@ -413,23 +313,6 @@ public class CategoryActivity extends AbstractActivity implements CategorySelect
         }
     }
 
-    /**
-     * todo.mb: refactor to common method with updateAttribute(LinearLayout, Attribute)
-     */
-    @Deprecated
-    private void updateSmsTemplate(LinearLayout layout, SmsTemplate t) {
-        int count = layout.getChildCount();
-        for (int i = 0; i < count; i++) {
-            View v = layout.getChildAt(i);
-            Object o = v.getTag();
-            if (o instanceof SmsTemplate) {
-                SmsTemplate a2 = (SmsTemplate) o;
-                if (a2.id == t.id) {
-                    setSmsTemplateData(v, t);
-                }
-            }
-        }
-    }
 
     @Override
     public void onCategorySelected(Category parent, boolean selectLast) {

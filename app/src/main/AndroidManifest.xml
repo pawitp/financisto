@@ -34,7 +34,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
         android:name=".app.FinancistoApp_"
@@ -98,14 +97,6 @@
             </intent-filter>
         </receiver>
 
-        <receiver
-            android:name=".service.SmsReceiver"
-            android:exported="true"
-            android:permission="android.permission.BROADCAST_SMS">
-            <intent-filter android:priority="1000"> <!-- https://stackoverflow.com/a/23732410/365675 -->
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
 
         <service
             android:name=".service.FinancistoService"
@@ -117,7 +108,6 @@
                 <action android:name=".SCHEDULE_ALL" />
                 <action android:name=".ACTION_SCHEDULE_AUTO_BACKUP" />
                 <action android:name=".ACTION_AUTO_BACKUP" />
-                <action android:name=".NEW_TRANSACTON_SMS" />
             </intent-filter>
         </service>
 
@@ -271,17 +261,6 @@
             android:label="@string/attribute"
             android:theme="@android:style/Theme.Dialog" />
 
-        <activity
-            android:name=".activity.SmsTemplateActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/sms_tpl"
-            android:theme="@android:style/Theme.Dialog" />
-
-        <activity
-            android:name=".activity.SmsDragListActivity"
-            android:label="@string/sms_templates"
-            android:theme="@style/Theme.AppCompat"
-        />
 
         <activity
             android:name=".activity.DateFilterActivity"

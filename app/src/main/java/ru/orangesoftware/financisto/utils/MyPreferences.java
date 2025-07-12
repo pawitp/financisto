@@ -634,16 +634,6 @@ public class MyPreferences {
         return sharedPreferences.getBoolean(name, defaultValue);
     }
 
-    public static TransactionStatus getSmsTransactionStatus(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return TransactionStatus.valueOf(sharedPreferences.getString("sms_transaction_status", "PN"));
-    }
-
-    public static boolean shouldSaveSmsToTransactionNote(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getBoolean("sms_transaction_note", true);
-    }
-
     public static long getLastAutobackupCheck(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getLong("last_autobackup_check", 0);

@@ -1,7 +1,6 @@
 package ru.orangesoftware.financisto.activity;
 
 import android.Manifest;
-import static android.Manifest.permission.RECEIVE_SMS;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -235,7 +234,6 @@ public enum MenuListItem implements SummaryEntityEnum {
         CURRENCIES(R.string.currencies, R.drawable.ic_action_money, CurrencyListActivity.class),
         EXCHANGE_RATES(R.string.exchange_rates, R.drawable.ic_action_line_chart, ExchangeRatesListActivity.class),
         CATEGORIES(R.string.categories, R.drawable.ic_action_category, CategoryListActivity2.class),
-        SMS_TEMPLATES(R.string.sms_templates, R.drawable.ic_action_sms, SmsDragListActivity.class, RECEIVE_SMS),
         PAYEES(R.string.payees, R.drawable.ic_action_users, PayeeListActivity.class),
         PROJECTS(R.string.projects, R.drawable.ic_action_gear, ProjectListActivity.class),
         LOCATIONS(R.string.locations, R.drawable.ic_action_location_2, LocationsListActivity.class);

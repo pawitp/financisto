@@ -44,12 +44,6 @@ public class RequestPermissionActivity extends Activity {
     @ViewById(R.id.toggleCamera)
     SwitchCompat toggleCamera;
 
-    @ViewById(R.id.toggleSmsWrap)
-    ViewGroup toggleSmsWrap;
-
-    @ViewById(R.id.toggleSms)
-    SwitchCompat toggleSms;
-
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(MyPreferences.switchLocale(base));
@@ -64,7 +58,6 @@ public class RequestPermissionActivity extends Activity {
         disableToggleIfGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE, toggleWriteStorage, toggleWriteStorageWrap);
         disableToggleIfGranted(Manifest.permission.GET_ACCOUNTS, toggleGetAccounts, toggleGetAccountsWrap);
         disableToggleIfGranted(Manifest.permission.CAMERA, toggleCamera, toggleCameraWrap);
-        disableToggleIfGranted(Manifest.permission.RECEIVE_SMS, toggleSms, toggleSmsWrap);
     }
 
     private void disableToggleIfGranted(String permission, CompoundButton toggleButton, ViewGroup wrapLayout) {
@@ -90,11 +83,6 @@ public class RequestPermissionActivity extends Activity {
     @Click(R.id.toggleCamera)
     public void onGrantCamera() {
         requestPermission(Manifest.permission.CAMERA, toggleCamera);
-    }
-
-    @Click(R.id.toggleSms)
-    public void onGrantSms() {
-        requestPermission(Manifest.permission.RECEIVE_SMS, toggleSms);
     }
 
     private void requestPermission(String permission, CompoundButton toggleButton) {
