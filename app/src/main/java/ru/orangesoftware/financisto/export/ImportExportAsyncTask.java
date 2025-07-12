@@ -25,7 +25,6 @@ import ru.orangesoftware.financisto.db.DatabaseAdapter;
 import ru.orangesoftware.financisto.utils.MyPreferences;
 
 import static ru.orangesoftware.financisto.export.Export.uploadBackupFileToDropbox;
-import static ru.orangesoftware.financisto.export.Export.uploadBackupFileToGoogleDrive;
 
 public abstract class ImportExportAsyncTask extends AsyncTask<String, String, Object> {
 
@@ -76,18 +75,6 @@ public abstract class ImportExportAsyncTask extends AsyncTask<String, String, Ob
         publishProgress(context.getString(R.string.dropbox_uploading_file));
         uploadBackupFileToDropbox(context, backupFileName);
     }
-
-    void doUploadToGoogleDrive(Context context, String backupFileName) throws Exception {
-        if (MyPreferences.isGoogleDriveUploadBackups(context)) {
-            doForceUploadToGoogleDrive(context, backupFileName);
-        }
-    }
-
-    private void doForceUploadToGoogleDrive(Context context, String backupFileName) throws Exception {
-        publishProgress(context.getString(R.string.google_drive_uploading_file));
-        uploadBackupFileToGoogleDrive(context, backupFileName);
-    }
-
 
     @Override
     protected void onProgressUpdate(String... values) {

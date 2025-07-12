@@ -634,37 +634,6 @@ public class MyPreferences {
         return sharedPreferences.getBoolean(name, defaultValue);
     }
 
-    public static String getGoogleDriveFolder(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getString("googledrive_folder", "financial_docs");
-    }
-
-    public static boolean doGoogleDriveUpload(Context context) {
-        return getBoolean(context, "googledrive_upload", false);
-    }
-
-    public static String getGoogleDriveAccount(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getString("google_drive_backup_account", null);
-    }
-
-    public static void setGoogleDriveAccount(Context context, String accountName) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().putString("google_drive_backup_account", accountName).apply();
-    }
-
-    public static boolean isGoogleDriveFullReadonly(Context context) {
-        return getBoolean(context, "google_drive_backup_full_readonly", false);
-    }
-
-    public static boolean isGoogleDriveUploadBackups(Context context) {
-        return getBoolean(context, "google_drive_upload_backup", false);
-    }
-
-    public static boolean isGoogleDriveUploadAutoBackups(Context context) {
-        return getBoolean(context, "google_drive_upload_autobackup", false);
-    }
-
     public static TransactionStatus getSmsTransactionStatus(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return TransactionStatus.valueOf(sharedPreferences.getString("sms_transaction_status", "PN"));

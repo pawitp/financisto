@@ -23,10 +23,6 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.google.android.gms.common.AccountPicker;
 
 import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.dialog.FolderBrowser;
@@ -36,14 +32,11 @@ import ru.orangesoftware.financisto.rates.ExchangeRateProviderFactory;
 import ru.orangesoftware.financisto.utils.MyPreferences;
 import ru.orangesoftware.financisto.utils.PinProtection;
 
-import static android.Manifest.permission.GET_ACCOUNTS;
 import static ru.orangesoftware.financisto.activity.RequestPermission.isRequestingPermission;
-import static ru.orangesoftware.financisto.activity.RequestPermission.isRequestingPermissions;
 
 public class PreferencesActivity extends PreferenceActivity {
 
     private static final int SELECT_DATABASE_FOLDER = 100;
-    private static final int CHOOSE_ACCOUNT = 101;
 
     Preference pOpenExchangeRatesAppId;
 
@@ -105,43 +98,9 @@ public class PreferencesActivity extends PreferenceActivity {
                 return ExchangeRateProviderFactory.openexchangerates.name().equals(provider);
             }
         });
-        Preference pDriveAccount = preferenceScreen.findPreference("google_drive_backup_account");
-        pDriveAccount.setOnPreferenceClickListener(arg0 -> {
-            chooseAccount();
-            return true;
-        });
         linkToDropbox();
         setCurrentDatabaseBackupFolder();
         enableOpenExchangeApp();
-        selectAccount();
-    }
-
-    private void chooseAccount() {
-        try {
-            if (isRequestingPermissions(this, GET_ACCOUNTS, "android.permission.USE_CREDENTIALS")) {
-                return;
-            }
-            Account selectedAccount = getSelectedAccount();
-            Intent intent = AccountPicker.newChooseAccountIntent(selectedAccount, null,
-                    new String[]{"com.google"}, true, null, null, null, null);
-            startActivityForResult(intent, CHOOSE_ACCOUNT);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, R.string.google_drive_account_select_error, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private Account getSelectedAccount() {
-        String accountName = MyPreferences.getGoogleDriveAccount(this);
-        if (accountName != null) {
-            AccountManager accountManager = AccountManager.get(this);
-            Account[] accounts = accountManager.getAccountsByType("com.google");
-            for (Account account : accounts) {
-                if (accountName.equals(account.name)) {
-                    return account;
-                }
-            }
-        }
-        return null;
     }
 
     private void linkToDropbox() {
@@ -182,26 +141,7 @@ public class PreferencesActivity extends PreferenceActivity {
                     MyPreferences.setDatabaseBackupFolder(this, databaseBackupFolder);
                     setCurrentDatabaseBackupFolder();
                     break;
-                case CHOOSE_ACCOUNT:
-                    if (data != null) {
-                        Bundle b = data.getExtras();
-                        String accountName = b.getString(AccountManager.KEY_ACCOUNT_NAME);
-                        Log.d("Preferences", "Selected account: " + accountName);
-                        if (accountName != null && accountName.length() > 0) {
-                            MyPreferences.setGoogleDriveAccount(this, accountName);
-                            selectAccount();
-                        }
-                    }
-                    break;
             }
-        }
-    }
-
-    private void selectAccount() {
-        Preference pDriveAccount = getPreferenceScreen().findPreference("google_drive_backup_account");
-        Account account = getSelectedAccount();
-        if (account != null) {
-            pDriveAccount.setSummary(account.name);
         }
     }
 

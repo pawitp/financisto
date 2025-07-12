@@ -23,7 +23,6 @@ public class BackupExportTask extends ImportExportAsyncTask {
         backupFileName = export.export();
         if (uploadOnline) {
             doUploadToDropbox(context, backupFileName);
-			doUploadToGoogleDrive(context, backupFileName);
         }
         return backupFileName;
 	}
