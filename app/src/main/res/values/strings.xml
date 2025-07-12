@@ -573,21 +573,10 @@
     <string name="alert_null_closing_day">Please insert a new closing day.</string>
     <string name="alert_regular_closing_day">Custom closing day must be different from regular closing day.</string>
 
-    <string name="ccard_statement">Statements</string>
-    <string name="monthly_view">Month Preview</string>
-    <string name="credit_card_statement">Credit Card Statement</string>
-    <string name="ccard_statement_title">&lt;ccard&gt; Statement</string>
-    <string name="ccard_par">&lt;ccard&gt;</string>
-    <string name="bill_on">Bill on </string>
-    <string name="monthly_result">Balance of month</string>
     <string name="closing_day_error">Closing day is not valid.</string>
     <string name="payment_day_error">Payment day is not valid.</string>
-    <string name="statement_error">Please set payment and closing days for this credit card on account properties.</string>
     <string name="is_ccard_payment">Credit Card Payment</string>
     <string name="is_ccard_payment_summary">Not Include into bill total</string>
-    <string name="header_payments">Payments</string>
-    <string name="header_credits">Various Credits</string>
-    <string name="header_expenses">Expenses</string>
     <string name="ui_language">Locale</string>
     <string name="ui_language_summary">Set language of user interface (requires restart!)</string>
 
@@ -838,8 +827,6 @@
 
     <string name="installed_on_sd_card_warning">Scheduled transactions might NOT work as expected when Financisto installed on SD card. Please move it to phone memory.</string>
 
-    <string name="planner">Planner</string>
-
     <string name="period_tomorrow">Tomorrow</string>
     <string name="period_next_week">Next week</string>
     <string name="period_this_and_next_week">This and next week</string>
@@ -923,7 +910,6 @@
     <string name="backup_database_to_summary">Send database backup to email, etc</string>
     <string name="import_export_summary">Import/export database to another format like csv, qif, etc</string>
     <string name="mass_operations_summary">Apply operations to multiple transactions</string>
-    <string name="planner_summary">View monthly planner</string>
     <string name="integrity_fix_summary">Fix internal problems when required</string>
     <string name="about_summary">Get more information about the project</string>
 

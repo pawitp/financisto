@@ -51,8 +51,6 @@ public class BlotterActivity extends AbstractListActivity {
     private static final int NEW_TRANSACTION_REQUEST = 1;
     private static final int NEW_TRANSFER_REQUEST = 3;
     private static final int NEW_TRANSACTION_FROM_TEMPLATE_REQUEST = 5;
-    private static final int MONTHLY_VIEW_REQUEST = 6;
-    private static final int BILL_PREVIEW_REQUEST = 7;
 
     protected static final int FILTER_REQUEST = 6;
     private static final int MENU_DUPLICATE = MENU_ADD + 1;
@@ -63,7 +61,6 @@ public class BlotterActivity extends AbstractListActivity {
     protected ImageButton bTransfer;
     protected ImageButton bTemplate;
     protected ImageButton bSearch;
-    protected ImageButton bMenu;
 
     protected QuickActionGrid transactionActionGrid;
     protected QuickActionGrid addButtonActionGrid;
@@ -219,77 +216,9 @@ public class BlotterActivity extends AbstractListActivity {
         });
 
         applyFilter();
-        applyPopupMenu();
         calculateTotals();
         prepareTransactionActionGrid();
         prepareAddButtonActionGrid();
-    }
-
-    private void applyPopupMenu() {
-        bMenu = findViewById(R.id.bMenu);
-        if (isAccountBlotter) {
-            bMenu.setOnClickListener(v -> {
-                PopupMenu popupMenu = new PopupMenu(BlotterActivity.this, bMenu);
-                long accountId = blotterFilter.getAccountId();
-                if (accountId != -1) {
-                    // get account type
-                    Account account = db.getAccount(accountId);
-                    AccountType type = AccountType.valueOf(account.type);
-                    if (type.isCreditCard) {
-                        // Show menu for Credit Cards - bill
-                        MenuInflater inflater = getMenuInflater();
-                        inflater.inflate(R.menu.ccard_blotter_menu, popupMenu.getMenu());
-                    } else {
-                        // Show menu for other accounts - monthly view
-                        MenuInflater inflater = getMenuInflater();
-                        inflater.inflate(R.menu.blotter_menu, popupMenu.getMenu());
-                    }
-                    popupMenu.setOnMenuItemClickListener(item -> {
-                        onPopupMenuSelected(item.getItemId());
-                        return true;
-                    });
-                    popupMenu.show();
-                }
-            });
-        } else {
-            bMenu.setVisibility(View.GONE);
-        }
-    }
-
-    public void onPopupMenuSelected(int id) {
-
-        long accountId = blotterFilter.getAccountId();
-
-        Intent intent = new Intent(this, MonthlyViewActivity.class);
-        intent.putExtra(MonthlyViewActivity.ACCOUNT_EXTRA, accountId);
-
-        switch (id) {
-
-            case R.id.opt_menu_month:
-                // call credit card bill activity sending account id
-                intent.putExtra(MonthlyViewActivity.BILL_PREVIEW_EXTRA, false);
-                startActivityForResult(intent, MONTHLY_VIEW_REQUEST);
-                break;
-
-            case R.id.opt_menu_bill:
-                if (accountId != -1) {
-                    Account account = db.getAccount(accountId);
-
-                    // call credit card bill activity sending account id
-                    if (account.paymentDay > 0 && account.closingDay > 0) {
-                        intent.putExtra(MonthlyViewActivity.BILL_PREVIEW_EXTRA, true);
-                        startActivityForResult(intent, BILL_PREVIEW_REQUEST);
-                    } else {
-                        // display message: need payment and closing day
-                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-                        dlgAlert.setMessage(R.string.statement_error);
-                        dlgAlert.setTitle(R.string.ccard_statement);
-                        dlgAlert.setPositiveButton(R.string.ok, null);
-                        dlgAlert.setCancelable(true);
-                        dlgAlert.create().show();
-                    }
-                }
-        }
     }
 
     private void showTotals() {

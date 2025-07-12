@@ -65,7 +65,6 @@ public class AccountListActivity extends AbstractListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupUi();
-        setupMenuButton();
         calculateTotals();
         integrityCheck();
     }
@@ -78,35 +77,6 @@ public class AccountListActivity extends AbstractListActivity {
             accountActionGrid.show(view);
             return true;
         });
-    }
-
-    private void setupMenuButton() {
-        final ImageButton bMenu = findViewById(R.id.bMenu);
-        if (MyPreferences.isShowMenuButtonOnAccountsScreen(this)) {
-            bMenu.setOnClickListener(v -> {
-                PopupMenu popupMenu = new PopupMenu(AccountListActivity.this, bMenu);
-                MenuInflater inflater = getMenuInflater();
-                inflater.inflate(R.menu.account_list_menu, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(item -> {
-                    handlePopupMenu(item.getItemId());
-                    return true;
-                });
-                popupMenu.show();
-            });
-        } else {
-            bMenu.setVisibility(View.GONE);
-        }
-    }
-
-    private void handlePopupMenu(int id) {
-        switch (id) {
-            case R.id.backup:
-                MenuListItem.MENU_BACKUP.call(this);
-                break;
-            case R.id.go_to_menu:
-                GreenRobotBus_.getInstance_(this).post(new SwitchToMenuTabEvent());
-                break;
-        }
     }
 
     protected void prepareAccountActionGrid() {

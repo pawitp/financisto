@@ -173,10 +173,6 @@
             android:label="@string/blotter" />
 
         <activity
-            android:name=".activity.PlannerActivity"
-            android:label="@string/planner" />
-
-        <activity
             android:name=".activity.MassOpActivity"
             android:label="@string/mass_operations" />
 
@@ -352,13 +348,6 @@
         <activity
             android:name=".activity.QifImportActivity"
             android:label="@string/qif_import" />
-
-        <activity
-            android:name=".activity.MonthlyViewActivity"
-            android:label="@string/monthly_view" />
-        <activity
-            android:name=".activity.CCardStatementClosingDayActivity"
-            android:label="@string/closing_day" />
 
         <activity
             android:name=".activity.Report2DChartActivity"
