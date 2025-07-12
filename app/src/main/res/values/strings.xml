@@ -618,8 +618,6 @@
     <string name="no_payee">No payee</string>
     <string name="no_payees">No payees</string>
     <string name="report_no_payee">There is no payee available for filtering in the report.</string>
-    <string name="donate">Make a donation</string>
-    <string name="donate_error">Android Market is not available on your device</string>
     <string name="type">Type</string>
 
     <string name="qif_export">QIF Export</string>
@@ -929,7 +927,6 @@
     <string name="mass_operations_summary">Apply operations to multiple transactions</string>
     <string name="planner_summary">View monthly planner</string>
     <string name="integrity_fix_summary">Fix internal problems when required</string>
-    <string name="donate_summary">Make a voluntary donation to support the project</string>
     <string name="about_summary">Get more information about the project</string>
 
     <string name="pin_warning">Please make sure to remember the pin. There is no way to recover your information or turn off the protection if you lose or forget the pin.</string>

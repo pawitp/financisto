@@ -175,20 +175,6 @@ public enum MenuListItem implements SummaryEntityEnum {
             new IntegrityFixTask(activity).execute();
         }
     },
-    MENU_DONATE(R.string.donate, R.string.donate_summary, R.drawable.actionbar_donate) {
-        @Override
-        public void call(Activity activity) {
-            try {
-                Intent browserIntent = new Intent("android.intent.action.VIEW",
-                        Uri.parse("market://search?q=pname:ru.orangesoftware.financisto.support"));
-                activity.startActivity(browserIntent);
-            } catch (Exception ex) {
-                //eventually market is not available
-                Toast.makeText(activity, R.string.donate_error, Toast.LENGTH_LONG).show();
-            }
-        }
-
-    },
     MENU_ABOUT(R.string.about, R.string.about_summary, R.drawable.ic_action_info) {
         @Override
         public void call(Activity activity) {
