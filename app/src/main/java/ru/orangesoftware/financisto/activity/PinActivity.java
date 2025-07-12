@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mtramin.rxfingerprint.RxFingerprint;
+// import com.mtramin.rxfingerprint.RxFingerprint;
 
 import io.reactivex.disposables.Disposable;
 import ru.orangesoftware.financisto.R;
@@ -47,7 +47,7 @@ public class PinActivity extends Activity implements PinView.PinListener {
         String pin = MyPreferences.getPin(this);
         if (pin == null) {
             onSuccess(null);
-        } else if (RxFingerprint.isAvailable(this) && MyPreferences.isPinLockUseFingerprint(this)) {
+        } else if (false && MyPreferences.isPinLockUseFingerprint(this)) { // Fingerprint disabled
             setContentView(R.layout.lock_fingerprint);
             askForFingerprint();
         } else {
@@ -71,6 +71,8 @@ public class PinActivity extends Activity implements PinView.PinListener {
         } else {
             usePinButton.setVisibility(View.GONE);
         }
+        /*
+        // Fingerprint authentication disabled - RxFingerprint library removed
         disposable = RxFingerprint.authenticate(this).subscribe(
                 result -> {
                     switch (result.getResult()) {
@@ -91,6 +93,7 @@ public class PinActivity extends Activity implements PinView.PinListener {
                     Toast.makeText(this, throwable.getMessage(), Toast.LENGTH_LONG).show();
                 }
         );
+        */
     }
 
     private void setFingerprintStatus(int messageResId, int iconResId, int colorResId) {

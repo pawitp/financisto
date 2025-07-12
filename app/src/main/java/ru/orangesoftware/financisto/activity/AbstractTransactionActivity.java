@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.*;
 
-import com.mlsdev.rximagepicker.RxImageConverters;
-import com.mlsdev.rximagepicker.RxImagePicker;
-import com.mlsdev.rximagepicker.Sources;
+// import com.mlsdev.rximagepicker.RxImageConverters;
+// import com.mlsdev.rximagepicker.RxImagePicker;
+// import com.mlsdev.rximagepicker.Sources;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -303,15 +303,17 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         pickImageActionGrid.setOnQuickActionClickListener((widget, position) -> {
             switch (position) {
                 case 0:
-                    requestImage(Sources.CAMERA);
+                    // requestImage(Sources.CAMERA); // TODO: Replace with modern image picker
                     break;
                 case 1:
-                    requestImage(Sources.GALLERY);
+                    // requestImage(Sources.GALLERY); // TODO: Replace with modern image picker
                     break;
             }
         });
     }
 
+    // TODO: Replace with modern image picker implementation
+    /*
     protected void requestImage(Sources source) {
         transaction.blobKey = null;
         disposable.add(RxImagePicker.with(getFragmentManager()).requestImage(source)
@@ -320,6 +322,11 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
                         file -> selectPicture(file.getName()),
                         e -> Toast.makeText(AbstractTransactionActivity.this, "Unable to pick up an image: " + e.getMessage(), Toast.LENGTH_LONG).show()
                 ));
+    }
+    */
+    protected void requestImage(int source) {
+        // Placeholder implementation - image picker functionality disabled
+        Toast.makeText(this, "Image picker temporarily disabled", Toast.LENGTH_SHORT).show();
     }
 
     protected void createPayeeNode(LinearLayout layout) {
