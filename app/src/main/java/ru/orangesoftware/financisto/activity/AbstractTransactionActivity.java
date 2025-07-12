@@ -18,13 +18,10 @@ import ru.orangesoftware.financisto.datetime.DateUtils;
 import ru.orangesoftware.financisto.db.DatabaseHelper.AccountColumns;
 import ru.orangesoftware.financisto.db.DatabaseHelper.TransactionColumns;
 import ru.orangesoftware.financisto.model.*;
-import ru.orangesoftware.financisto.recur.NotificationOptions;
-import ru.orangesoftware.financisto.recur.Recurrence;
 import ru.orangesoftware.financisto.utils.EnumUtils;
 import ru.orangesoftware.financisto.utils.MyPreferences;
 import ru.orangesoftware.financisto.utils.TransactionUtils;
 import ru.orangesoftware.financisto.view.AttributeView;
-import ru.orangesoftware.financisto.view.AttributeViewFactory;
 import ru.orangesoftware.financisto.widget.RateLayoutView;
 
 import java.text.DateFormat;
@@ -34,7 +31,6 @@ import java.util.List;
 
 import static ru.orangesoftware.financisto.activity.UiUtils.applyTheme;
 import static ru.orangesoftware.financisto.model.Category.NO_CATEGORY_ID;
-import static ru.orangesoftware.financisto.model.MyLocation.CURRENT_LOCATION_ID;
 import static ru.orangesoftware.financisto.model.Project.NO_PROJECT_ID;
 import static ru.orangesoftware.financisto.utils.Utils.text;
 
@@ -46,10 +42,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
     public static final String TEMPLATE_EXTRA = "isTemplate";
     public static final String DATETIME_EXTRA = "dateTimeExtra";
     public static final String NEW_FROM_TEMPLATE_EXTRA = "newFromTemplateExtra";
-
-    private static final int RECURRENCE_REQUEST = 4003;
-    private static final int NOTIFICATION_REQUEST = 4004;
-    private static final int PICTURE_REQUEST = 4005;
 
     private static final TransactionStatus[] statuses = TransactionStatus.values();
 
@@ -213,15 +205,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         categorySelector.createAttributesLayout(layout);
         createCommonNodes(layout);
 
-        if (transaction.isScheduled()) {
-            recurText = x.addListNode(layout, R.id.recurrence_pattern, R.string.recur, R.string.recur_interval_no_recur);
-            notificationText = x.addListNode(layout, R.id.notification, R.string.notification, R.string.notification_options_default);
-            Attribute sa = db.getSystemAttribute(SystemAttribute.DELETE_AFTER_EXPIRED);
-            deleteAfterExpired = AttributeViewFactory.createViewForAttribute(this, sa);
-            String value = transaction.getSystemAttribute(SystemAttribute.DELETE_AFTER_EXPIRED);
-            deleteAfterExpired.inflateView(layout, value != null ? value : sa.defaultValue);
-        }
-
         Button bSave = findViewById(R.id.bSave);
         bSave.setOnClickListener(arg0 -> saveAndFinish());
 
@@ -258,9 +241,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
             }
             if (!isRememberLastProject) {
                 projectSelector.selectEntity(NO_PROJECT_ID);
-            }
-            if (transaction.isScheduled()) {
-                selectStatus(TransactionStatus.PN);
             }
         }
 
@@ -349,18 +329,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
                 x.select(this, R.id.account, R.string.account, accountCursor, accountAdapter,
                         AccountColumns.ID, getSelectedAccountId());
                 break;
-            case R.id.recurrence_pattern: {
-                Intent intent = new Intent(this, RecurrenceActivity.class);
-                intent.putExtra(RecurrenceActivity.RECURRENCE_PATTERN, recurrence);
-                startActivityForResult(intent, RECURRENCE_REQUEST);
-                break;
-            }
-            case R.id.notification: {
-                Intent intent = new Intent(this, NotificationOptionsActivity.class);
-                intent.putExtra(NotificationOptionsActivity.NOTIFICATION_OPTIONS, notificationOptions);
-                startActivityForResult(intent, NOTIFICATION_REQUEST);
-                break;
-            }
         }
     }
 
@@ -428,30 +396,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 
     }
 
-    private void setRecurrence(String recurrence) {
-        this.recurrence = recurrence;
-        if (recurrence == null) {
-            recurText.setText(R.string.recur_interval_no_recur);
-            dateText.setEnabled(true);
-            timeText.setEnabled(true);
-        } else {
-            dateText.setEnabled(false);
-            timeText.setEnabled(false);
-            Recurrence r = Recurrence.parse(recurrence);
-            recurText.setText(r.toInfoString(this));
-        }
-    }
-
-    private void setNotification(String notificationOptions) {
-        this.notificationOptions = notificationOptions;
-        if (notificationOptions == null) {
-            notificationText.setText(R.string.notification_options_default);
-        } else {
-            NotificationOptions o = NotificationOptions.parse(notificationOptions);
-            notificationText.setText(o.toInfoString(this));
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -459,20 +403,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         categorySelector.onActivityResult(requestCode, resultCode, data);
         if (isShowPayee) {
             payeeSelector.onActivityResult(requestCode, resultCode, data);
-        }
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case RECURRENCE_REQUEST:
-                    String recurrence = data.getStringExtra(RecurrenceActivity.RECURRENCE_PATTERN);
-                    setRecurrence(recurrence);
-                    break;
-                case NOTIFICATION_REQUEST:
-                    String notificationOptions = data.getStringExtra(NotificationOptionsActivity.NOTIFICATION_OPTIONS);
-                    setNotification(notificationOptions);
-                    break;
-                default:
-                    break;
-            }
         }
     }
 
@@ -497,10 +427,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         if (transaction.isTemplate()) {
             templateName.setText(transaction.templateName);
         }
-        if (transaction.isScheduled()) {
-            setRecurrence(transaction.recurrence);
-            setNotification(transaction.notificationOptions);
-        }
 
         if (transaction.isCreatedFromTemlate() && isOpenCalculatorForTemplates) {
             rateView.openFromAmountCalculator();
@@ -518,9 +444,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
     protected void updateTransactionFromUI(Transaction transaction) {
         transaction.categoryId = categorySelector.getSelectedCategoryId();
         transaction.projectId = projectSelector.getSelectedEntityId();
-        if (transaction.isScheduled()) {
-            DateUtils.zeroSeconds(dateTime);
-        }
         transaction.dateTime = dateTime.getTime().getTime();
         if (isShowPayee) {
             transaction.payeeId = payeeSelector.getSelectedEntityId();
@@ -530,10 +453,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         }
         if (transaction.isTemplate()) {
             transaction.templateName = text(templateName);
-        }
-        if (transaction.isScheduled()) {
-            transaction.recurrence = recurrence;
-            transaction.notificationOptions = notificationOptions;
         }
     }
 

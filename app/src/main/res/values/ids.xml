@@ -63,8 +63,6 @@
     <item name="sort_order" type="id" />
     <item name="sort_order_clear" type="id" />
     <item name="budget_mode" type="id" />
-    <item name="recurrence_pattern" type="id" />
-    <item name="recurrence_period" type="id" />
     <item name="start_date" type="id" />
     <item name="start_time" type="id" />
     <item name="notification" type="id" />

@@ -37,7 +37,6 @@ import ru.orangesoftware.financisto.model.Transaction;
 import ru.orangesoftware.financisto.model.TransactionAttributeInfo;
 import ru.orangesoftware.financisto.model.TransactionInfo;
 import ru.orangesoftware.financisto.model.TransactionStatus;
-import ru.orangesoftware.financisto.recur.Recurrence;
 import ru.orangesoftware.financisto.utils.MyPreferences;
 import ru.orangesoftware.financisto.utils.Utils;
 import ru.orangesoftware.financisto.view.NodeInflater;
@@ -187,17 +186,12 @@ public class TransactionInfoDialog {
         if (ti.isTemplate()) {
             titleLabel.setText(ti.templateName);
         } else {
-            if (ti.isScheduled() && ti.recurrence != null) {
-                Recurrence r = Recurrence.parse(ti.recurrence);
-                titleLabel.setText(r.toInfoString(context));
-            } else {
-                int titleId = ti.isSplitParent()
-                        ? R.string.split
-                        : (ti.toAccount == null ? R.string.transaction : R.string.transfer);
-                titleLabel.setText(titleId);
-                add(layout, R.string.date, DateUtils.formatDateTime(context, ti.dateTime,
-                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_YEAR));
-            }
+            int titleId = ti.isSplitParent()
+                    ? R.string.split
+                    : (ti.toAccount == null ? R.string.transaction : R.string.transfer);
+            titleLabel.setText(titleId);
+            add(layout, R.string.date, DateUtils.formatDateTime(context, ti.dateTime,
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_YEAR));
         }
         TransactionStatus status = ti.status;
         titleData.setText(context.getString(status.titleId));

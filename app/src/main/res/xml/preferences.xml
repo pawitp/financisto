@@ -337,11 +337,6 @@
             android:key="include_transfers_into_reports"
             android:summary="@string/include_transfers_into_reports_summary"
             android:title="@string/include_transfers_into_reports" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="restore_missed_scheduled_transactions"
-            android:summary="@string/restore_missed_scheduled_transactions_summary"
-            android:title="@string/restore_missed_scheduled_transactions" />
     </PreferenceCategory>
 
 </PreferenceScreen>

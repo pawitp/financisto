@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import ru.orangesoftware.financisto.db.DatabaseAdapter;
-import ru.orangesoftware.financisto.service.RecurrenceScheduler;
 import ru.orangesoftware.financisto.utils.CurrencyCache;
 import ru.orangesoftware.financisto.utils.IntegrityFix;
 
@@ -43,7 +42,6 @@ public abstract class FullDatabaseImport {
         }
         new IntegrityFix(dbAdapter).fix();
         CurrencyCache.initialize(dbAdapter);
-        scheduleAll();
     }
 
     protected abstract void restoreDatabase() throws IOException;
@@ -58,11 +56,6 @@ public abstract class FullDatabaseImport {
         List<String> list = new ArrayList<>(Arrays.asList(Backup.BACKUP_TABLES));
         list.add("running_balance");
         return list;
-    }
-
-    private void scheduleAll() {
-        RecurrenceScheduler scheduler = new RecurrenceScheduler(dbAdapter);
-        scheduler.scheduleAll(context);
     }
 
 }

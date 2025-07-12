@@ -396,11 +396,6 @@ public class MyPreferences {
         return sharedPreferences.getBoolean("include_transfers_into_reports", false);
     }
 
-    public static boolean isRestoreMissedScheduledTransactions(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getBoolean("restore_missed_scheduled_transactions", true);
-    }
-
     public static boolean isShowRunningBalance(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean("show_running_balance", true);

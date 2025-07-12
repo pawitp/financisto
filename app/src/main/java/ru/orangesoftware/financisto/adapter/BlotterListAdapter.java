@@ -17,15 +17,13 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.format.DateUtils;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import java.util.Date;
-import java.util.HashMap;
+
 import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.db.DatabaseAdapter;
 import ru.orangesoftware.financisto.db.DatabaseHelper.BlotterColumns;
@@ -33,7 +31,6 @@ import static ru.orangesoftware.financisto.model.Category.isSplit;
 import ru.orangesoftware.financisto.model.CategoryEntity;
 import ru.orangesoftware.financisto.model.Currency;
 import ru.orangesoftware.financisto.model.TransactionStatus;
-import ru.orangesoftware.financisto.recur.Recurrence;
 import ru.orangesoftware.financisto.utils.CurrencyCache;
 import ru.orangesoftware.financisto.utils.MyPreferences;
 import static ru.orangesoftware.financisto.utils.TransactionTitleUtils.generateTransactionTitle;
@@ -184,22 +181,15 @@ public class BlotterListAdapter extends ResourceCursorAdapter {
             String templateName = cursor.getString(BlotterColumns.template_name.ordinal());
             v.centerView.setText(templateName);
         } else {
-            String recurrence = cursor.getString(BlotterColumns.recurrence.ordinal());
-            if (isTemplate == 2 && recurrence != null) {
-                Recurrence r = Recurrence.parse(recurrence);
-                v.bottomView.setText(r.toInfoString(context));
-                v.bottomView.setTextColor(v.topView.getTextColors().getDefaultColor());
-            } else {
-                long date = cursor.getLong(BlotterColumns.datetime.ordinal());
-                dt.setTime(date);
-                v.bottomView.setText(StringUtil.capitalize(DateUtils.formatDateTime(context, dt.getTime(),
-                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_ABBREV_WEEKDAY)));
+            long date = cursor.getLong(BlotterColumns.datetime.ordinal());
+            dt.setTime(date);
+            v.bottomView.setText(StringUtil.capitalize(DateUtils.formatDateTime(context, dt.getTime(),
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_MONTH | DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_ABBREV_WEEKDAY)));
 
-                if (isTemplate == 0 && date > System.currentTimeMillis()) {
-                    u.setFutureTextColor(v.bottomView);
-                } else {
-                    v.bottomView.setTextColor(v.topView.getTextColors().getDefaultColor());
-                }
+            if (isTemplate == 0 && date > System.currentTimeMillis()) {
+                u.setFutureTextColor(v.bottomView);
+            } else {
+                v.bottomView.setTextColor(v.topView.getTextColors().getDefaultColor());
             }
         }
         removeRightViewIfNeeded(v);

@@ -62,41 +62,6 @@ public class TransactionInfo extends TransactionBase {
 		return isTransfer() ? TransferActivity.class : TransactionActivity.class;
 	}
 	
-	public int getNotificationIcon() {
-		return isTransfer() ?
-            R.drawable.notification_icon_transfer :
-            fromAmount > 0 ?
-                R.drawable.notification_icon_transaction : R.drawable.ic_btn_round_minus;
-	}
-	
-	public String getNotificationTickerText(Context context) {
-		return context.getString(isTransfer() ? R.string.new_scheduled_transfer_text : R.string.new_scheduled_transaction_text);
-	}
-
-	public String getNotificationContentTitle(Context context) {
-		return context.getString(isTransfer() ? R.string.new_scheduled_transfer_title : R.string.new_scheduled_transaction_title);
-	}
-	
-	public String getNotificationContentText(Context context) {
-		if (toAccount != null) {
-			if (fromAccount.currency.id == toAccount.currency.id) {
-				return context.getString(R.string.new_scheduled_transfer_notification_same_currency, 
-						Utils.amountToString(fromAccount.currency, Math.abs(fromAmount)),
-						fromAccount.title, toAccount.title);				
-			} else {
-				return context.getString(R.string.new_scheduled_transfer_notification_differ_currency, 
-						Utils.amountToString(fromAccount.currency, Math.abs(fromAmount)),
-						Utils.amountToString(toAccount.currency, Math.abs(toAmount)),
-						fromAccount.title, toAccount.title);								
-			}
-		} else {
-			return context.getString(R.string.new_scheduled_transaction_notification,
-					Utils.amountToString(fromAccount.currency, Math.abs(fromAmount)),
-					context.getString(fromAmount > 0 ? R.string.new_scheduled_transaction_debit : R.string.new_scheduled_transaction_credit),
-					fromAccount.title);
-		}		
-	}
-
     @Override
     public TransactionInfo clone() {
         try {

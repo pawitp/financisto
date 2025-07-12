@@ -26,12 +26,10 @@ public class TransferActivity extends AbstractTransactionActivity {
 
     @Override
     protected void internalOnCreate() {
-        if (transaction.isTemplateLike()) {
-            setTitle(transaction.isTemplate() ? R.string.transfer_template : R.string.transfer_schedule);
-            if (transaction.isTemplate()) {
-                dateText.setEnabled(false);
-                timeText.setEnabled(false);
-            }
+        if (transaction.isTemplate()) {
+            setTitle(R.string.transfer_template);
+            dateText.setEnabled(false);
+            timeText.setEnabled(false);
         }
     }
 

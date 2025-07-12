@@ -473,21 +473,6 @@
     <string name="delete_template_confirm">Delete template?</string>
     <string name="save_as_template">Save as template</string>
     <string name="save_as_template_success">Transaction saved as template…</string>
-    <string name="scheduled_transactions">Scheduled</string>
-    <string name="no_scheduled_transactions">No scheduled transactions</string>
-    <string name="recur_interval_geeky">Geeky</string>
-    <string name="recurrence_pattern">Recurrence pattern</string>
-    <string name="recurrence_period">Recurrence period</string>
-    <string name="recurrence_period_starts_on">Starts on</string>
-    <string name="recurrence_weekly_days">Repeat on</string>
-    <string name="recurrence_monthly_pattern">Monthly pattern</string>
-    <string name="recurrence_monthly_every_nth_day">Every Nth day</string>
-    <string name="recurrence_monthly_specific_day">Specific day</string>
-    <string name="recur_interval_semi_monthly_1">1st day</string>
-    <string name="recur_interval_semi_monthly_2">2nd day</string>
-    <string name="recurrence_none">No recurrence</string>
-    <string name="specify_value">Specify value…</string>
-    <string name="recurrence_evaluate">Evaluate dates</string>
     <string name="first">First</string>
     <string name="second">Second</string>
     <string name="third">Third</string>
@@ -503,47 +488,11 @@
     <string name="thursday">Thursday</string>
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
-    <string name="transaction_schedule">Transaction (Schedule)</string>
-    <string name="transfer_schedule">Transfer (Schedule)</string>
-    <string name="recurrence_period_starts_on_date">Starts on date</string>
-    <string name="recurrence_period_starts_on_time">Starts on time</string>
-    <string name="new_scheduled_transfer_title">Scheduled transfer</string>
-    <string name="new_scheduled_transfer_text">Scheduled transfer has been made</string>
-    <string name="new_scheduled_transaction_title">Scheduled transaction</string>
-    <string name="new_scheduled_transaction_text">Scheduled transaction has been added</string>
-    <string name="new_scheduled_transaction_notification" formatted="false">%s has been %s %s</string>
-    <string name="new_scheduled_transaction_debit">debited to</string>
-    <string name="new_scheduled_transaction_credit">credited to</string>
-    <string name="new_scheduled_transfer_notification_differ_currency" formatted="false">%s(%s) has been transferred from %s to %s</string>
-    <string name="new_scheduled_transfer_notification_same_currency" formatted="false">%s has been transferred from %s to %s</string>
-    <string name="notification">Notification</string>
-    <string name="notification_options_on">On</string>
-    <string name="notification_options_off">Off</string>
-    <string name="notification_options_short">Z</string>
-    <string name="notification_options_2_short">Z-Z</string>
-    <string name="notification_options_3_short">Z-Z-Z</string>
-    <string name="notification_options_long">Zz</string>
-    <string name="notification_options_2_long">Zz-Zz</string>
-    <string name="notification_options_3_long">Zz-Zz-Zz</string>
-    <string name="notification_options_led_green">Green</string>
-    <string name="notification_options_led_blue">Blue</string>
-    <string name="notification_options_led_yellow">Yellow</string>
-    <string name="notification_options_led_red">Red</string>
-    <string name="notification_options_led_pink">Pink</string>
-    <string name="notification_options_text" formatted="false">Sound:%s Vibration:%s Led:%s</string>
-    <string name="notification_options_custom">Custom</string>
-    <string name="notification_options_default">Default</string>
-    <string name="notification_sound">Ringtone</string>
-    <string name="notification_vibra">Vibration</string>
-    <string name="notification_led">Led</string>
     <string name="transaction_status">Status</string>
     <string name="transaction_status_pending">Pending</string>
     <string name="transaction_status_unreconciled">Unreconciled</string>
     <string name="transaction_status_cleared">Cleared</string>
     <string name="transaction_status_reconciled">Reconciled</string>
-    <string name="scheduled">(scheduled)</string>
-    <string name="expired">(expired)</string>
-    <string name="pending">(pending)</string>
     <string name="system_attribute_delete_after_expired">Delete after expired</string>
     <string name="no_transaction_found">No transaction found, please restart Financisto…</string>
     <string name="include_credit">Include credits</string>
@@ -580,11 +529,8 @@
 
     <string name="enter_pin">Enter PIN</string>
     <string name="account_type_paypal">PayPal</string>
-    <string name="proceed">Proceed</string>
     <string name="entities">Entities</string>
     <string name="transaction_status_restored">Restored</string>
-    <string name="restore_missed_scheduled_transactions">Restore missed schedules</string>
-    <string name="restore_missed_scheduled_transactions_summary">Missed scheduled transactions will be restored with \'Restored\' status</string>
     <string name="save_and_new">Save&amp;New</string>
     <string name="payees">Payees</string>
     <string name="report_by_payee">By Payee</string>
@@ -661,14 +607,6 @@
     <string name="qif_import_success">QIF file has been successfully imported</string>
     <string name="import_export">Import/Export</string>
     <string name="qif_import_disclaimer">*WARNING* Please note that all existing data will be removed!</string>
-
-    <string name="googledrive" translatable="false">Google Drive</string>
-    <string name="googledrive_authorize">Enable Sync to Google Drive</string>
-    <string name="googledrive_authorize_summary">Sync your picture in Drive</string>
-    <string name="googledrive_upload">Upload pictures</string>
-    <string name="googledrive_upload_summary">Upload attached pictures to Google Drive</string>
-    <string name="googledrive_folder">Google Drive Folder</string>
-    <string name="googledrive_folder_summary">Select a Google Drive folder to store the uploaded pictures</string>
 
     <string name="remember_last_category_for_payee">Last category</string>
     <string name="remember_last_category_for_payee_summary">Remember the last category for the chosen payee (or account if payee is disabled)</string>
