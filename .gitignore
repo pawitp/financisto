@@ -4,7 +4,6 @@
 /local.properties
 .DS_Store
 /build
-/classes
-/gen
+/app/build
 *.apk
-_prepare_dropbox_keys.sh
+keys.properties

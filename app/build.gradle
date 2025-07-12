@@ -7,6 +7,13 @@ repositories {
 
 apply plugin: 'com.android.application'
 
+// Load properties from keys.properties file
+def keysPropertiesFile = rootProject.file('keys.properties')
+def keysProperties = new Properties()
+if (keysPropertiesFile.exists()) {
+    keysProperties.load(new FileInputStream(keysPropertiesFile))
+}
+
 android {
     compileSdkVersion 28
 
@@ -25,6 +32,9 @@ android {
                 ]
             }
         }
+
+        buildConfigField "String", "DROPBOX_APP_KEY", "\"${keysProperties['DROPBOX_APP_KEY'] ?: ''}\""
+        manifestPlaceholders = [dropboxAppKey: keysProperties['DROPBOX_APP_KEY'] ?: '']
     }
 
     buildTypes {

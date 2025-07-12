@@ -22,6 +22,7 @@ import com.dropbox.core.v2.files.ListFolderResult;
 import com.dropbox.core.v2.files.Metadata;
 import com.dropbox.core.v2.files.WriteMode;
 
+import ru.orangesoftware.financisto.BuildConfig;
 import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.export.ImportExportException;
 import ru.orangesoftware.financisto.utils.MyPreferences;
@@ -32,8 +33,6 @@ import java.io.InputStream;
 import java.util.*;
 
 public class Dropbox {
-
-    private static final String APP_KEY = "INSERT_APP_KEY_HERE";
 
     private final Context context;
 
@@ -46,7 +45,7 @@ public class Dropbox {
 
     public void startAuth() {
         startedAuth = true;
-        Auth.startOAuth2Authentication(context, APP_KEY);
+        Auth.startOAuth2Authentication(context, BuildConfig.DROPBOX_APP_KEY);
     }
 
     public void completeAuth() {

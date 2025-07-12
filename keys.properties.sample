@@ -1,0 +1,4 @@
+# Copy this file to keys.properties and replace with your actual Dropbox API key
+# Get your Dropbox API key from https://www.dropbox.com/developers/apps
+
+DROPBOX_APP_KEY=your_dropbox_app_key_here

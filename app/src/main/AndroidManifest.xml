@@ -455,8 +455,8 @@
             android:launchMode="singleTask">
             <intent-filter>
 
-                <!-- Change this to be db- followed by your app key -->
-                <data android:scheme="db-INSERT-APP-KEY-HERE" />
+                <!-- Dropbox app key scheme - automatically generated from local.properties -->
+                <data android:scheme="db-${dropboxAppKey}" />
 
                 <action android:name="android.intent.action.VIEW" />
 
