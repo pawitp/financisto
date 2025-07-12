@@ -145,12 +145,6 @@ public enum MenuListItem implements SummaryEntityEnum {
             showPickOneDialog(activity, R.string.import_export, ImportExportEntities.values(), activity);
         }
     },
-    MENU_MASS_OP(R.string.mass_operations, R.string.mass_operations_summary, R.drawable.ic_menu_agenda) {
-        @Override
-        public void call(Activity activity) {
-            activity.startActivity(new Intent(activity, MassOpActivity.class));
-        }
-    },
     MENU_SCHEDULED_TRANSACTIONS(R.string.scheduled_transactions, R.string.scheduled_transactions_summary, R.drawable.actionbar_calendar) {
         @Override
         public void call(Activity activity) {

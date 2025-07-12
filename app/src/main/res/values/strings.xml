@@ -579,19 +579,10 @@
     <string name="ui_language_summary">Set language of user interface (requires restart!)</string>
 
     <string name="enter_pin">Enter PIN</string>
-    <string name="mass_operations">Mass operations</string>
     <string name="account_type_paypal">PayPal</string>
-    <string name="mass_operations_use_filter">Use filter to search for transactions</string>
-    <string name="mass_operations_clear_all">Clear all</string>
-    <string name="mass_operations_reconcile">Reconcile all</string>
-    <string name="mass_operations_delete">Delete all</string>
     <string name="proceed">Proceed</string>
-    <string name="apply_mass_op" formatted="false">Apply \'%s\' on %d transaction(s)?</string>
-    <string name="apply_mass_op_zero_count">No transactions selected…</string>
     <string name="entities">Entities</string>
     <string name="transaction_status_restored">Restored</string>
-    <string name="scheduled_transactions_restored">Scheduled transactions have been restored</string>
-    <string name="scheduled_transactions_have_been_restored">%d missed scheduled transactions have been restored. Please use Mass Operations to clear/delete them.</string>
     <string name="restore_missed_scheduled_transactions">Restore missed schedules</string>
     <string name="restore_missed_scheduled_transactions_summary">Missed scheduled transactions will be restored with \'Restored\' status</string>
     <string name="save_and_new">Save&amp;New</string>
@@ -882,7 +873,6 @@
     <string name="restore_database_online_dropbox_summary">Restore database from Dropbox</string>
     <string name="backup_database_to_summary">Send database backup to email, etc</string>
     <string name="import_export_summary">Import/export database to another format like csv, qif, etc</string>
-    <string name="mass_operations_summary">Apply operations to multiple transactions</string>
     <string name="integrity_fix_summary">Fix internal problems when required</string>
     <string name="about_summary">Get more information about the project</string>
 

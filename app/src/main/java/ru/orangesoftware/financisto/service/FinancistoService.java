@@ -24,7 +24,6 @@ import java.util.Date;
 import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.activity.AbstractTransactionActivity;
 import ru.orangesoftware.financisto.activity.AccountWidget;
-import ru.orangesoftware.financisto.activity.MassOpActivity;
 import ru.orangesoftware.financisto.backup.DatabaseExport;
 import ru.orangesoftware.financisto.blotter.BlotterFilter;
 import ru.orangesoftware.financisto.db.DatabaseAdapter;
@@ -94,10 +93,7 @@ public class FinancistoService extends JobIntentService {
 
 
     private void scheduleAll() {
-        int restoredTransactionsCount = scheduler.scheduleAll(this);
-        if (restoredTransactionsCount > 0) {
-            notifyUser(createRestoredNotification(restoredTransactionsCount), RESTORED_NOTIFICATION_ID);
-        }
+        scheduler.scheduleAll(this);
     }
 
     private void scheduleOne(Intent intent) {
@@ -149,29 +145,6 @@ public class FinancistoService extends JobIntentService {
     private void notifyUser(Notification notification, int id) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id, notification);
-    }
-
-    private Notification createRestoredNotification(int count) {
-        long when = System.currentTimeMillis();
-        String text = getString(R.string.scheduled_transactions_have_been_restored, count);
-        String contentTitle = getString(R.string.scheduled_transactions_restored);
-
-        Intent notificationIntent = new Intent(this, MassOpActivity.class);
-        WhereFilter filter = new WhereFilter("");
-        filter.eq(BlotterFilter.STATUS, TransactionStatus.RS.name());
-        filter.toIntent(notificationIntent);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
-        return new NotificationCompat.Builder(this, "restored")
-                .setContentIntent(contentIntent)
-                .setSmallIcon(R.drawable.notification_icon_transaction)
-                .setWhen(when)
-                .setTicker(text)
-                .setContentText(text)
-                .setContentTitle(contentTitle)
-                .setAutoCancel(true)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .build();
     }
 
     private Notification createScheduledNotification(TransactionInfo t) {
