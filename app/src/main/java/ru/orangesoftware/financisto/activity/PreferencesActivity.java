@@ -39,8 +39,6 @@ import ru.orangesoftware.financisto.utils.PinProtection;
 import static android.Manifest.permission.GET_ACCOUNTS;
 import static ru.orangesoftware.financisto.activity.RequestPermission.isRequestingPermission;
 import static ru.orangesoftware.financisto.activity.RequestPermission.isRequestingPermissions;
-import static ru.orangesoftware.financisto.utils.FingerprintUtils.fingerprintUnavailable;
-import static ru.orangesoftware.financisto.utils.FingerprintUtils.reasonWhyFingerprintUnavailable;
 
 public class PreferencesActivity extends PreferenceActivity {
 
@@ -112,11 +110,6 @@ public class PreferencesActivity extends PreferenceActivity {
             chooseAccount();
             return true;
         });
-        Preference useFingerprint = preferenceScreen.findPreference("pin_protection_use_fingerprint");
-        if (fingerprintUnavailable(this)) {
-            useFingerprint.setSummary(getString(R.string.fingerprint_unavailable, reasonWhyFingerprintUnavailable(this)));
-            useFingerprint.setEnabled(false);
-        }
         linkToDropbox();
         setCurrentDatabaseBackupFolder();
         enableOpenExchangeApp();

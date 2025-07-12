@@ -977,20 +977,6 @@
     <string name="permissions">Permissions</string>
     <string name="permissions_summary">Review permissions that needs to be granted manually</string>
 
-    <string name="pin_protection_use_fingerprint">Fingerprint Unlock</string>
-    <string name="pin_protection_use_fingerprint_summary">Use Fingerprint to unlock the application</string>
-    <string name="pin_protection_use_fingerprint_fallback_to_pin_summary">Fallback to PIN</string>
-    <string name="pin_protection_use_fingerprint_fallback_to_pin">Allow to use PIN to unlock the application even if the fingerprint is enabled.</string>
-    <string name="fingerprint_description">Confirm fingerprint to continue</string>
-    <string name="fingerprint_hint">Touch sensor</string>
-    <string name="fingerprint_auth_success">Fingerprint recognized</string>
-    <string name="fingerprint_auth_failed">Fingerprint not recognized. Try again.</string>
-    <string name="fingerprint_error">Error!</string>
-    <string name="fingerprint_unavailable_hardware">Fingerprint sensor is not detected</string>
-    <string name="fingerprint_unavailable_enrolled_fingerprints">At least one fingerprint needs to be enrolled</string>
-    <string name="fingerprint_unavailable_unknown">This device is not supported</string>
-    <string name="fingerprint_unavailable">Not available: %s</string>
-
     <string name="image_pick_camera">Camera</string>
     <string name="image_pick_images">Images</string>
     <string name="use_pin">Use PIN</string>

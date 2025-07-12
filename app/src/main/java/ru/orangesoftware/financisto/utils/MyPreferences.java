@@ -123,15 +123,6 @@ public class MyPreferences {
         return isPinProtected(context) && sharedPreferences.getBoolean("pin_protection_lock", true);
     }
 
-    public static boolean isPinLockUseFingerprint(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return isPinProtected(context) && sharedPreferences.getBoolean("pin_protection_use_fingerprint", false);
-    }
-
-    public static boolean isUseFingerprintFallbackToPinEnabled(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return isPinProtected(context) && sharedPreferences.getBoolean("pin_protection_use_fingerprint_fallback_to_pin", true);
-    }
 
     public static int getLockTimeSeconds(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);

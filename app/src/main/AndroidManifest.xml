@@ -26,9 +26,6 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
-    <uses-feature
-        android:name="android.hardware.fingerprint"
-        android:required="false" />
 
     <!-- Custom permissions -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
@@ -44,7 +41,6 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:name=".app.FinancistoApp_"
