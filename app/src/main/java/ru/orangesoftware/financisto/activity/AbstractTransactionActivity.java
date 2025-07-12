@@ -1,6 +1,5 @@
 package ru.orangesoftware.financisto.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -10,14 +9,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.*;
 
-// import com.mlsdev.rximagepicker.RxImageConverters;
-// import com.mlsdev.rximagepicker.RxImagePicker;
-// import com.mlsdev.rximagepicker.Sources;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import greendroid.widget.QuickActionGrid;
-import greendroid.widget.QuickActionWidget;
 import io.reactivex.disposables.CompositeDisposable;
 import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.datetime.DateUtils;
@@ -28,7 +22,6 @@ import ru.orangesoftware.financisto.recur.NotificationOptions;
 import ru.orangesoftware.financisto.recur.Recurrence;
 import ru.orangesoftware.financisto.utils.EnumUtils;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PicturesUtil;
 import ru.orangesoftware.financisto.utils.TransactionUtils;
 import ru.orangesoftware.financisto.view.AttributeView;
 import ru.orangesoftware.financisto.view.AttributeViewFactory;
@@ -39,7 +32,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static ru.orangesoftware.financisto.activity.RequestPermission.isRequestingPermission;
 import static ru.orangesoftware.financisto.activity.UiUtils.applyTheme;
 import static ru.orangesoftware.financisto.model.Category.NO_CATEGORY_ID;
 import static ru.orangesoftware.financisto.model.MyLocation.CURRENT_LOCATION_ID;
@@ -77,8 +69,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
     protected TextView recurText;
     protected TextView notificationText;
 
-    private ImageView pictureView;
-
     private CheckBox ccardPayment;
 
     protected Account selectedAccount;
@@ -99,7 +89,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
     protected boolean isRememberLastLocation;
     protected boolean isRememberLastProject;
     protected boolean isShowNote;
-    protected boolean isShowTakePicture;
     protected boolean isShowIsCCardPayment;
     protected boolean isOpenCalculatorForTemplates;
 
@@ -107,8 +96,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 
     protected DateFormat df;
     protected DateFormat tf;
-
-    private QuickActionWidget pickImageActionGrid;
 
     protected Transaction transaction = new Transaction();
 
@@ -137,7 +124,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         isRememberLastLocation = isRememberLastCategory && MyPreferences.isRememberLocation(this);
         isRememberLastProject = isRememberLastCategory && MyPreferences.isRememberProject(this);
         isShowNote = MyPreferences.isShowNote(this);
-        isShowTakePicture = MyPreferences.isShowTakePicture(this);
         isShowIsCCardPayment = MyPreferences.isShowIsCCardPayment(this);
         isOpenCalculatorForTemplates = MyPreferences.isOpenCalculatorForTemplates(this);
 
@@ -290,43 +276,8 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
             }
         }
 
-        setupPickImageActionGrid();
-
         long t1 = System.currentTimeMillis();
         Log.i("TransactionActivity", "onCreate " + (t1 - t0) + "ms");
-    }
-
-    protected void setupPickImageActionGrid() {
-        pickImageActionGrid = new QuickActionGrid(this);
-        pickImageActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_photo_camera, R.string.image_pick_camera));
-        pickImageActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_photo_library, R.string.image_pick_images));
-        pickImageActionGrid.setOnQuickActionClickListener((widget, position) -> {
-            switch (position) {
-                case 0:
-                    // requestImage(Sources.CAMERA); // TODO: Replace with modern image picker
-                    break;
-                case 1:
-                    // requestImage(Sources.GALLERY); // TODO: Replace with modern image picker
-                    break;
-            }
-        });
-    }
-
-    // TODO: Replace with modern image picker implementation
-    /*
-    protected void requestImage(Sources source) {
-        transaction.blobKey = null;
-        disposable.add(RxImagePicker.with(getFragmentManager()).requestImage(source)
-                .flatMap(uri -> RxImageConverters.uriToFile(this, uri, PicturesUtil.createEmptyImageFile()))
-                .subscribe(
-                        file -> selectPicture(file.getName()),
-                        e -> Toast.makeText(AbstractTransactionActivity.this, "Unable to pick up an image: " + e.getMessage(), Toast.LENGTH_LONG).show()
-                ));
-    }
-    */
-    protected void requestImage(int source) {
-        // Placeholder implementation - image picker functionality disabled
-        Toast.makeText(this, "Image picker temporarily disabled", Toast.LENGTH_SHORT).show();
     }
 
     protected void createPayeeNode(LinearLayout layout) {
@@ -398,9 +349,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
                 projectSelector.createNode(layout);
             }
         }
-        if (isShowTakePicture && transaction.isNotTemplateLike()) {
-            pictureView = x.addPictureNodeMinus(this, layout, R.id.attach_picture, R.id.delete_picture, R.string.attach_picture, R.string.new_picture);
-        }
         if (isShowIsCCardPayment) {
             // checkbox to register if the transaction is a credit card payment.
             // this will be used to exclude from totals in bill preview
@@ -434,18 +382,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
                 Intent intent = new Intent(this, NotificationOptionsActivity.class);
                 intent.putExtra(NotificationOptionsActivity.NOTIFICATION_OPTIONS, notificationOptions);
                 startActivityForResult(intent, NOTIFICATION_REQUEST);
-                break;
-            }
-            case R.id.attach_picture: {
-                if (isRequestingPermission(this, Manifest.permission.CAMERA)) {
-                    return;
-                }
-                transaction.blobKey = null;
-                pickImageActionGrid.show(v);
-                break;
-            }
-            case R.id.delete_picture: {
-                removePicture();
                 break;
             }
             case R.id.is_ccard_payment: {
@@ -570,34 +506,9 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
                 default:
                     break;
             }
-        } else {
-            if (requestCode == PICTURE_REQUEST) {
-                removePicture();
-            }
         }
     }
 
-    private void selectPicture(String pictureFileName) {
-        if (pictureView == null) {
-            return;
-        }
-        if (pictureFileName == null) {
-            return;
-        }
-        PicturesUtil.showImage(this, pictureView, pictureFileName);
-        pictureView.setTag(R.id.attached_picture, pictureFileName);
-        transaction.attachedPicture = pictureFileName;
-    }
-
-    private void removePicture() {
-        if (pictureView == null) {
-            return;
-        }
-        transaction.attachedPicture = null;
-        transaction.blobKey = null;
-        pictureView.setImageBitmap(null);
-        pictureView.setTag(R.id.attached_picture, null);
-    }
 
     protected void setDateTime(long date) {
         Date d = new Date(date);
@@ -623,9 +534,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         if (transaction.isScheduled()) {
             setRecurrence(transaction.recurrence);
             setNotification(transaction.notificationOptions);
-        }
-        if (isShowTakePicture) {
-            selectPicture(transaction.attachedPicture);
         }
         if (isShowIsCCardPayment) {
             setIsCCardPayment(transaction.isCCardPayment);

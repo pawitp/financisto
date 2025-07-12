@@ -196,8 +196,7 @@ public class TransactionInfoDialog {
                         : (ti.toAccount == null ? R.string.transaction : R.string.transfer);
                 titleLabel.setText(titleId);
                 add(layout, R.string.date, DateUtils.formatDateTime(context, ti.dateTime,
-                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_YEAR),
-                        ti.attachedPicture);
+                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_YEAR));
             }
         }
         TransactionStatus status = ti.status;
@@ -236,18 +235,6 @@ public class TransactionInfoDialog {
         return (TextView)v.findViewById(R.id.data);
     }
 
-    private void add(LinearLayout layout, int labelId, String data, String pictureFileName) {
-        View v = inflater.new PictureBuilder(layout)
-                .withPicture(context, pictureFileName)
-                .withLabel(labelId)
-                .withData(data)
-                .create();
-        v.setClickable(false);
-        v.setFocusable(false);
-        v.setFocusableInTouchMode(false);
-        ImageView pictureView = v.findViewById(R.id.picture);
-        pictureView.setTag(pictureFileName);
-    }
 
     private LinearLayout add(LinearLayout layout, String label, String data) {
         return (LinearLayout) inflater.new Builder(layout, R.layout.select_entry_simple).withLabel(label)

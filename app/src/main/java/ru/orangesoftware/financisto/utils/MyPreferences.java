@@ -123,7 +123,6 @@ public class MyPreferences {
         return isPinProtected(context) && sharedPreferences.getBoolean("pin_protection_lock", true);
     }
 
-
     public static int getLockTimeSeconds(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return isPinLockEnabled(context) ? 60 * Integer.parseInt(sharedPreferences.getString("pin_protection_lock_time", "5")) : 0;
@@ -189,11 +188,6 @@ public class MyPreferences {
     public static boolean isRememberProject(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean("remember_last_project", false);
-    }
-
-    public static boolean isShowTakePicture(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return isCameraSupported(context) && sharedPreferences.getBoolean("ntsl_show_picture", true);
     }
 
     public static boolean isShowCategoryInTransferScreen(Context context) {
@@ -467,10 +461,6 @@ public class MyPreferences {
         return context;
     }
 
-    public static boolean isCameraSupported(Context context) {
-        return isFeatureSupported(context, PackageManager.FEATURE_CAMERA);
-    }
-
     public static boolean isLocationSupported(Context context) {
         return isFeatureSupported(context, PackageManager.FEATURE_LOCATION);
     }
@@ -652,7 +642,6 @@ public class MyPreferences {
     public static boolean doGoogleDriveUpload(Context context) {
         return getBoolean(context, "googledrive_upload", false);
     }
-
 
     public static String getGoogleDriveAccount(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);

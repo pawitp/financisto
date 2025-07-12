@@ -1,22 +1,14 @@
 package ru.orangesoftware.financisto.view;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import androidx.core.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import android.widget.RelativeLayout.LayoutParams;
-import ru.orangesoftware.financisto.BuildConfig;
 import ru.orangesoftware.financisto.R;
-import ru.orangesoftware.financisto.utils.PicturesUtil;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static ru.orangesoftware.financisto.activity.RequestPermission.isRequestingPermission;
 
 public class NodeInflater {
 
@@ -164,41 +156,6 @@ public class NodeInflater {
         public CheckBoxBuilder withCheckbox(boolean checked) {
             CheckBox checkBox = v.findViewById(R.id.checkbox);
             checkBox.setChecked(checked);
-            return this;
-        }
-
-    }
-
-    public class PictureBuilder extends ListBuilder {
-
-        public PictureBuilder(LinearLayout layout) {
-            super(layout, R.layout.select_entry_picture);
-        }
-
-        @Override
-        public ListBuilder withButtonId(int buttonId, OnClickListener listener) {
-            ImageView plusImageView = v.findViewById(R.id.plus_minus);
-            plusImageView.setVisibility(VISIBLE);
-            return super.withButtonId(buttonId, listener);
-        }
-
-        public PictureBuilder withPicture(final Context context, String pictureFileName) {
-            final ImageView imageView = v.findViewById(R.id.picture);
-            imageView.setOnClickListener(arg0 -> {
-                if (isRequestingPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    return;
-                }
-                String fileName = (String) imageView.getTag(R.id.attached_picture);
-                if (fileName != null) {
-                    Uri target = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID, PicturesUtil.pictureFile(fileName, true));
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    intent.setDataAndType(target, "image/jpeg");
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    context.startActivity(intent);
-                }
-            });
-            PicturesUtil.showImage(context, imageView, pictureFileName);
             return this;
         }
 
