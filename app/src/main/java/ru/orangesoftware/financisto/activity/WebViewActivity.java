@@ -46,4 +46,9 @@ public class WebViewActivity extends Activity {
         webView.loadUrl(url);
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
 }
