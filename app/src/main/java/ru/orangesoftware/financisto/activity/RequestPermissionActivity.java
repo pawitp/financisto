@@ -32,18 +32,6 @@ public class RequestPermissionActivity extends Activity {
     @ViewById(R.id.toggleWriteStorage)
     SwitchCompat toggleWriteStorage;
 
-    @ViewById(R.id.toggleGetAccountsWrap)
-    ViewGroup toggleGetAccountsWrap;
-
-    @ViewById(R.id.toggleGetAccounts)
-    SwitchCompat toggleGetAccounts;
-
-    @ViewById(R.id.toggleCameraWrap)
-    ViewGroup toggleCameraWrap;
-
-    @ViewById(R.id.toggleCamera)
-    SwitchCompat toggleCamera;
-
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(MyPreferences.switchLocale(base));
@@ -56,8 +44,6 @@ public class RequestPermissionActivity extends Activity {
 
     private void checkPermissions() {
         disableToggleIfGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE, toggleWriteStorage, toggleWriteStorageWrap);
-        disableToggleIfGranted(Manifest.permission.GET_ACCOUNTS, toggleGetAccounts, toggleGetAccountsWrap);
-        disableToggleIfGranted(Manifest.permission.CAMERA, toggleCamera, toggleCameraWrap);
     }
 
     private void disableToggleIfGranted(String permission, CompoundButton toggleButton, ViewGroup wrapLayout) {
@@ -73,16 +59,6 @@ public class RequestPermissionActivity extends Activity {
     @Click(R.id.toggleWriteStorage)
     public void onGrantWriteStorage() {
         requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, toggleWriteStorage);
-    }
-
-    @Click(R.id.toggleGetAccounts)
-    public void onGrantGetAccounts() {
-        requestPermission(Manifest.permission.GET_ACCOUNTS, toggleGetAccounts);
-    }
-
-    @Click(R.id.toggleCamera)
-    public void onGrantCamera() {
-        requestPermission(Manifest.permission.CAMERA, toggleCamera);
     }
 
     private void requestPermission(String permission, CompoundButton toggleButton) {

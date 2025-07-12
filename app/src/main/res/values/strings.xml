@@ -901,10 +901,6 @@
     <string name="request_permissions_description">Please grant the required permissions below, then return back to the previous screen and repeat the operation. Permissions can be revoked in the system Settings -> App Permissions.</string>
     <string name="request_permissions_storage_title">Storage</string>
     <string name="request_permissions_storage_description">Required to read and write backup files from/to the external storage.</string>
-    <string name="request_permissions_camera_title">Camera</string>
-    <string name="request_permissions_camera_description">Required to take pictures and attach them to transactions.</string>
-    <string name="request_permissions_get_accounts_title">Contacts</string>
-    <string name="request_permissions_get_accounts_description">Required to allow backup to your personal Google Drive.</string>
     <string name="request_permissions_granted">Permission granted</string>
     <string name="request_permissions_not_granted">Permission NOT granted</string>
     <string name="privacy_policy">Privacy Policy</string>
