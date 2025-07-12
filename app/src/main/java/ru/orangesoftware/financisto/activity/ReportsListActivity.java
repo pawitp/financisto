@@ -95,10 +95,6 @@ public class ReportsListActivity extends ListActivity {
 			reports.add(ReportType.BY_PAYEE);
 		}
 
-		if (MyPreferences.isShowLocation(getBaseContext())) {
-			reports.add(ReportType.BY_LOCATION);
-		}
-
 		if (MyPreferences.isShowProject(getBaseContext())) {
 			reports.add(ReportType.BY_PROJECT);
 		}
@@ -108,10 +104,6 @@ public class ReportsListActivity extends ListActivity {
 
 		if (MyPreferences.isShowPayee(getBaseContext())) {
 			reports.add(ReportType.BY_PAYEE_BY_PERIOD);
-		}
-
-		if (MyPreferences.isShowLocation(getBaseContext())) {
-			reports.add(ReportType.BY_LOCATION_BY_PERIOD);
 		}
 
 		if (MyPreferences.isShowProject(getBaseContext())) {

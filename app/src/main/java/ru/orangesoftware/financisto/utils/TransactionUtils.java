@@ -50,10 +50,6 @@ public class TransactionUtils {
 		return new MyEntityAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, projects);
 	}
 
-    public static ListAdapter createLocationAdapter(Context context, List<MyLocation> locations) {
-        return new MyEntityAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, locations);
-    }
-
     public static ListAdapter createPayeeAdapter(Context context, List<Payee> payees) {
         return new MyEntityAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, payees);
     }
@@ -61,11 +57,6 @@ public class TransactionUtils {
     public static ListAdapter createCurrencyAdapter(Context context, List<Currency> currencies) {
         return new MyEntityAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, currencies);
     }
-
-    public static ListAdapter createLocationAdapter(Context context, Cursor cursor) {
-		return new SimpleCursorAdapter(context, android.R.layout.simple_spinner_dropdown_item, cursor, 
-				new String[]{"e_name"}, new int[]{android.R.id.text1});
-	}
 
     public static SimpleCursorAdapter createPayeeAutoCompleteAdapter(Context context, final MyEntityManager db) {
         return new FilterSimpleCursorAdapter<MyEntityManager, Payee>(context, db, Payee.class) {
@@ -83,20 +74,6 @@ public class TransactionUtils {
 
     public static SimpleCursorAdapter createProjectAutoCompleteAdapter(Context context, final MyEntityManager db) {
         return new FilterSimpleCursorAdapter<>(context, db, Project.class);
-    }
-
-    public static SimpleCursorAdapter createLocationAutoCompleteAdapter(Context context, final MyEntityManager db) {
-        return new FilterSimpleCursorAdapter<MyEntityManager, MyLocation>(context, db, MyLocation.class){
-            @Override
-            Cursor filterRows(CharSequence constraint) {
-                return db.filterActiveEntities(MyLocation.class, constraint.toString());
-            }
-
-            @Override
-            Cursor getAllRows() {
-                return db.filterActiveEntities(MyLocation.class, null);
-            }
-        };
     }
 
     public static SimpleCursorAdapter createCategoryFilterAdapter(Context context, final DatabaseAdapter db) {
@@ -159,10 +136,6 @@ public class TransactionUtils {
 
     public static FilterEntityAdapter<Project> projectFilterAdapter(Context context, MyEntityManager em) {
         return new FilterEntityAdapter<>(context, em.getAllActiveProjectsList());
-    }
-
-    public static FilterEntityAdapter<MyLocation> locationFilterAdapter(Context context, MyEntityManager em) {
-        return new FilterEntityAdapter<>(context, em.getAllActiveLocationsList());
     }
 
     public static class FilterEntityAdapter<E extends MyEntity> extends ArrayAdapter<E> {

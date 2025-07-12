@@ -81,12 +81,10 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 
     protected PayeeSelector<AbstractTransactionActivity> payeeSelector;
     protected ProjectSelector<AbstractTransactionActivity> projectSelector;
-    protected LocationSelector<AbstractTransactionActivity> locationSelector;
     protected CategorySelector<AbstractTransactionActivity> categorySelector;
 
     protected boolean isRememberLastAccount;
     protected boolean isRememberLastCategory;
-    protected boolean isRememberLastLocation;
     protected boolean isRememberLastProject;
     protected boolean isShowNote;
     protected boolean isShowIsCCardPayment;
@@ -121,7 +119,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 
         isRememberLastAccount = MyPreferences.isRememberAccount(this);
         isRememberLastCategory = isRememberLastAccount && MyPreferences.isRememberCategory(this);
-        isRememberLastLocation = isRememberLastCategory && MyPreferences.isRememberLocation(this);
         isRememberLastProject = isRememberLastCategory && MyPreferences.isRememberProject(this);
         isShowNote = MyPreferences.isShowNote(this);
         isShowIsCCardPayment = MyPreferences.isShowIsCCardPayment(this);
@@ -212,8 +209,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 
         rateView = new RateLayoutView(this, x, layout);
 
-        locationSelector = new LocationSelector<>(this, db, x);
-        locationSelector.fetchEntities();
 
         projectSelector = new ProjectSelector<>(this, db, x);
         projectSelector.fetchEntities();
@@ -267,9 +262,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
             }
             if (!isRememberLastProject) {
                 projectSelector.selectEntity(NO_PROJECT_ID);
-            }
-            if (!isRememberLastLocation) {
-                locationSelector.selectEntity(CURRENT_LOCATION_ID);
             }
             if (transaction.isScheduled()) {
                 selectStatus(TransactionStatus.PN);
@@ -330,13 +322,9 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
     }
 
     protected void createCommonNodes(LinearLayout layout) {
-        int locationOrder = MyPreferences.getLocationOrder(this);
         int noteOrder = MyPreferences.getNoteOrder(this);
         int projectOrder = MyPreferences.getProjectOrder(this);
         for (int i = 0; i < 6; i++) {
-            if (i == locationOrder) {
-                locationSelector.createNode(layout);
-            }
             if (i == noteOrder) {
                 if (isShowNote) {
                     //note
@@ -366,7 +354,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         if (isShowPayee) payeeSelector.onClick(id);
         projectSelector.onClick(id);
         categorySelector.onClick(id);
-        locationSelector.onClick(id);
         switch (id) {
             case R.id.account:
                 x.select(this, R.id.account, R.string.account, accountCursor, accountAdapter,
@@ -395,7 +382,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
     public void onSelectedPos(int id, int selectedPos) {
         if (isShowPayee) payeeSelector.onSelectedPos(id, selectedPos);
         projectSelector.onSelectedPos(id, selectedPos);
-        locationSelector.onSelectedPos(id, selectedPos);
         switch (id) {
             case R.id.status:
                 selectStatus(statuses[selectedPos]);
@@ -408,7 +394,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         if (isShowPayee) payeeSelector.onSelectedId(id, selectedId);
         categorySelector.onSelectedId(id, selectedId);
         projectSelector.onSelectedId(id, selectedId);
-        locationSelector.onSelectedId(id, selectedId);
         switch (id) {
             case R.id.account:
                 selectAccount(selectedId);
@@ -444,9 +429,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         addOrRemoveSplits();
         categorySelector.addAttributes(transaction);
         switchIncomeExpenseButton(category);
-        if (selectLast && isRememberLastLocation) {
-            locationSelector.selectEntity(category.lastLocationId);
-        }
         if (selectLast && isRememberLastProject) {
             projectSelector.selectEntity(category.lastProjectId);
         }
@@ -489,7 +471,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         super.onActivityResult(requestCode, resultCode, data);
         projectSelector.onActivityResult(requestCode, resultCode, data);
         categorySelector.onActivityResult(requestCode, resultCode, data);
-        locationSelector.onActivityResult(requestCode, resultCode, data);
         if (isShowPayee) {
             payeeSelector.onActivityResult(requestCode, resultCode, data);
         }
@@ -523,7 +504,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         selectStatus(transaction.status);
         categorySelector.selectCategory(transaction.categoryId, false);
         projectSelector.selectEntity(transaction.projectId);
-        locationSelector.selectEntity(transaction.locationId);
         setDateTime(transaction.dateTime);
         if (isShowNote) {
             noteText.setText(transaction.note);
@@ -553,7 +533,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         if (isShowPayee) {
             payeeSelector.createNewEntity();
         }
-        locationSelector.createNewEntity();
         projectSelector.createNewEntity();
         return true;
     }
@@ -561,7 +540,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
     protected void updateTransactionFromUI(Transaction transaction) {
         transaction.categoryId = categorySelector.getSelectedCategoryId();
         transaction.projectId = projectSelector.getSelectedEntityId();
-        transaction.locationId = locationSelector.getSelectedEntityId();
         if (transaction.isScheduled()) {
             DateUtils.zeroSeconds(dateTime);
         }

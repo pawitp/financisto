@@ -221,8 +221,7 @@ public enum MenuListItem implements SummaryEntityEnum {
         EXCHANGE_RATES(R.string.exchange_rates, R.drawable.ic_action_line_chart, ExchangeRatesListActivity.class),
         CATEGORIES(R.string.categories, R.drawable.ic_action_category, CategoryListActivity2.class),
         PAYEES(R.string.payees, R.drawable.ic_action_users, PayeeListActivity.class),
-        PROJECTS(R.string.projects, R.drawable.ic_action_gear, ProjectListActivity.class),
-        LOCATIONS(R.string.locations, R.drawable.ic_action_location_2, LocationsListActivity.class);
+        PROJECTS(R.string.projects, R.drawable.ic_action_gear, ProjectListActivity.class);
 
         private final int titleId;
         private final int iconId;

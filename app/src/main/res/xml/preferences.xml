@@ -109,12 +109,6 @@
                 <CheckBoxPreference
                     android:defaultValue="false"
                     android:dependency="remember_last_category"
-                    android:key="remember_last_location"
-                    android:summary="@string/remember_last_location_summary"
-                    android:title="@string/remember_last_location" />
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:dependency="remember_last_category"
                     android:key="remember_last_project"
                     android:summary="@string/remember_last_project_summary"
                     android:title="@string/remember_last_project" />
@@ -140,19 +134,6 @@
                     android:key="ntsl_show_payee"
                     android:summary="@string/show_payee_summary"
                     android:title="@string/show_payee" />
-                <CheckBoxPreference
-                    android:defaultValue="true"
-                    android:key="ntsl_show_location"
-                    android:summary="@string/show_location_summary"
-                    android:title="@string/show_location" />
-                <ListPreference
-                    android:defaultValue="1"
-                    android:dependency="ntsl_show_location"
-                    android:entries="@array/sort_order_entities"
-                    android:entryValues="@array/sort_order_entities"
-                    android:key="ntsl_show_location_order"
-                    android:summary="@string/show_location_order_summary"
-                    android:title="@string/show_location_order" />
                 <CheckBoxPreference
                     android:defaultValue="true"
                     android:key="ntsl_show_note"
@@ -333,26 +314,12 @@
             android:defaultValue="filter"
             android:entries="@array/entity_selector_entities"
             android:entryValues="@array/entity_selector_values"
-            android:key="location_selector"
-            android:summary="@string/entity_selector_summary"
-            android:title="@string/location_selector_title" />
-        <ListPreference
-            android:defaultValue="filter"
-            android:entries="@array/entity_selector_entities"
-            android:entryValues="@array/entity_selector_values"
             android:key="project_selector"
             android:summary="@string/entity_selector_summary"
             android:title="@string/project_selector_title" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/sort_order">
-        <ListPreference
-            android:defaultValue="NAME"
-            android:entries="@array/sort_locations_entities"
-            android:entryValues="@array/sort_locations_values"
-            android:key="sort_locations"
-            android:summary="@string/sort_locations_summary"
-            android:title="@string/sort_locations" />
         <ListPreference
             android:defaultValue="DATE"
             android:entries="@array/sort_templates_entities"

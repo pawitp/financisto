@@ -180,11 +180,6 @@ public class MyPreferences {
         return sharedPreferences.getBoolean("remember_last_category", false);
     }
 
-    public static boolean isRememberLocation(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getBoolean("remember_last_location", false);
-    }
-
     public static boolean isRememberProject(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean("remember_last_project", false);
@@ -220,16 +215,6 @@ public class MyPreferences {
         return Integer.parseInt(sharedPreferences.getString("ntsl_show_payee_order", "1"));
     }
 
-    public static boolean isShowLocation(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return isLocationSupported(context) && sharedPreferences.getBoolean("ntsl_show_location", true);
-    }
-
-    public static int getLocationOrder(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return Integer.parseInt(sharedPreferences.getString("ntsl_show_location_order", "1"));
-    }
-
     public static boolean isShowIsCCardPayment(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean("ntsl_show_is_ccard_payment", true);
@@ -252,11 +237,6 @@ public class MyPreferences {
     public static boolean isProjectSelectorList(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return ENTITY_SELECTOR_LIST.equals(sharedPreferences.getString("project_selector", ENTITY_SELECTOR_FILTER));
-    }
-
-    public static boolean isLocationSelectorList(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return ENTITY_SELECTOR_LIST.equals(sharedPreferences.getString("location_selector", ENTITY_SELECTOR_FILTER));
     }
 
     /**
@@ -459,10 +439,6 @@ public class MyPreferences {
         context = context.createConfigurationContext(config);
         Log.i("MyPreferences", "Switching locale to " + config.locale.getDisplayName());
         return context;
-    }
-
-    public static boolean isLocationSupported(Context context) {
-        return isFeatureSupported(context, PackageManager.FEATURE_LOCATION);
     }
 
     public static boolean isAutoBackupEnabled(Context context) {

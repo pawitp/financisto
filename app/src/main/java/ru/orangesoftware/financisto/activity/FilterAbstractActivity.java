@@ -22,7 +22,6 @@ import ru.orangesoftware.financisto.utils.ArrUtils;
 
 import static ru.orangesoftware.financisto.activity.CategorySelector.SelectorType.FILTER;
 import static ru.orangesoftware.financisto.blotter.BlotterFilter.CATEGORY_LEFT;
-import static ru.orangesoftware.financisto.blotter.BlotterFilter.LOCATION_ID;
 import static ru.orangesoftware.financisto.blotter.BlotterFilter.PAYEE_ID;
 import static ru.orangesoftware.financisto.blotter.BlotterFilter.PROJECT_ID;
 import static ru.orangesoftware.financisto.filter.WhereFilter.Operation.BTW;
@@ -35,7 +34,6 @@ public abstract class FilterAbstractActivity extends AbstractActivity implements
     protected ProjectSelector<FilterAbstractActivity> projectSelector;
     protected PayeeSelector<FilterAbstractActivity> payeeSelector;
     protected CategorySelector<FilterAbstractActivity> categorySelector;
-    protected LocationSelector<FilterAbstractActivity> locationSelector;
 
     protected String noFilterValue;
 
@@ -51,11 +49,6 @@ public abstract class FilterAbstractActivity extends AbstractActivity implements
         projectSelector.createNode(layout);
     }
 
-    protected void initLocationSelector(LinearLayout layout) {
-        locationSelector = new LocationSelector<>(this, db, x, R.string.no_filter);
-        locationSelector.initMultiSelect();
-        locationSelector.createNode(layout);
-    }
 
     protected void initCategorySelector(LinearLayout layout) {
         categorySelector = new CategorySelector<>(this, db, x);
@@ -106,21 +99,6 @@ public abstract class FilterAbstractActivity extends AbstractActivity implements
             case R.id.project_show_list:
                 projectSelector.onClick(id);
                 break;
-            case R.id.location: {
-                Criteria c = filter.get(LOCATION_ID);
-                if (c != null) locationSelector.updateCheckedEntities(c.getValues());
-                locationSelector.onClick(id);
-            }
-            break;
-            case R.id.location_clear:
-                clear(LOCATION_ID);
-                locationSelector.onClick(id);
-                break;
-            case R.id.location_show_filter:
-            case R.id.location_close_filter:
-            case R.id.location_show_list:
-                locationSelector.onClick(id);
-                break;
             case R.id.payee: {
                 Criteria c = filter.get(BlotterFilter.PAYEE_ID);
                 if (c != null) projectSelector.updateCheckedEntities(c.getValues());
@@ -161,11 +139,6 @@ public abstract class FilterAbstractActivity extends AbstractActivity implements
 //                filter.put(Criteria.btw(CATEGORY_LEFT, categorySelector.getCheckedCategoryLeafs()));
 //                updateCategoryFromFilter();
                 break;
-            case R.id.location:
-                locationSelector.onSelectedId(id, selectedId);
-                filter.put(Criteria.in(LOCATION_ID, locationSelector.getCheckedIds()));
-                updateLocationFromFilter();
-                break;
         }
     }
 
@@ -194,14 +167,6 @@ public abstract class FilterAbstractActivity extends AbstractActivity implements
                 } else {
                     filter.put(Criteria.in(PAYEE_ID, payeeSelector.getCheckedIds()));
                     updatePayeeFromFilter();
-                }
-                break;
-            case R.id.location:
-                if (ArrUtils.isEmpty(locationSelector.getCheckedIds())) {
-                    clear(LOCATION_ID);
-                } else {
-                    filter.put(Criteria.in(LOCATION_ID, locationSelector.getCheckedIds()));
-                    updateLocationFromFilter();
                 }
                 break;
         }
@@ -316,11 +281,6 @@ public abstract class FilterAbstractActivity extends AbstractActivity implements
         }
     }
 
-    protected void updateLocationFromFilter() {
-        if (locationSelector.isShow()) {
-            updateEntityFromFilter(LOCATION_ID, locationSelector);
-        }
-    }
 
     protected void showMinusButton(TextView textView) {
         ImageView v = findMinusButton(textView);

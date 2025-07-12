@@ -72,7 +72,6 @@ public class BlotterFilterActivity extends FilterAbstractActivity {
 		initCategorySelector(layout);
 		initPayeeSelector(layout);
 		initProjectSelector(layout);
-		initLocationSelector(layout);
 		note = x.addFilterNodeMinus(layout, R.id.note, R.id.note_clear, R.string.note, R.string.no_filter);
 		status = x.addFilterNodeMinus(layout, R.id.status, R.id.status_clear, R.string.transaction_status, R.string.no_filter);
 		sortOrder = x.addFilterNodeMinus(layout, R.id.sort_order, R.id.sort_order_clear, R.string.sort_order, 0, sortBlotterEntries[0]);
@@ -115,7 +114,6 @@ public class BlotterFilterActivity extends FilterAbstractActivity {
 			updateProjectFromFilter();
             updatePayeeFromFilter();
 			updateNoteFromFilter();
-			updateLocationFromFilter();
 			updateSortOrderFromFilter();
 			updateStatusFromFilter();
             disableAccountResetButtonIfNeeded();

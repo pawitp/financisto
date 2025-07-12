@@ -57,7 +57,6 @@ public class ReportFilterActivity extends FilterAbstractActivity {
         initCategorySelector(layout);
         initPayeeSelector(layout);
         initProjectSelector(layout);
-        initLocationSelector(layout);
         status = x.addFilterNodeMinus(layout, R.id.status, R.id.status_clear, R.string.transaction_status, R.string.no_filter);
 
         Button bOk = findViewById(R.id.bOK);
@@ -89,7 +88,6 @@ public class ReportFilterActivity extends FilterAbstractActivity {
             updateCategoryFromFilter();
             updateProjectFromFilter();
             updatePayeeFromFilter();
-            updateLocationFromFilter();
             updateStatusFromFilter();
         }
 

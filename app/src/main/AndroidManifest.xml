@@ -326,16 +326,6 @@
             android:label="@string/payees" />
 
         <activity
-            android:name=".activity.LocationActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/location"
-            android:theme="@android:style/Theme.Dialog" />
-
-        <activity
-            android:name=".activity.LocationsListActivity"
-            android:label="@string/locations" />
-
-        <activity
             android:name=".activity.TemplatesListActivity"
             android:label="@string/transaction_templates" />
 

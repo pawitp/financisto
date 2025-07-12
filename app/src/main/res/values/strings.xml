@@ -914,7 +914,7 @@
     <string name="delete_account">Delete account</string>
 
     <string name="preferences_summary">Change application settings</string>
-    <string name="entities_summary">Modify categories, payees, projects, locations, etc</string>
+    <string name="entities_summary">Modify categories, payees, projects, etc</string>
     <string name="scheduled_transactions_summary">Schedule transactions and transfers</string>
     <string name="backup_database_summary">Backup database to the local storage</string>
     <string name="restore_database_summary">Restore database from the local storage</string>
