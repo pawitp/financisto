@@ -608,8 +608,6 @@
     <string name="restore_missed_scheduled_transactions">Restore missed schedules</string>
     <string name="restore_missed_scheduled_transactions_summary">Missed scheduled transactions will be restored with \'Restored\' status</string>
     <string name="save_and_new">Save&amp;New</string>
-    <string name="show_picture">Show \'Take picture\'</string>
-    <string name="show_picture_summary">Show \'Take picture\' box</string>
     <string name="payees">Payees</string>
     <string name="report_by_payee">By Payee</string>
     <string name="report_by_payee_summary">Transactions report by payee</string>
