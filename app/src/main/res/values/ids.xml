@@ -76,7 +76,6 @@
     <item name="attach_picture" type="id" />
     <item name="delete_picture" type="id" />
     <item name="negative_opening_amount" type="id" />
-    <item name="is_ccard_payment" type="id" />
     <item name="add_split" type="id" />
     <item name="edit_aplit" type="id" />
     <item name="delete_split" type="id" />

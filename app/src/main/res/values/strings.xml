@@ -575,8 +575,6 @@
 
     <string name="closing_day_error">Closing day is not valid.</string>
     <string name="payment_day_error">Payment day is not valid.</string>
-    <string name="is_ccard_payment">Credit Card Payment</string>
-    <string name="is_ccard_payment_summary">Not Include into bill total</string>
     <string name="ui_language">Locale</string>
     <string name="ui_language_summary">Set language of user interface (requires restart!)</string>
 
@@ -820,8 +818,6 @@
 
     <string name="file_import_utf8_warning">Please make sure that the file is in UTF-8</string>
 
-    <string name="show_is_ccard_payment">Show \'Credit Card Payment\'</string>
-    <string name="show_is_ccard_payment_summary">Show checkbox to mark credit card payments</string>
     <string name="open_calculator_for_template_transactions">Open Calculator</string>
     <string name="open_calculator_for_template_transactions_summary">Open Calculator for transactions created from template</string>
 
@@ -853,29 +849,8 @@
 
     <string name="show_payee_in_transfer">Transfer Payee</string>
     <string name="show_payee_in_transfer_summary">Show payee field in New Transfer screen</string>
-    <string name="google_drive_backup_account">Backup account</string>
-    <string name="google_drive_backup_account_summary">Choose your Google Drive account</string>
-    <string name="google_drive_permission_requested">Permission requested</string>
-    <string name="google_drive_permission_requested_for_account">for account %s</string>
-    <string name="google_drive_permission_required">Please authorize Financisto to access your Google Drive then try again…</string>
-    <string name="google_drive_loading_files">Loading files from Google Drive…</string>
-    <string name="google_drive_account_required">Please specify your Google Drive account in the Preferences then try again…</string>
-    <string name="google_drive_backup_success">Backup success on Google Drive: %s</string>
-    <string name="google_drive_restore_in_progress">Restoring database from Google Drive…</string>
-    <string name="google_drive_connection_resolved">Connection resolved. Please try the last operation again…</string>
-    <string name="google_drive_connection_failed">Unable to connect to Google Drive:\n%s</string>
-    <string name="google_drive_account_select_error">Unable to select a Google account to use. Looks like your device does not support Google Play Services.</string>
-    <string name="google_drive_backup_full_readonly">Full read-only access</string>
-    <string name="google_drive_backup_full_readonly_summary">Allows read-only access to all files on your Google Drive.</string>
-    <string name="google_drive_uploading_file">Uploading file to Google Drive…</string>
-    <string name="google_drive_upload_backup">Upload Backups</string>
-    <string name="google_drive_upload_backup_summary">Upload database backups to Google Drive</string>
-    <string name="google_drive_upload_autobackup">Upload Auto-backups</string>
-    <string name="google_drive_upload_autobackup_summary">Upload database auto-backups to Google Drive</string>
 
     <string name="backup_restore_database_online">Backup/Restore Online</string>
-    <string name="backup_database_online_google_drive">Google Drive Backup</string>
-    <string name="restore_database_online_google_drive">Google Drive Restore</string>
     <string name="backup_database_online_dropbox">Dropbox Backup</string>
     <string name="restore_database_online_dropbox">Dropbox Restore</string>
     <string name="backup_database_dropbox_inprogress">Backing up database…</string>
@@ -903,8 +878,6 @@
     <string name="scheduled_transactions_summary">Schedule transactions and transfers</string>
     <string name="backup_database_summary">Backup database to the local storage</string>
     <string name="restore_database_summary">Restore database from the local storage</string>
-    <string name="backup_database_online_google_drive_summary">Backup database to Google Drive</string>
-    <string name="restore_database_online_google_drive_summary">Restore database from Google Drive</string>
     <string name="backup_database_online_dropbox_summary">Backup database to Dropbox</string>
     <string name="restore_database_online_dropbox_summary">Restore database from Dropbox</string>
     <string name="backup_database_to_summary">Send database backup to email, etc</string>

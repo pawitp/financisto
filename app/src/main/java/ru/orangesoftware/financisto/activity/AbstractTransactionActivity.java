@@ -69,8 +69,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
     protected TextView recurText;
     protected TextView notificationText;
 
-    private CheckBox ccardPayment;
-
     protected Account selectedAccount;
 
     protected String recurrence;
@@ -87,7 +85,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
     protected boolean isRememberLastCategory;
     protected boolean isRememberLastProject;
     protected boolean isShowNote;
-    protected boolean isShowIsCCardPayment;
     protected boolean isOpenCalculatorForTemplates;
 
     protected AttributeView deleteAfterExpired;
@@ -121,7 +118,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
         isRememberLastCategory = isRememberLastAccount && MyPreferences.isRememberCategory(this);
         isRememberLastProject = isRememberLastCategory && MyPreferences.isRememberProject(this);
         isShowNote = MyPreferences.isShowNote(this);
-        isShowIsCCardPayment = MyPreferences.isShowIsCCardPayment(this);
         isOpenCalculatorForTemplates = MyPreferences.isOpenCalculatorForTemplates(this);
 
         categorySelector = new CategorySelector<>(this, db, x);
@@ -337,12 +333,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
                 projectSelector.createNode(layout);
             }
         }
-        if (isShowIsCCardPayment) {
-            // checkbox to register if the transaction is a credit card payment.
-            // this will be used to exclude from totals in bill preview
-            ccardPayment = x.addCheckboxNode(layout, R.id.is_ccard_payment,
-                    R.string.is_ccard_payment, R.string.is_ccard_payment_summary, false);
-        }
     }
 
     protected abstract void createListNodes(LinearLayout layout);
@@ -370,10 +360,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
                 intent.putExtra(NotificationOptionsActivity.NOTIFICATION_OPTIONS, notificationOptions);
                 startActivityForResult(intent, NOTIFICATION_REQUEST);
                 break;
-            }
-            case R.id.is_ccard_payment: {
-                ccardPayment.setChecked(!ccardPayment.isChecked());
-                transaction.isCCardPayment = ccardPayment.isChecked() ? 1 : 0;
             }
         }
     }
@@ -515,18 +501,10 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
             setRecurrence(transaction.recurrence);
             setNotification(transaction.notificationOptions);
         }
-        if (isShowIsCCardPayment) {
-            setIsCCardPayment(transaction.isCCardPayment);
-        }
 
         if (transaction.isCreatedFromTemlate() && isOpenCalculatorForTemplates) {
             rateView.openFromAmountCalculator();
         }
-    }
-
-    private void setIsCCardPayment(int isCCardPaymentValue) {
-        transaction.isCCardPayment = isCCardPaymentValue;
-        ccardPayment.setChecked(isCCardPaymentValue == 1);
     }
 
     protected boolean checkSelectedEntities() {

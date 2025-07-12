@@ -162,11 +162,6 @@
                     android:title="@string/show_project_order" />
                 <CheckBoxPreference
                     android:defaultValue="true"
-                    android:key="ntsl_show_is_ccard_payment"
-                    android:summary="@string/show_is_ccard_payment_summary"
-                    android:title="@string/show_is_ccard_payment" />
-                <CheckBoxPreference
-                    android:defaultValue="true"
                     android:key="ntsl_show_category_in_transfer"
                     android:summary="@string/show_category_in_transfer_summary"
                     android:title="@string/show_category_in_transfer" />

@@ -215,11 +215,6 @@ public class MyPreferences {
         return Integer.parseInt(sharedPreferences.getString("ntsl_show_payee_order", "1"));
     }
 
-    public static boolean isShowIsCCardPayment(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getBoolean("ntsl_show_is_ccard_payment", true);
-    }
-
     public static boolean isOpenCalculatorForTemplates(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean("ntsl_open_calculator_for_template_transactions", true);
