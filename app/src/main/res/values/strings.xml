@@ -726,10 +726,6 @@
     <string name="request_permissions_not_granted">Permission NOT granted</string>
     <string name="privacy_policy">Privacy Policy</string>
 
-    <string name="show_menu_button_on_accounts_screen">Show Menu</string>
-    <string name="show_menu_button_on_accounts_screen_summary">Show menu button on the Accounts screen</string>
-    <string name="go_to_menu_tab">Go to Menu</string>
-
     <string name="card_issuer_default">Default</string>
     <string name="card_issuer_mir">Mir</string>
     <string name="electronic_payment_type">Payment type</string>
