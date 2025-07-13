@@ -525,9 +525,9 @@ public class DatabaseAdapter extends MyEntityManager {
 
     private void updateRunningBalance(Transaction oldTransaction, Transaction newTransaction) {
         deleteRunningBalance(oldTransaction.fromAccountId, oldTransaction.id, oldTransaction.fromAmount, oldTransaction.dateTime);
+        deleteRunningBalance(oldTransaction.toAccountId, oldTransaction.id, oldTransaction.toAmount, oldTransaction.dateTime);
         insertRunningBalance(newTransaction.fromAccountId, newTransaction.id, newTransaction.dateTime,
                 newTransaction.fromAmount, newTransaction.fromAmount);
-        deleteRunningBalance(oldTransaction.toAccountId, oldTransaction.id, oldTransaction.toAmount, oldTransaction.dateTime);
         insertRunningBalance(newTransaction.toAccountId, newTransaction.id, newTransaction.dateTime,
                 newTransaction.toAmount, newTransaction.toAmount);
     }
