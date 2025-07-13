@@ -176,7 +176,7 @@ public class MainActivity extends TabActivity implements TabHost.OnTabChangeList
     private void setupMenuTab(TabHost tabHost) {
         tabHost.addTab(tabHost.newTabSpec("menu")
                 .setIndicator(getString(R.string.menu), getResources().getDrawable(R.drawable.ic_tab_menu))
-                .setContent(new Intent(this, MenuListActivity_.class)));
+                .setContent(new Intent(this, MenuListActivity.class)));
     }
 
 }

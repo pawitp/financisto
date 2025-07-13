@@ -16,6 +16,7 @@ import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import org.greenrobot.eventbus.Subscribe;
@@ -28,26 +29,46 @@ import ru.orangesoftware.financisto.export.dropbox.DropboxFileList;
 import ru.orangesoftware.financisto.export.dropbox.DropboxBackupTask;
 import ru.orangesoftware.financisto.export.dropbox.DropboxListFilesTask;
 import ru.orangesoftware.financisto.export.dropbox.DropboxRestoreTask;
+
+import static ru.orangesoftware.financisto.activity.MenuListItem.ACTIVITY_CHANGE_PREFERENCES;
+import static ru.orangesoftware.financisto.activity.MenuListItem.ACTIVITY_CSV_EXPORT;
 import static ru.orangesoftware.financisto.service.DailyAutoBackupScheduler.scheduleNextAutoBackup;
 
 import ru.orangesoftware.financisto.utils.MyPreferences;
 
 public class MenuListActivity extends ListActivity {
 
-    GreenRobotBus bus;
+    private GreenRobotBus bus;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.bus = GreenRobotBus.getInstance();
+        setContentView(R.layout.activity_menu_list);
+        setListAdapter(new SummaryEntityListAdapter(this, MenuListItem.values()));
+    }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(MyPreferences.switchLocale(base));
     }
 
-    protected void init() {
-        setListAdapter(new SummaryEntityListAdapter(this, MenuListItem.values()));
-    }
-
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         MenuListItem.values()[position].call(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case ACTIVITY_CSV_EXPORT:
+                onCsvExportResult(resultCode, data);
+                break;
+            case ACTIVITY_CHANGE_PREFERENCES:
+                onChangePreferences();
+                break;
+        }
     }
 
     public void onCsvExportResult(int resultCode, Intent data) {
