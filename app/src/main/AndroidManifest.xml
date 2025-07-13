@@ -10,7 +10,6 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="ru.orangesoftware.financisto"
     android:installLocation="internalOnly">
 
     <supports-screens
