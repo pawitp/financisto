@@ -70,7 +70,7 @@ public class RateNode {
         bCalc.setOnClickListener(v -> {
             Activity activity = owner.getActivity();
 
-            CalculatorInput input = CalculatorInput_.builder().amount(String.valueOf(getRate())).build();
+            CalculatorInput input = CalculatorInput.newInstance(String.valueOf(getRate()));
             input.setListener(amount -> {
                 try {
                     setRate(Float.parseFloat(amount));

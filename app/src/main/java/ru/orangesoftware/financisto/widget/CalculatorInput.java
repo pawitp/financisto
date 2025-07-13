@@ -2,25 +2,35 @@ package ru.orangesoftware.financisto.widget;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
 import androidx.core.content.ContextCompat;
+
+import android.os.VibratorManager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
 import ru.orangesoftware.financisto.R;
+import ru.orangesoftware.financisto.databinding.CalculatorBinding;
 import ru.orangesoftware.financisto.utils.MyPreferences;
 import ru.orangesoftware.financisto.utils.StringUtil;
 import ru.orangesoftware.financisto.utils.Utils;
 
 public class CalculatorInput extends DialogFragment {
 
+    public static final String AMOUNT_ARG = "amount";
+
+    private CalculatorBinding binding;
     protected TextView tvResult;
 
     protected TextView tvOp;
@@ -43,6 +53,47 @@ public class CalculatorInput extends DialogFragment {
     }
 
     public void init() {
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+    }
+
+    private void initViews() {
+        tvResult = binding.result;
+        tvOp = binding.op;
+        
+        buttons = new ArrayList<>();
+        buttons.add(binding.b0);
+        buttons.add(binding.b1);
+        buttons.add(binding.b2);
+        buttons.add(binding.b3);
+        buttons.add(binding.b4);
+        buttons.add(binding.b5);
+        buttons.add(binding.b6);
+        buttons.add(binding.b7);
+        buttons.add(binding.b8);
+        buttons.add(binding.b9);
+        buttons.add(binding.bAdd);
+        buttons.add(binding.bSubtract);
+        buttons.add(binding.bDivide);
+        buttons.add(binding.bMultiply);
+        buttons.add(binding.bPercent);
+        buttons.add(binding.bPlusMinus);
+        buttons.add(binding.bDot);
+        buttons.add(binding.bResult);
+        buttons.add(binding.bClear);
+        buttons.add(binding.bDelete);
+        
+        for (Button button : buttons) {
+            button.setOnClickListener(this::onButtonClick);
+        }
+        
+        View bOK = binding.getRoot().findViewById(R.id.bOK);
+        View bCancel = binding.getRoot().findViewById(R.id.bCancel);
+        if (bOK != null) {
+            bOK.setOnClickListener(v -> onOk());
+        }
+        if (bCancel != null) {
+            bCancel.setOnClickListener(v -> onCancel());
+        }
     }
 
     public void initUi() {
@@ -50,6 +101,38 @@ public class CalculatorInput extends DialogFragment {
         int bgColor = ContextCompat.getColor(getActivity(), bgColorResource);
         getView().setBackgroundColor(bgColor);
         setDisplay(amount);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(AMOUNT_ARG)) {
+            amount = args.getString(AMOUNT_ARG);
+        }
+        init();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = CalculatorBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initViews();
+        initUi();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+        tvResult = null;
+        tvOp = null;
+        buttons = null;
     }
 
     @Override
@@ -234,6 +317,16 @@ public class CalculatorInput extends DialogFragment {
         }
         doLastOp();
         tvOp.setText("");
+    }
+
+    public static CalculatorInput newInstance(String amount) {
+        CalculatorInput fragment = new CalculatorInput();
+        Bundle args = new Bundle();
+        if (amount != null) {
+            args.putString(AMOUNT_ARG, amount);
+        }
+        fragment.setArguments(args);
+        return fragment;
     }
 
 }
