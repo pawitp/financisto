@@ -1,9 +1,7 @@
 package ru.orangesoftware.financisto.bus;
 
-import org.androidannotations.annotations.EBean;
 import org.greenrobot.eventbus.EventBus;
 
-@EBean(scope = EBean.Scope.Singleton)
 public class GreenRobotBus {
 
     public final EventBus bus = new EventBus();

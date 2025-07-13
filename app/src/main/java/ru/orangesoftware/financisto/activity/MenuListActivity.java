@@ -18,10 +18,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ListView;
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.OnActivityResult;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import ru.orangesoftware.financisto.R;
@@ -36,10 +32,8 @@ import static ru.orangesoftware.financisto.service.DailyAutoBackupScheduler.sche
 
 import ru.orangesoftware.financisto.utils.MyPreferences;
 
-@EActivity(R.layout.activity_menu_list)
 public class MenuListActivity extends ListActivity {
 
-    @Bean
     GreenRobotBus bus;
 
     @Override
@@ -47,7 +41,6 @@ public class MenuListActivity extends ListActivity {
         super.attachBaseContext(MyPreferences.switchLocale(base));
     }
 
-    @AfterViews
     protected void init() {
         setListAdapter(new SummaryEntityListAdapter(this, MenuListItem.values()));
     }
@@ -57,7 +50,6 @@ public class MenuListActivity extends ListActivity {
         MenuListItem.values()[position].call(this);
     }
 
-    @OnActivityResult(MenuListItem.ACTIVITY_CSV_EXPORT)
     public void onCsvExportResult(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             CsvExportOptions options = CsvExportOptions.fromIntent(data);
@@ -65,7 +57,6 @@ public class MenuListActivity extends ListActivity {
         }
     }
 
-    @OnActivityResult(MenuListItem.ACTIVITY_CHANGE_PREFERENCES)
     public void onChangePreferences() {
         scheduleNextAutoBackup(this);
     }

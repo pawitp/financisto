@@ -17,7 +17,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
-import org.androidannotations.annotations.EBean;
 import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.blotter.BlotterFilter;
 import ru.orangesoftware.financisto.datetime.DateUtils;
@@ -34,10 +33,8 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import static ru.orangesoftware.financisto.db.DatabaseHelper.*;
-import static ru.orangesoftware.financisto.db.DatabaseHelper.SmsTemplateColumns.*;
 import static ru.orangesoftware.financisto.utils.StringUtil.generateQueryPlaceholders;
 
-@EBean(scope = EBean.Scope.Singleton)
 public class DatabaseAdapter extends MyEntityManager {
 
     private boolean updateAccountBalance = true;

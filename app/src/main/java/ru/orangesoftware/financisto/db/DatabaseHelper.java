@@ -11,12 +11,10 @@
 package ru.orangesoftware.financisto.db;
 
 import android.content.Context;
-import org.androidannotations.annotations.EBean;
 import ru.orangesoftware.financisto.utils.EnumUtils;
 import static ru.orangesoftware.financisto.utils.EnumUtils.asStringArray;
 import static ru.orangesoftware.orb.EntityManager.DEF_SORT_COL;
 
-@EBean(scope = EBean.Scope.Singleton)
 public class DatabaseHelper extends DatabaseSchemaEvolution {
 
     public DatabaseHelper(Context context) {
