@@ -9,7 +9,6 @@ import ru.orangesoftware.financisto.model.Category;
 import ru.orangesoftware.financisto.model.Currency;
 import ru.orangesoftware.financisto.model.TransactionAttribute;
 import ru.orangesoftware.financisto.widget.AmountInput;
-import ru.orangesoftware.financisto.widget.AmountInput_;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +31,7 @@ public class SplitTransactionActivity extends AbstractSplitActivity implements C
     protected void createUI(LinearLayout layout) {
         categorySelector.createNode(layout, SPLIT);
 
-        amountInput = AmountInput_.build(this);
+        amountInput = AmountInput.build(this);
         amountInput.setOwner(this);
         amountInput.setOnAmountChangedListener((oldAmount, newAmount) -> setUnsplitAmount(split.unsplitAmount - newAmount));
         View v = x.addEditNode(layout, R.string.amount, amountInput);

@@ -12,6 +12,7 @@ package ru.orangesoftware.financisto.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
@@ -28,11 +29,13 @@ import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.core.content.ContextCompat;
 
 import java.math.BigDecimal;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ru.orangesoftware.financisto.R;
+import ru.orangesoftware.financisto.databinding.AmountInputBinding;
 import ru.orangesoftware.financisto.model.Currency;
 import ru.orangesoftware.financisto.utils.MyPreferences;
 import ru.orangesoftware.financisto.utils.Utils;
@@ -47,7 +50,6 @@ public class AmountInput extends LinearLayout implements AmountListener {
 
     protected Activity owner;
     private Currency currency;
-    private int decimals;
 
     protected ImageSwitcher signSwitcher;
     protected EditText primary;
@@ -66,12 +68,9 @@ public class AmountInput extends LinearLayout implements AmountListener {
     private boolean incomeExpenseEnabled = true;
     private boolean isExpense = true;
 
-    protected AmountInput(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
     protected AmountInput(Context context) {
         super(context);
+        initResources();
     }
 
     public void disableIncomeExpenseButton() {
@@ -269,10 +268,6 @@ public class AmountInput extends LinearLayout implements AmountListener {
         return currency;
     }
 
-    public int getDecimals() {
-        return decimals;
-    }
-
     public void setCurrency(Currency currency) {
         this.currency = currency;
     }
@@ -348,6 +343,41 @@ public class AmountInput extends LinearLayout implements AmountListener {
             }
         } catch (NumberFormatException ignored) {
         }
+    }
+
+    private void initResources() {
+        Resources resources = getContext().getResources();
+        this.minHeight = resources.getDimensionPixelSize(R.dimen.select_entry_height_no_label);
+        this.plusDrawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_action_add);
+        this.minusDrawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_action_minus);
+        this.plusColor = ContextCompat.getColor(getContext(), R.color.positive_amount);
+        this.minusColor = ContextCompat.getColor(getContext(), R.color.negative_amount);
+    }
+
+    @Override
+    public void onFinishInflate() {
+        super.onFinishInflate();
+
+        inflate(getContext(), R.layout.amount_input, this);
+        initViews();
+    }
+
+    private void initViews() {
+        AmountInputBinding binding = AmountInputBinding.bind(this);;
+        this.signSwitcher = binding.signSwitcher;
+        this.primary = binding.primary;
+        this.delimiter = binding.delimiter;
+        this.secondary = binding.secondary;
+
+        binding.calculator.setOnClickListener(v -> onClickCalculator());
+        binding.signSwitcher.setOnClickListener(v -> onClickSignSwitcher());
+        initialize();
+    }
+
+    public static AmountInput build(Context context) {
+        AmountInput instance = new AmountInput(context);
+        instance.onFinishInflate();
+        return instance;
     }
 
 }

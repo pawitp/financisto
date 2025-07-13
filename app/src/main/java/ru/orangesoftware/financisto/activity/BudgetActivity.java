@@ -14,7 +14,6 @@ import ru.orangesoftware.financisto.model.MultiChoiceItem;
 import ru.orangesoftware.financisto.utils.RecurUtils;
 import ru.orangesoftware.financisto.utils.RecurUtils.Recur;
 import ru.orangesoftware.financisto.widget.AmountInput;
-import ru.orangesoftware.financisto.widget.AmountInput_;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +85,7 @@ public class BudgetActivity extends AbstractActivity {
                 R.id.type, R.string.budget_type_saving,
                 R.string.budget_type_saving_summary, true);
 
-        amountInput = AmountInput_.build(this);
+        amountInput = AmountInput.build(this);
         amountInput.setOwner(this);
         amountInput.setIncome();
         amountInput.disableIncomeExpenseButton();
