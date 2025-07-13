@@ -207,11 +207,6 @@ public class AmountInput extends LinearLayout implements AmountListener {
         openCalculator();
     }
 
-    @Click(R.id.amount_input)
-    protected void onClickUpDown() {
-        openQuickInput();
-    }
-
     @Click(R.id.signSwitcher)
     protected void onClickSignSwitcher() {
         if (isExpense) {
@@ -359,12 +354,6 @@ public class AmountInput extends LinearLayout implements AmountListener {
         CalculatorInput input = CalculatorInput_.builder().amount(getAbsAmountString()).build();
         input.setListener(this);
         input.show(owner.getFragmentManager(), "calculator");
-    }
-
-    private void openQuickInput() {
-        QuickAmountInput input = QuickAmountInput_.builder().amount(getAmount()).build();
-        input.setListener(this);
-        input.show(owner.getFragmentManager(), "quick");
     }
 
     @Override
