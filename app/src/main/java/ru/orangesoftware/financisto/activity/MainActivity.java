@@ -27,7 +27,6 @@ import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.bus.GreenRobotBus;
 import ru.orangesoftware.financisto.bus.GreenRobotBus_;
 import ru.orangesoftware.financisto.bus.RefreshCurrentTab;
-import ru.orangesoftware.financisto.bus.SwitchToMenuTabEvent;
 import ru.orangesoftware.financisto.db.DatabaseAdapter;
 import ru.orangesoftware.financisto.db.DatabaseHelper;
 import ru.orangesoftware.financisto.dialog.WebViewDialog;
@@ -65,11 +64,6 @@ public class MainActivity extends TabActivity implements TabHost.OnTabChangeList
         MyPreferences.StartupScreen screen = MyPreferences.getStartupScreen(this);
         tabHost.setCurrentTabByTag(screen.tag);
         tabHost.setOnTabChangedListener(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onSwitchToMenuTab(SwitchToMenuTabEvent event) {
-        getTabHost().setCurrentTabByTag("menu");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

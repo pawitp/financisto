@@ -33,8 +33,6 @@ import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.adapter.AccountListAdapter2;
 import ru.orangesoftware.financisto.blotter.BlotterFilter;
 import ru.orangesoftware.financisto.blotter.TotalCalculationTask;
-import ru.orangesoftware.financisto.bus.GreenRobotBus_;
-import ru.orangesoftware.financisto.bus.SwitchToMenuTabEvent;
 import ru.orangesoftware.financisto.db.DatabaseAdapter;
 import ru.orangesoftware.financisto.dialog.AccountInfoDialog;
 import ru.orangesoftware.financisto.filter.Criteria;

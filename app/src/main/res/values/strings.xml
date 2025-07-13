@@ -750,8 +750,6 @@
     <string name="open_calculator_for_template_transactions">Open Calculator</string>
     <string name="open_calculator_for_template_transactions_summary">Open Calculator for transactions created from template</string>
 
-    <string name="installed_on_sd_card_warning">Scheduled transactions might NOT work as expected when Financisto installed on SD card. Please move it to phone memory.</string>
-
     <string name="period_tomorrow">Tomorrow</string>
     <string name="period_next_week">Next week</string>
     <string name="period_this_and_next_week">This and next week</string>

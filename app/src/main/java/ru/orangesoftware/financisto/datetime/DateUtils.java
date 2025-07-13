@@ -20,10 +20,8 @@ import android.provider.Settings;
 
 public class DateUtils {
 
-	public static final DateFormat FORMAT_TIMESTAMP_ISO_8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	public static final DateFormat FORMAT_DATE_ISO_8601 = new SimpleDateFormat("yyyy-MM-dd");
 	public static final DateFormat FORMAT_TIME_ISO_8601 = new SimpleDateFormat("HH:mm:ss");
-	public static final DateFormat FORMAT_DATE_RFC_2445 = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
 
     public static Period getPeriod(PeriodType period) {
         return period.calculatePeriod();
@@ -75,20 +73,11 @@ public class DateUtils {
 		return android.text.format.DateFormat.getLongDateFormat(context);
 	}
 
-	public static DateFormat getMediumDateFormat(Context context) {
-		return android.text.format.DateFormat.getMediumDateFormat(context);
-	}
-
 	public static DateFormat getTimeFormat(Context context) {
 		return android.text.format.DateFormat.getTimeFormat(context);
 	}
 
 	public static boolean is24HourFormat(Context context) {
 		return "24".equals(Settings.System.getString(context.getContentResolver(), Settings.System.TIME_12_24));
-	}
-
-	public static void zeroSeconds(Calendar dateTime) {
-		dateTime.set(Calendar.SECOND, 0);
-		dateTime.set(Calendar.MILLISECOND, 0);
 	}
 }
