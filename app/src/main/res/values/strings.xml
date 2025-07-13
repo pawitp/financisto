@@ -264,27 +264,13 @@
     <string name="restore">Restore</string>
     <string name="backup_database">Backup Database</string>
     <string name="backup_database_inprogress">Backing up database…</string>
-    <string name="backup_database_gdocs">Backup on Google Drive</string>
-    <string name="backup_database_gdocs_inprogress">Backing up database…</string>
     <string name="csv_export">CSV Export</string>
     <string name="csv_export_summary">Export database to CSV</string>
     <string name="csv_export_inprogress">Exporting database to CSV…</string>
     <string name="restore_database">Restore Database</string>
     <string name="restore_database_inprogress">Restoring database…</string>
-    <string name="restore_database_gdocs">Restore from Google Drive</string>
-    <string name="restore_database_inprogress_gdocs">Restoring database…</string>
     <string name="restore_database_inprogress_dropbox">Restoring database…</string>
     <string name="restore_database_success">Database has been successfully restored.</string>
-    <string name="gdocs_connection_failed">Can not connect to Google Drive.</string>
-    <string name="gdocs_folder_not_found">The backup folder on Google Drive was not found.</string>
-    <string name="gdocs_credentials_not_configured">Please set Google account login and password in the preferences.</string>
-    <string name="gdocs_folder_not_configured">Please set the Google Drive backup folder in the preferences.</string>
-    <string name="gdocs_backup_failed">Error sending backup file to Google Drive. Please try again.</string>
-    <string name="gdocs_restore_failed">Error retrieving backup file. Please try again.</string>
-
-    <string name="gdocs_folder_error">Error accessing the folder in Google Drive.</string>
-    <string name="gdocs_service_error">Unexpected error while working with Google Drive.</string>
-    <string name="gdocs_io_error">Error connecting with Google Drive.</string>
 
     <string name="success">Success! %s</string>
     <string name="fail">Fail…</string>
@@ -381,7 +367,6 @@
     <string name="calculating">Calculating…</string>
     <string name="budget_mode">Ease conditions</string>
     <string name="budget_mode_summary">Use less restrictive conditions (category OR project) to filter transactions</string>
-    <string name="gdocs_backup">Google Drive Backup</string>
     <string name="user_login">Login</string>
     <string name="user_login_summary">Google account login (username)</string>
     <string name="user_password">Password</string>
