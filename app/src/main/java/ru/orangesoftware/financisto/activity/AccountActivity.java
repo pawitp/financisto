@@ -244,7 +244,6 @@ public class AccountActivity extends AbstractActivity {
                 t.fromAmount = amount;
                 db.insertOrUpdate(t, null);
             }
-            AccountWidget.updateWidgets(this);
             Intent intent1 = new Intent();
             intent1.putExtra(ACCOUNT_ID_EXTRA, accountId);
             setResult(RESULT_OK, intent1);

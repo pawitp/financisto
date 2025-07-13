@@ -44,42 +44,6 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-        <receiver
-            android:name=".activity.AccountWidget"
-            android:label="@string/widget_2x1">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name=".UPDATE_WIDGET" />
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_2x1" />
-        </receiver>
-
-        <receiver
-            android:name=".activity.AccountWidget3x1"
-            android:label="@string/widget_3x1">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name=".UPDATE_WIDGET" />
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_3x1" />
-        </receiver>
-
-        <receiver
-            android:name=".activity.AccountWidget4x1"
-            android:label="@string/widget_4x1">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name=".UPDATE_WIDGET" />
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_4x1" />
-        </receiver>
-
         <receiver android:name=".activity.ScheduledAlarmReceiver">
             <intent-filter>
                 <action android:name=".SCHEDULED_BACKUP" />

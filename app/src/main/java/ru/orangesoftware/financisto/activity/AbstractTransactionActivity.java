@@ -275,7 +275,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
             if (isNew) {
                 MyPreferences.setLastAccount(this, transaction.fromAccountId);
             }
-            AccountWidget.updateWidgets(this);
             return id;
         }
         return -1;

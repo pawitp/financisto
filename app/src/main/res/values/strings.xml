@@ -497,8 +497,6 @@
     <string name="no_transaction_found">No transaction found, please restart Financisto…</string>
     <string name="include_credit">Include credits</string>
     <string name="include_credit_summary">Include credits (income or returns) into budget total</string>
-    <string name="enable_widget">Enable widget</string>
-    <string name="enable_widget_summary">Show account total on the widget</string>
     <string name="attach_picture">Attach picture</string>
     <string name="new_picture">Take a picture</string>
 

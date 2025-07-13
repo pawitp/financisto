@@ -353,7 +353,6 @@ public class BlotterActivity extends AbstractListActivity {
         }
         Toast.makeText(this, toastText, Toast.LENGTH_LONG).show();
         recreateCursor();
-        AccountWidget.updateWidgets(BlotterActivity.this);
         return newId;
     }
 
@@ -405,7 +404,6 @@ public class BlotterActivity extends AbstractListActivity {
 
     protected void afterDeletingTransaction(long id) {
         recreateCursor();
-        AccountWidget.updateWidgets(this);
     }
 
     @Override

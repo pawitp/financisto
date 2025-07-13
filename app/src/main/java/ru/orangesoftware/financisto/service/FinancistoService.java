@@ -10,24 +10,17 @@
  ******************************************************************************/
 package ru.orangesoftware.financisto.service;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import static android.app.PendingIntent.FLAG_CANCEL_CURRENT;
 import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
-import androidx.core.app.NotificationCompat;
+
 import android.util.Log;
 import java.util.Date;
 
-import ru.orangesoftware.financisto.activity.AbstractTransactionActivity;
-import ru.orangesoftware.financisto.activity.AccountWidget;
 import ru.orangesoftware.financisto.backup.DatabaseExport;
 import ru.orangesoftware.financisto.db.DatabaseAdapter;
 import ru.orangesoftware.financisto.export.Export;
-import ru.orangesoftware.financisto.model.TransactionInfo;
 
 import static ru.orangesoftware.financisto.service.DailyAutoBackupScheduler.scheduleNextAutoBackup;
 import ru.orangesoftware.financisto.utils.MyPreferences;
