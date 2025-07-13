@@ -36,7 +36,6 @@ import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.datetime.DateUtils;
 import ru.orangesoftware.financisto.utils.LocalizableEnum;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
 import ru.orangesoftware.financisto.utils.RecurUtils;
 import ru.orangesoftware.financisto.utils.RecurUtils.DayOfWeek;
 import ru.orangesoftware.financisto.utils.RecurUtils.EveryXDay;
@@ -428,15 +427,4 @@ public class RecurActivity extends Activity {
         return selected;
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        PinProtection.lock(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        PinProtection.unlock(this);
-    }
 }

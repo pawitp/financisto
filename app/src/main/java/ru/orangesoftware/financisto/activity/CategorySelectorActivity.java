@@ -38,7 +38,6 @@ public class CategorySelectorActivity extends AbstractListActivity {
 
     public CategorySelectorActivity() {
         super(R.layout.category_selector);
-        enablePin = false;
     }
 
     @Override

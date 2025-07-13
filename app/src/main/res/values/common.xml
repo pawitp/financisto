@@ -30,8 +30,6 @@
 	<dimen name="picker_width">62dp</dimen>
 	<dimen name="calculator_button_width">56dp</dimen>
 	<dimen name="calculator_button_height">56dp</dimen>
-	<dimen name="pin_button_width">70dp</dimen>
-	<dimen name="pin_button_height">70dp</dimen>
 	<dimen name="select_entry_height">51dp</dimen>
 	<dimen name="select_entry_height_no_label">45dp</dimen>
 	<dimen name="title_entry_height">25dp</dimen>
@@ -168,15 +166,6 @@
 	<string name="recur_rrule" translatable="false">RFC-2445 RRULE</string>
 	<dimen name="category_padding">10dp</dimen>
     <dimen name="transaction_icon_padding">10dp</dimen>
-
-    <string-array name="lock_time_values">
-        <item>0</item>
-        <item>1</item>
-        <item>3</item>
-        <item>5</item>
-        <item>10</item>
-        <item>15</item>
-    </string-array>
 
     <string-array name="date_format_values">
         <item>dd/MM/yyyy</item>

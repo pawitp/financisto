@@ -32,7 +32,6 @@ import ru.orangesoftware.financisto.db.DatabaseHelper;
 import ru.orangesoftware.financisto.dialog.WebViewDialog;
 import ru.orangesoftware.financisto.utils.CurrencyCache;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
 
 public class MainActivity extends TabActivity implements TabHost.OnTabChangeListener {
 
@@ -75,23 +74,18 @@ public class MainActivity extends TabActivity implements TabHost.OnTabChangeList
     protected void onResume() {
         super.onResume();
         greenRobotBus.register(this);
-        PinProtection.unlock(this);
-        if (PinProtection.isUnlocked()) {
-            WebViewDialog.checkVersionAndShowWhatsNewIfNeeded(this);
-        }
+        WebViewDialog.checkVersionAndShowWhatsNewIfNeeded(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         greenRobotBus.unregister(this);
-        PinProtection.lock(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        PinProtection.immediateLock(this);
     }
 
     private void initialLoad() {

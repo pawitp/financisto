@@ -22,7 +22,6 @@ import ru.orangesoftware.financisto.filter.WhereFilter;
 import ru.orangesoftware.financisto.filter.DateTimeCriteria;
 import ru.orangesoftware.financisto.datetime.DateUtils;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
 import ru.orangesoftware.financisto.datetime.Period;
 import ru.orangesoftware.financisto.datetime.PeriodType;
 
@@ -139,16 +138,4 @@ public abstract class AbstractExportActivity extends Activity {
 			updatePeriod();
 		}
 	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		PinProtection.lock(this);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		PinProtection.unlock(this);
-	}	
 }

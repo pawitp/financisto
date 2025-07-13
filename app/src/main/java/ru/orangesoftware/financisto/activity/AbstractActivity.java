@@ -22,7 +22,6 @@ import java.util.List;
 import ru.orangesoftware.financisto.db.DatabaseAdapter;
 import ru.orangesoftware.financisto.model.MultiChoiceItem;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
 import ru.orangesoftware.financisto.view.NodeInflater;
 
 public abstract class AbstractActivity extends Activity implements ActivityLayoutListener {
@@ -46,26 +45,6 @@ public abstract class AbstractActivity extends Activity implements ActivityLayou
 		db = new DatabaseAdapter(this);
 		db.open();
 	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-        if (shouldLock()) {
-		    PinProtection.lock(this);
-        }
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-        if (shouldLock()) {
-		    PinProtection.unlock(this);
-        }
-	}
-
-    protected boolean shouldLock() {
-        return true;
-    }
 
 	@Override
 	public void onClick(View v) {

@@ -261,15 +261,6 @@
         <item>Newer to Older</item>
         <item>Older to Newer</item>
     </string-array>
-    <string name="more_products">More products…</string>
-    <string name="pin_protection">PIN Protection</string>
-    <string name="pin_protection_summary">Check to protect access with PIN</string>
-    <string name="pin_protection_notify">Please set PIN in Preferences</string>
-    <string name="change_pin">Change PIN</string>
-    <string name="change_pin_summary">Change the PIN number</string>
-    <string name="pin">PIN</string>
-    <string name="set_pin">Set PIN</string>
-    <string name="confirm_pin">Confirm PIN</string>
     <string name="restore">Restore</string>
     <string name="backup_database">Backup Database</string>
     <string name="backup_database_inprogress">Backing up database…</string>
@@ -311,7 +302,6 @@
     <string name="no_project">No project</string>
     <string name="no_period">No period</string>
     <string name="current_location">Current location</string>
-    <string name="protection">Protection</string>
     <string name="transaction_screen">New transaction screen</string>
     <string name="transaction_screen_summary">Preferences for new transaction/transfer screen</string>
     <string name="screen_layout">Screen layout</string>
@@ -525,7 +515,6 @@
     <string name="ui_language">Locale</string>
     <string name="ui_language_summary">Set language of user interface (requires restart!)</string>
 
-    <string name="enter_pin">Enter PIN</string>
     <string name="account_type_paypal">PayPal</string>
     <string name="entities">Entities</string>
     <string name="transaction_status_restored">Restored</string>
@@ -551,20 +540,8 @@
     <string name="show_running_balance_summary">Show account running balance in the blotter (requires restart)</string>
 
     <string name="new_currency">New currency…</string>
-    <string name="lock_time">Lock time</string>
-    <string name="lock_time_summary">Time to keep main screen active before locking it off</string>
-    <string-array name="lock_time_entities">
-        <item>Off</item>
-        <item>1 minute</item>
-        <item>3 minutes</item>
-        <item>5 minutes</item>
-        <item>10 minutes</item>
-        <item>15 minutes</item>
-    </string-array>
 
     <string name="date_format">Date format</string>
-    <string name="pin_protection_lock_transaction">Lock New Transaction\\Transfer</string>
-    <string name="pin_protection_lock_transaction_summary">Lock \'New transaction\' and \'New transfer\' screens by PIN</string>
 
     <string name="split">[Split…]</string>
     <string name="split_transaction">[Split-Transaction]</string>
@@ -810,8 +787,6 @@
     <string name="integrity_fix_summary">Fix internal problems when required</string>
     <string name="about_summary">Get more information about the project</string>
 
-    <string name="pin_warning">Please make sure to remember the pin. There is no way to recover your information or turn off the protection if you lose or forget the pin.</string>
-
     <string name="auto_backup_reminder_enabled">Remind about autobackup</string>
     <string name="auto_backup_reminder_enabled_summary">Remind if autobackup has not been enabled for a few days.</string>
     <string name="auto_backup_warning_enabled">Notify about failures</string>
@@ -824,7 +799,6 @@
     <string name="permissions">Permissions</string>
     <string name="permissions_summary">Review permissions that needs to be granted manually</string>
 
-    <string name="use_pin">Use PIN</string>
     <string name="set_focus_on_amount_field">Set focus on amount field</string>
     <string name="set_focus_on_amount_field_summary">Automatically set focus on amount field for new transactions</string>
     <string name="inactive">Inactive</string>

@@ -13,7 +13,6 @@ import ru.orangesoftware.financisto.db.DatabaseAdapter;
 import ru.orangesoftware.financisto.db.DatabaseHelper;
 import ru.orangesoftware.financisto.model.MyEntity;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
 
 public abstract class MyEntityActivity<T extends MyEntity> extends Activity {
 	
@@ -84,17 +83,5 @@ public abstract class MyEntityActivity<T extends MyEntity> extends Activity {
 		title.setText(entity.title);
 		CheckBox activityCheckBox = findViewById(R.id.isActive);
 		activityCheckBox.setChecked(entity.isActive);
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		PinProtection.lock(this);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		PinProtection.unlock(this);
 	}
 }

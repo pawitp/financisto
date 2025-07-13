@@ -27,7 +27,6 @@ import ru.orangesoftware.financisto.report.ProjectByPeriodReport;
 import ru.orangesoftware.financisto.report.ReportType;
 import ru.orangesoftware.financisto.utils.CurrencyCache;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
 import ru.orangesoftware.financisto.utils.Utils;
 import ru.orangesoftware.financisto.view.Report2DChartView;
 
@@ -480,15 +479,4 @@ public class Report2DChartActivity extends Activity {
         super.onDestroy();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        PinProtection.lock(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        PinProtection.unlock(this);
-    }
 }

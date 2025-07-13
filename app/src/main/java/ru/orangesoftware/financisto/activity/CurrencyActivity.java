@@ -28,7 +28,6 @@ import ru.orangesoftware.financisto.model.Currency;
 import ru.orangesoftware.financisto.model.SymbolFormat;
 import ru.orangesoftware.financisto.utils.CurrencyCache;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
 
 import static ru.orangesoftware.financisto.utils.Utils.checkEditText;
 import static ru.orangesoftware.financisto.utils.Utils.text;
@@ -170,15 +169,4 @@ public class CurrencyActivity extends Activity {
         super.onDestroy();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        PinProtection.lock(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        PinProtection.unlock(this);
-    }
 }

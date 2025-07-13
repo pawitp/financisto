@@ -96,43 +96,6 @@ public class MyPreferences {
         }
     }
 
-    private static Method hasSystemFeatureMethod;
-
-    static {
-        // hack for 1.5/1.6 devices
-        try {
-            hasSystemFeatureMethod = PackageManager.class.getMethod("hasSystemFeature", String.class);
-        } catch (NoSuchMethodException ex) {
-            hasSystemFeatureMethod = null;
-        }
-
-    }
-
-    public static boolean isPinProtected(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getBoolean("pin_protection", false);
-    }
-
-    public static boolean isPinProtectedNewTransaction(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getBoolean("pin_protection_lock_transaction", true);
-    }
-
-    public static boolean isPinLockEnabled(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return isPinProtected(context) && sharedPreferences.getBoolean("pin_protection_lock", true);
-    }
-
-    public static int getLockTimeSeconds(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return isPinLockEnabled(context) ? 60 * Integer.parseInt(sharedPreferences.getString("pin_protection_lock_time", "5")) : 0;
-    }
-
-    public static String getPin(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getString("pin", null);
-    }
-
     public static AccountSortOrder getAccountSortOrder(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String sortOrder = sharedPreferences.getString("sort_accounts", AccountSortOrder.SORT_ORDER_DESC.name());
@@ -439,20 +402,6 @@ public class MyPreferences {
     public static boolean isCollapseBlotterButtons(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean("collapse_blotter_buttons", false);
-    }
-
-    private static boolean isFeatureSupported(Context context, String feature) {
-        if (hasSystemFeatureMethod != null) {
-            PackageManager pm = context.getPackageManager();
-            try {
-                return (Boolean) hasSystemFeatureMethod.invoke(pm, feature);
-            } catch (Exception e) {
-                Log.w("Financisto", "Some problems executing PackageManager.hasSystemFeature(" + feature + ")", e);
-                return false;
-            }
-        }
-        Log.i("Financisto", "It's an old device - no PackageManager.hasSystemFeature");
-        return true;
     }
 
     public static boolean shouldRebuildRunningBalance(Context context) {

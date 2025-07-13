@@ -49,7 +49,6 @@ import ru.orangesoftware.financisto.report.PeriodReport;
 import ru.orangesoftware.financisto.report.Report;
 import ru.orangesoftware.financisto.report.ReportData;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
 import ru.orangesoftware.financisto.utils.Utils;
 
 public class ReportActivity extends ListActivity implements RefreshSupportedActivity {
@@ -138,18 +137,6 @@ public class ReportActivity extends ListActivity implements RefreshSupportedActi
     private void showPieChart() {
         new PieChartGeneratorTask().execute();
     }
-
-    @Override
-	protected void onPause() {
-		super.onPause();
-		PinProtection.lock(this);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		PinProtection.unlock(this);
-	}
 
     private void showOrRemoveTotals() {
         if (!currentReport.shouldDisplayTotal()) {

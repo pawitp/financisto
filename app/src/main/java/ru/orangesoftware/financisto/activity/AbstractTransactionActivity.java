@@ -291,11 +291,6 @@ public abstract class AbstractTransactionActivity extends AbstractActivity imple
 
     protected abstract void internalOnCreate();
 
-    @Override
-    protected boolean shouldLock() {
-        return MyPreferences.isPinProtectedNewTransaction(this);
-    }
-
     protected void createCommonNodes(LinearLayout layout) {
         int noteOrder = MyPreferences.getNoteOrder(this);
         int projectOrder = MyPreferences.getProjectOrder(this);

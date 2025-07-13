@@ -15,7 +15,6 @@ import ru.orangesoftware.financisto.db.DatabaseAdapter;
 import ru.orangesoftware.financisto.db.DatabaseHelper.AttributeColumns;
 import ru.orangesoftware.financisto.model.Attribute;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
 import ru.orangesoftware.financisto.utils.Utils;
 import android.app.Activity;
 import android.content.Context;
@@ -133,18 +132,6 @@ public class AttributeActivity extends Activity implements OnItemSelectedListene
 		super.onDestroy();		
 	}
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		PinProtection.lock(this);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		PinProtection.unlock(this);
-	}
-	
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		boolean showDefaultCheck = Attribute.TYPE_CHECKBOX - position == 1;

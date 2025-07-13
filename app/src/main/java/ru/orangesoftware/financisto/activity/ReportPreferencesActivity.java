@@ -18,7 +18,7 @@ import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.model.Currency;
 import ru.orangesoftware.financisto.utils.CurrencyCache;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -114,17 +114,5 @@ public class ReportPreferencesActivity extends PreferenceActivity {
 		if(dialog!=null)
 			dialog.cancel();
 		return true;
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		PinProtection.lock(this);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		PinProtection.unlock(this);
 	}
 }

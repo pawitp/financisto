@@ -21,7 +21,6 @@ import java.io.File;
 
 import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
 
 public abstract class AbstractImportActivity extends Activity {
 
@@ -95,14 +94,12 @@ public abstract class AbstractImportActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        PinProtection.lock(this);
         savePreferences();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        PinProtection.unlock(this);
         restorePreferences();
     }
 

@@ -19,7 +19,7 @@ import ru.orangesoftware.financisto.model.Currency;
 import ru.orangesoftware.financisto.report.Report;
 import ru.orangesoftware.financisto.report.ReportType;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
+
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -27,9 +27,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ReportsListActivity extends ListActivity {
 	
@@ -52,17 +50,6 @@ public class ReportsListActivity extends ListActivity {
 		setListAdapter(new SummaryEntityListAdapter(this, reports));
 	}
 	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		PinProtection.lock(this);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		PinProtection.unlock(this);
-	}
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		if (reports[position].isConventionalBarReport()) {

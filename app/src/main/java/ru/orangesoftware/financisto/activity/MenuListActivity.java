@@ -36,7 +36,6 @@ import ru.orangesoftware.financisto.export.dropbox.DropboxRestoreTask;
 import ru.orangesoftware.financisto.export.qif.QifExportOptions;
 import ru.orangesoftware.financisto.export.qif.QifImportOptions;
 import static ru.orangesoftware.financisto.service.DailyAutoBackupScheduler.scheduleNextAutoBackup;
-import ru.orangesoftware.financisto.utils.PinProtection;
 
 import ru.orangesoftware.financisto.utils.MyPreferences;
 
@@ -101,14 +100,12 @@ public class MenuListActivity extends ListActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        PinProtection.lock(this);
         bus.unregister(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        PinProtection.unlock(this);
         bus.register(this);
     }
 

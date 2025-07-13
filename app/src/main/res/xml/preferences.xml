@@ -184,34 +184,6 @@
         </PreferenceScreen>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/protection">
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="pin_protection"
-            android:summary="@string/pin_protection_summary"
-            android:title="@string/pin_protection" />
-        <ru.orangesoftware.financisto.dialog.PinDialogPreference
-            android:dependency="pin_protection"
-            android:dialogLayout="@layout/lock"
-            android:key="pin"
-            android:summary="@string/pin_warning"
-            android:title="@string/change_pin" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:dependency="pin_protection"
-            android:key="pin_protection_lock_transaction"
-            android:summary="@string/pin_protection_lock_transaction_summary"
-            android:title="@string/pin_protection_lock_transaction" />
-        <ListPreference
-            android:defaultValue="5"
-            android:dependency="pin_protection"
-            android:entries="@array/lock_time_entities"
-            android:entryValues="@array/lock_time_values"
-            android:key="pin_protection_lock_time"
-            android:summary="@string/lock_time_summary"
-            android:title="@string/lock_time" />
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/home_screen">
         <Preference
             android:key="shortcut_new_transaction"

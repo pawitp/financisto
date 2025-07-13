@@ -11,9 +11,6 @@
 package ru.orangesoftware.financisto.activity;
 
 import android.Manifest;
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +27,6 @@ import ru.orangesoftware.financisto.export.Export;
 import ru.orangesoftware.financisto.export.dropbox.Dropbox;
 import ru.orangesoftware.financisto.rates.ExchangeRateProviderFactory;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
 
 import static ru.orangesoftware.financisto.activity.RequestPermission.isRequestingPermission;
 
@@ -176,15 +172,8 @@ public class PreferencesActivity extends PreferenceActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        PinProtection.lock(this);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
-        PinProtection.unlock(this);
         dropbox.completeAuth();
         linkToDropbox();
     }

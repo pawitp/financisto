@@ -33,7 +33,6 @@ import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.db.DatabaseAdapter;
 import ru.orangesoftware.financisto.utils.MenuItemInfo;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-import ru.orangesoftware.financisto.utils.PinProtection;
 
 public abstract class AbstractListActivity extends ListActivity implements RefreshSupportedActivity {
 
@@ -49,8 +48,6 @@ public abstract class AbstractListActivity extends ListActivity implements Refre
     protected ListAdapter adapter;
     protected DatabaseAdapter db;
     protected ImageButton bAdd;
-
-    protected boolean enablePin = true;
 
     protected AbstractListActivity(int contentId) {
         this.contentId = contentId;
@@ -115,18 +112,6 @@ public abstract class AbstractListActivity extends ListActivity implements Refre
     protected void onDestroy() {
         db.close();
         super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (enablePin) PinProtection.lock(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (enablePin) PinProtection.unlock(this);
     }
 
     protected List<MenuItemInfo> createContextMenus(long id) {

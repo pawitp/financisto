@@ -146,9 +146,4 @@ public abstract class AbstractSplitActivity extends AbstractActivity {
         return originalCurrency != null ? originalCurrency : (fromAccount != null ? fromAccount.currency : Currency.defaultCurrency());
     }
 
-    @Override
-    protected boolean shouldLock() {
-        return MyPreferences.isPinProtectedNewTransaction(this);
-    }
-
 }
