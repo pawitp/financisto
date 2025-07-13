@@ -9,14 +9,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import androidx.core.content.FileProvider;
 import android.widget.ListAdapter;
-import android.widget.Toast;
+
 import java.io.File;
 import ru.orangesoftware.financisto.BuildConfig;
 import ru.orangesoftware.financisto.R;
 import static ru.orangesoftware.financisto.activity.RequestPermission.isRequestingPermission;
 import static ru.orangesoftware.financisto.activity.RequestPermission.isRequestingPermissions;
 import ru.orangesoftware.financisto.backup.Backup;
-import ru.orangesoftware.financisto.bus.GreenRobotBus_;
+import ru.orangesoftware.financisto.bus.GreenRobotBus;
 import ru.orangesoftware.financisto.db.DatabaseAdapter;
 import ru.orangesoftware.financisto.export.BackupExportTask;
 import ru.orangesoftware.financisto.export.BackupImportTask;
@@ -25,8 +25,6 @@ import ru.orangesoftware.financisto.export.csv.CsvExportOptions;
 import ru.orangesoftware.financisto.export.csv.CsvExportTask;
 import ru.orangesoftware.financisto.utils.EntityEnum;
 import ru.orangesoftware.financisto.utils.EnumUtils;
-import static ru.orangesoftware.financisto.utils.EnumUtils.showPickOneDialog;
-import ru.orangesoftware.financisto.utils.ExecutableEntityEnum;
 import ru.orangesoftware.financisto.utils.IntegrityFix;
 import ru.orangesoftware.financisto.utils.SummaryEntityEnum;
 
@@ -97,7 +95,7 @@ public enum MenuListItem implements SummaryEntityEnum {
             if (isRequestingPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 return;
             }
-            GreenRobotBus_.getInstance_(activity).post(new MenuListActivity.StartDropboxBackup());
+            GreenRobotBus.getInstance().post(new MenuListActivity.StartDropboxBackup());
         }
     },
     DROPBOX_RESTORE(R.string.restore_database_online_dropbox, R.string.restore_database_online_dropbox_summary, R.drawable.actionbar_dropbox) {
@@ -106,7 +104,7 @@ public enum MenuListItem implements SummaryEntityEnum {
             if (isRequestingPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 return;
             }
-            GreenRobotBus_.getInstance_(activity).post(new MenuListActivity.StartDropboxRestore());
+            GreenRobotBus.getInstance().post(new MenuListActivity.StartDropboxRestore());
         }
     },
     MENU_BACKUP_TO(R.string.backup_database_to, R.string.backup_database_to_summary, R.drawable.actionbar_share) {

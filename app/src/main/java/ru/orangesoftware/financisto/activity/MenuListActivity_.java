@@ -21,7 +21,7 @@ import org.androidannotations.api.view.HasViews;
 import org.androidannotations.api.view.OnViewChangedListener;
 import org.androidannotations.api.view.OnViewChangedNotifier;
 import ru.orangesoftware.financisto.R;
-import ru.orangesoftware.financisto.bus.GreenRobotBus_;
+import ru.orangesoftware.financisto.bus.GreenRobotBus;
 
 public final class MenuListActivity_
     extends MenuListActivity
@@ -44,7 +44,7 @@ public final class MenuListActivity_
     }
 
     private void init_(Bundle savedInstanceState) {
-        this.bus = GreenRobotBus_.getInstance_(this);
+        this.bus = GreenRobotBus.getInstance();
         OnViewChangedNotifier.registerOnViewChangedListener(this);
     }
 

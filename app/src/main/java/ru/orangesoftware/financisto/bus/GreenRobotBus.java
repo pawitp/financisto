@@ -4,7 +4,19 @@ import org.greenrobot.eventbus.EventBus;
 
 public class GreenRobotBus {
 
+    private static GreenRobotBus INSTANCE;
+
     public final EventBus bus = new EventBus();
+
+    private GreenRobotBus() {
+    }
+
+    public static GreenRobotBus getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new GreenRobotBus();
+        }
+        return INSTANCE;
+    }
 
     public void post(Object event) {
         bus.post(event);

@@ -9,10 +9,7 @@ import ru.orangesoftware.financisto.utils.MyPreferences;
 
 public class FinancistoApp extends MultiDexApplication {
 
-    public GreenRobotBus bus;
-
-    public void init() {
-    }
+    public GreenRobotBus bus = GreenRobotBus.getInstance();
 
     @Override
     protected void attachBaseContext(Context base) {
