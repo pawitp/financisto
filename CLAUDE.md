@@ -105,5 +105,5 @@ Key entities in `model/` package:
 
 ### Legacy Considerations
 - Uses deprecated `TabActivity` pattern (consider migrating to ViewPager/Fragments)
-- Targets API level 28 (Android 9)
+- Migrating from API level 28 to API level 34
 - Uses older Android support libraries (some migration to AndroidX started)

@@ -43,14 +43,16 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-        <receiver android:name=".activity.ScheduledAlarmReceiver">
+        <receiver android:name=".activity.ScheduledAlarmReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name=".SCHEDULED_BACKUP" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".activity.PackageReplaceReceiver">
+        <receiver android:name=".activity.PackageReplaceReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
                 <data
@@ -87,7 +89,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/app_name"
+            android:exported="true"
             android:taskAffinity=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -98,6 +100,7 @@
         <activity
             android:name=".activity.TransactionActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true"
             android:icon="@drawable/icon_transaction"
             android:label="@string/transaction"
             android:taskAffinity=".TransactionActivity"
@@ -113,6 +116,7 @@
         <activity
             android:name=".activity.TransferActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true"
             android:icon="@drawable/icon_transfer"
             android:label="@string/transfer"
             android:taskAffinity=".TransferActivity"
@@ -335,6 +339,7 @@
         <activity
             android:name="com.dropbox.core.android.AuthActivity"
             android:configChanges="orientation|keyboard"
+            android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
 
