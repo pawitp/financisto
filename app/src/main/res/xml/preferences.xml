@@ -116,11 +116,6 @@
             <PreferenceCategory android:title="@string/screen_layout">
                 <CheckBoxPreference
                     android:defaultValue="true"
-                    android:key="ntsl_use_fixed_layout"
-                    android:summary="@string/use_fixed_layout_summary"
-                    android:title="@string/use_fixed_layout" />
-                <CheckBoxPreference
-                    android:defaultValue="true"
                     android:key="ntsl_show_currency"
                     android:summary="@string/show_currency_summary"
                     android:title="@string/show_currency" />

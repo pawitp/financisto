@@ -344,11 +344,6 @@ public class MyPreferences {
         return Integer.parseInt(sharedPreferences.getString("ntsl_show_project_order", "4"));
     }
 
-    public static boolean isUseFixedLayout(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getBoolean("ntsl_use_fixed_layout", true);
-    }
-
     public static boolean isIncludeTransfersIntoReports(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean("include_transfers_into_reports", false);

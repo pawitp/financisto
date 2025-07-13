@@ -376,8 +376,6 @@
     <string name="shortcut_new_transaction">\'New Transaction\' shortcut</string>
     <string name="shortcut_new_transfer">\'New Transfer\' shortcut</string>
     <string name="shortcut_summary">Add the shortcut to the Home Screen</string>
-    <string name="use_fixed_layout">Use fixed layout</string>
-    <string name="use_fixed_layout_summary">Fix OK/Cancel buttons in the layout</string>
     <string name="no_data">No data</string>
     <string name="calculating">Calculating…</string>
     <string name="budget_mode">Ease conditions</string>

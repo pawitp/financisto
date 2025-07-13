@@ -60,7 +60,7 @@ public class TransactionActivity extends AbstractTransactionActivity {
     }
 
     protected int getLayoutId() {
-        return MyPreferences.isUseFixedLayout(this) ? R.layout.transaction_fixed : R.layout.transaction_free;
+        return R.layout.transaction_fixed;
     }
 
     @Override
