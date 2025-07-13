@@ -8,7 +8,7 @@ public class RequestPermission {
 
     public static boolean isRequestingPermission(Context context, String permission) {
         if (!checkPermission(context, permission)) {
-            RequestPermissionActivity_.intent(context).requestedPermission(permission).start();
+            // TODO: Request permissions here
             return true;
         }
         return false;

@@ -718,12 +718,6 @@
     <string name="restore_database_online_dropbox">Dropbox Restore</string>
     <string name="backup_database_dropbox_inprogress">Backing up database…</string>
 
-    <string name="request_permissions_title">Financisto requires a few permissions to be granted manually.</string>
-    <string name="request_permissions_description">Please grant the required permissions below, then return back to the previous screen and repeat the operation. Permissions can be revoked in the system Settings -> App Permissions.</string>
-    <string name="request_permissions_storage_title">Storage</string>
-    <string name="request_permissions_storage_description">Required to read and write backup files from/to the external storage.</string>
-    <string name="request_permissions_granted">Permission granted</string>
-    <string name="request_permissions_not_granted">Permission NOT granted</string>
     <string name="privacy_policy">Privacy Policy</string>
 
     <string name="card_issuer_default">Default</string>
@@ -752,8 +746,6 @@
     <string name="autobackup_failed_message">Autobackup failed at %s with error [%s].</string>
 
     <string name="request_permissions_storage_not_granted">Write external storage permisson not granted</string>
-    <string name="permissions">Permissions</string>
-    <string name="permissions_summary">Review permissions that needs to be granted manually</string>
 
     <string name="set_focus_on_amount_field">Set focus on amount field</string>
     <string name="set_focus_on_amount_field_summary">Automatically set focus on amount field for new transactions</string>

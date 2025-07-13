@@ -138,12 +138,6 @@ public enum MenuListItem implements SummaryEntityEnum {
             activity.startActivityForResult(intent, ACTIVITY_CSV_EXPORT);
         }
     },
-    MENU_PERMISSIONS(R.string.permissions, R.string.permissions_summary, R.drawable.ic_tab_about) {
-        @Override
-        public void call(Activity activity) {
-            RequestPermissionActivity_.intent(activity).start();
-        }
-    },
     MENU_INTEGRITY_FIX(R.string.integrity_fix, R.string.integrity_fix_summary, R.drawable.actionbar_flash) {
         @Override
         public void call(Activity activity) {

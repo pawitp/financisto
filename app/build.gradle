@@ -82,12 +82,8 @@ android {
     }
 }
 
-def AAVersion = '4.6.0'
-
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.1'
-
-    implementation "org.androidannotations:androidannotations-api:$AAVersion"
 
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'net.sf.trove4j:trove4j:3.0.3'
