@@ -25,10 +25,6 @@ import ru.orangesoftware.financisto.export.csv.CsvExportOptions;
 import ru.orangesoftware.financisto.export.csv.CsvExportTask;
 import ru.orangesoftware.financisto.export.csv.CsvImportOptions;
 import ru.orangesoftware.financisto.export.csv.CsvImportTask;
-import ru.orangesoftware.financisto.export.qif.QifExportOptions;
-import ru.orangesoftware.financisto.export.qif.QifExportTask;
-import ru.orangesoftware.financisto.export.qif.QifImportOptions;
-import ru.orangesoftware.financisto.export.qif.QifImportTask;
 import ru.orangesoftware.financisto.utils.EntityEnum;
 import ru.orangesoftware.financisto.utils.EnumUtils;
 import static ru.orangesoftware.financisto.utils.EnumUtils.showPickOneDialog;
@@ -190,9 +186,7 @@ public enum MenuListItem implements SummaryEntityEnum {
     }
 
     public static final int ACTIVITY_CSV_EXPORT = 2;
-    public static final int ACTIVITY_QIF_EXPORT = 3;
     public static final int ACTIVITY_CSV_IMPORT = 4;
-    public static final int ACTIVITY_QIF_IMPORT = 5;
     public static final int ACTIVITY_CHANGE_PREFERENCES = 6;
 
     public abstract void call(Activity activity);
@@ -255,20 +249,6 @@ public enum MenuListItem implements SummaryEntityEnum {
                 Intent intent = new Intent(mainActivity, CsvImportActivity.class);
                 mainActivity.startActivityForResult(intent, ACTIVITY_CSV_IMPORT);
             }
-        },
-        QIF_EXPORT(R.string.qif_export, R.drawable.backup_qif) {
-            @Override
-            public void execute(Activity mainActivity) {
-                Intent intent = new Intent(mainActivity, QifExportActivity.class);
-                mainActivity.startActivityForResult(intent, ACTIVITY_QIF_EXPORT);
-            }
-        },
-        QIF_IMPORT(R.string.qif_import, R.drawable.backup_qif) {
-            @Override
-            public void execute(Activity mainActivity) {
-                Intent intent = new Intent(mainActivity, QifImportActivity.class);
-                mainActivity.startActivityForResult(intent, ACTIVITY_QIF_IMPORT);
-            }
         };
 
         private final int titleId;
@@ -299,16 +279,6 @@ public enum MenuListItem implements SummaryEntityEnum {
     public static void doCsvImport(Activity activity, CsvImportOptions options) {
         ProgressDialog progressDialog = ProgressDialog.show(activity, null, activity.getString(R.string.csv_import_inprogress), true);
         new CsvImportTask(activity, progressDialog, options).execute();
-    }
-
-    public static void doQifExport(Activity activity, QifExportOptions options) {
-        ProgressDialog progressDialog = ProgressDialog.show(activity, null, activity.getString(R.string.qif_export_inprogress), true);
-        new QifExportTask(activity, progressDialog, options).execute();
-    }
-
-    public static void doQifImport(Activity activity, QifImportOptions options) {
-        ProgressDialog progressDialog = ProgressDialog.show(activity, null, activity.getString(R.string.qif_import_inprogress), true);
-        new QifImportTask(activity, progressDialog, options).execute();
     }
 
     private static class IntegrityFixTask extends AsyncTask<Void, Void, Void> {

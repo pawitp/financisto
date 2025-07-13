@@ -281,13 +281,6 @@
             android:label="@string/csv_import" />
 
         <activity
-            android:name=".activity.QifExportActivity"
-            android:label="@string/qif_export" />
-        <activity
-            android:name=".activity.QifImportActivity"
-            android:label="@string/qif_import" />
-
-        <activity
             android:name=".activity.Report2DChartActivity"
             android:label="@string/report" />
         <activity

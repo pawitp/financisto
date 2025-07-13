@@ -33,8 +33,6 @@ import ru.orangesoftware.financisto.export.dropbox.DropboxFileList;
 import ru.orangesoftware.financisto.export.dropbox.DropboxBackupTask;
 import ru.orangesoftware.financisto.export.dropbox.DropboxListFilesTask;
 import ru.orangesoftware.financisto.export.dropbox.DropboxRestoreTask;
-import ru.orangesoftware.financisto.export.qif.QifExportOptions;
-import ru.orangesoftware.financisto.export.qif.QifImportOptions;
 import static ru.orangesoftware.financisto.service.DailyAutoBackupScheduler.scheduleNextAutoBackup;
 
 import ru.orangesoftware.financisto.utils.MyPreferences;
@@ -68,27 +66,11 @@ public class MenuListActivity extends ListActivity {
         }
     }
 
-    @OnActivityResult(MenuListItem.ACTIVITY_QIF_EXPORT)
-    public void onQifExportResult(int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            QifExportOptions options = QifExportOptions.fromIntent(data);
-            MenuListItem.doQifExport(this, options);
-        }
-    }
-
     @OnActivityResult(MenuListItem.ACTIVITY_CSV_IMPORT)
     public void onCsvImportResult(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             CsvImportOptions options = CsvImportOptions.fromIntent(data);
             MenuListItem.doCsvImport(this, options);
-        }
-    }
-
-    @OnActivityResult(MenuListItem.ACTIVITY_QIF_IMPORT)
-    public void onQifImportResult(int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            QifImportOptions options = QifImportOptions.fromIntent(data);
-            MenuListItem.doQifImport(this, options);
         }
     }
 

@@ -527,8 +527,6 @@
     <string name="report_no_payee">There is no payee available for filtering in the report.</string>
     <string name="type">Type</string>
 
-    <string name="qif_export">QIF Export</string>
-    <string name="qif_export_inprogress">Exporting data to QIF…</string>
     <string name="all_accounts">All accounts</string>
     <string name="filter_value_not_found">Not found…</string>
     <string name="empty_report">Empty report</string>
@@ -574,12 +572,7 @@
     <string name="import_parse_error">Parsing error in import file</string>
     <string name="csv_import_error">CSV import error</string>
 
-    <string name="qif_import">QIF Import</string>
-    <string name="qif_import_inprogress">Importing data from QIF…</string>
-    <string name="qif_import_error">QIF import error</string>
-    <string name="qif_import_success">QIF file has been successfully imported</string>
     <string name="import_export">Import/Export</string>
-    <string name="qif_import_disclaimer">*WARNING* Please note that all existing data will be removed!</string>
 
     <string name="remember_last_category_for_payee">Last category</string>
     <string name="remember_last_category_for_payee_summary">Remember the last category for the chosen payee (or account if payee is disabled)</string>
@@ -781,7 +774,7 @@
     <string name="backup_database_online_dropbox_summary">Backup database to Dropbox</string>
     <string name="restore_database_online_dropbox_summary">Restore database from Dropbox</string>
     <string name="backup_database_to_summary">Send database backup to email, etc</string>
-    <string name="import_export_summary">Import/export database to another format like csv, qif, etc</string>
+    <string name="import_export_summary">Import/export database to another format like csv</string>
     <string name="integrity_fix_summary">Fix internal problems when required</string>
     <string name="about_summary">Get more information about the project</string>
 
