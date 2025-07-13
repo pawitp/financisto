@@ -276,9 +276,6 @@
         <activity
             android:name=".activity.CsvExportActivity"
             android:label="@string/csv_export" />
-        <activity
-            android:name=".activity.CsvImportActivity"
-            android:label="@string/csv_import" />
 
         <activity
             android:name=".activity.Report2DChartActivity"

@@ -28,7 +28,6 @@ import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.adapter.SummaryEntityListAdapter;
 import ru.orangesoftware.financisto.bus.GreenRobotBus;
 import ru.orangesoftware.financisto.export.csv.CsvExportOptions;
-import ru.orangesoftware.financisto.export.csv.CsvImportOptions;
 import ru.orangesoftware.financisto.export.dropbox.DropboxFileList;
 import ru.orangesoftware.financisto.export.dropbox.DropboxBackupTask;
 import ru.orangesoftware.financisto.export.dropbox.DropboxListFilesTask;
@@ -63,14 +62,6 @@ public class MenuListActivity extends ListActivity {
         if (resultCode == RESULT_OK) {
             CsvExportOptions options = CsvExportOptions.fromIntent(data);
             MenuListItem.doCsvExport(this, options);
-        }
-    }
-
-    @OnActivityResult(MenuListItem.ACTIVITY_CSV_IMPORT)
-    public void onCsvImportResult(int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            CsvImportOptions options = CsvImportOptions.fromIntent(data);
-            MenuListItem.doCsvImport(this, options);
         }
     }
 

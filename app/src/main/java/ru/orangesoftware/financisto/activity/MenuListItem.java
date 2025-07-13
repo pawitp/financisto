@@ -23,8 +23,6 @@ import ru.orangesoftware.financisto.export.BackupImportTask;
 import ru.orangesoftware.financisto.export.Export;
 import ru.orangesoftware.financisto.export.csv.CsvExportOptions;
 import ru.orangesoftware.financisto.export.csv.CsvExportTask;
-import ru.orangesoftware.financisto.export.csv.CsvImportOptions;
-import ru.orangesoftware.financisto.export.csv.CsvImportTask;
 import ru.orangesoftware.financisto.utils.EntityEnum;
 import ru.orangesoftware.financisto.utils.EnumUtils;
 import static ru.orangesoftware.financisto.utils.EnumUtils.showPickOneDialog;
@@ -132,13 +130,14 @@ public enum MenuListItem implements SummaryEntityEnum {
             t.execute((String[]) null);
         }
     },
-    MENU_IMPORT_EXPORT(R.string.import_export, R.string.import_export_summary, R.drawable.actionbar_export) {
+    MENU_IMPORT_EXPORT(R.string.csv_export, R.string.csv_export_summary, R.drawable.actionbar_export) {
         @Override
         public void call(Activity activity) {
             if (isRequestingPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 return;
             }
-            showPickOneDialog(activity, R.string.import_export, ImportExportEntities.values(), activity);
+            Intent intent = new Intent(activity, CsvExportActivity.class);
+            activity.startActivityForResult(intent, ACTIVITY_CSV_EXPORT);
         }
     },
     MENU_PERMISSIONS(R.string.permissions, R.string.permissions_summary, R.drawable.ic_tab_about) {
@@ -186,7 +185,6 @@ public enum MenuListItem implements SummaryEntityEnum {
     }
 
     public static final int ACTIVITY_CSV_EXPORT = 2;
-    public static final int ACTIVITY_CSV_IMPORT = 4;
     public static final int ACTIVITY_CHANGE_PREFERENCES = 6;
 
     public abstract void call(Activity activity);
@@ -234,51 +232,9 @@ public enum MenuListItem implements SummaryEntityEnum {
         }
     }
 
-    private enum ImportExportEntities implements ExecutableEntityEnum<Activity> {
-
-        CSV_EXPORT(R.string.csv_export, R.drawable.backup_csv) {
-            @Override
-            public void execute(Activity mainActivity) {
-                Intent intent = new Intent(mainActivity, CsvExportActivity.class);
-                mainActivity.startActivityForResult(intent, ACTIVITY_CSV_EXPORT);
-            }
-        },
-        CSV_IMPORT(R.string.csv_import, R.drawable.backup_csv) {
-            @Override
-            public void execute(Activity mainActivity) {
-                Intent intent = new Intent(mainActivity, CsvImportActivity.class);
-                mainActivity.startActivityForResult(intent, ACTIVITY_CSV_IMPORT);
-            }
-        };
-
-        private final int titleId;
-        private final int iconId;
-
-        ImportExportEntities(int titleId, int iconId) {
-            this.titleId = titleId;
-            this.iconId = iconId;
-        }
-
-        @Override
-        public int getTitleId() {
-            return titleId;
-        }
-
-        @Override
-        public int getIconId() {
-            return iconId;
-        }
-
-    }
-
     public static void doCsvExport(Activity activity, CsvExportOptions options) {
         ProgressDialog progressDialog = ProgressDialog.show(activity, null, activity.getString(R.string.csv_export_inprogress), true);
         new CsvExportTask(activity, progressDialog, options).execute();
-    }
-
-    public static void doCsvImport(Activity activity, CsvImportOptions options) {
-        ProgressDialog progressDialog = ProgressDialog.show(activity, null, activity.getString(R.string.csv_import_inprogress), true);
-        new CsvImportTask(activity, progressDialog, options).execute();
     }
 
     private static class IntegrityFixTask extends AsyncTask<Void, Void, Void> {
