@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 import ru.orangesoftware.financisto.export.AbstractImportExportTest;
-import ru.orangesoftware.financisto.export.Export;
 import ru.orangesoftware.financisto.model.Account;
 import ru.orangesoftware.financisto.model.Category;
 import ru.orangesoftware.financisto.test.CategoryBuilder;
@@ -105,7 +104,7 @@ public class DatabaseBackupTest extends AbstractImportExportTest {
     }
 
     private BufferedReader createFileReader(String fileName, boolean useGzip) throws IOException {
-        File backupPath = Export.getBackupFolder(getContext());
+        File backupPath = getContext().getCacheDir();
         File file = new File(backupPath, fileName);
         InputStream in = new FileInputStream(file);
         if (useGzip) {
@@ -123,7 +122,7 @@ public class DatabaseBackupTest extends AbstractImportExportTest {
     }
 
     private String fileAsString(String backupFile) throws IOException {
-        File backupPath = Export.getBackupFolder(context);
+        File backupPath = context.getCacheDir();
         File file = new File(backupPath, backupFile);
         return FileUtils.readFileToString(file, "UTF-8");
     }

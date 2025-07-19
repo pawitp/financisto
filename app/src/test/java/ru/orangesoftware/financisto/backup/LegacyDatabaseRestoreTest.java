@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.List;
 
 import ru.orangesoftware.financisto.db.AbstractDbTest;
-import ru.orangesoftware.financisto.export.Export;
 import ru.orangesoftware.financisto.model.Account;
 import ru.orangesoftware.financisto.model.AccountType;
 import ru.orangesoftware.financisto.model.Attribute;
@@ -271,7 +270,7 @@ public class LegacyDatabaseRestoreTest extends AbstractDbTest {
 
     private String createBackupFile(String fileContent) throws IOException {
         String fileName = "backup_" + System.currentTimeMillis() + ".backup";
-        FileOutputStream out = new FileOutputStream(new File(Export.getBackupFolder(getContext()), fileName));
+        FileOutputStream out = new FileOutputStream(new File(getContext().getCacheDir(), fileName));
         out.write(fileContent.getBytes());
         out.flush();
         out.close();
@@ -279,7 +278,7 @@ public class LegacyDatabaseRestoreTest extends AbstractDbTest {
     }
 
     private void deleteBackupFile(String fileName) {
-        new File(Export.getBackupFolder(getContext()), fileName).delete();
+        new File(getContext().getCacheDir(), fileName).delete();
     }
 
 }
