@@ -296,7 +296,7 @@
             android:launchMode="singleTask">
             <intent-filter>
 
-                <!-- Dropbox app key scheme - automatically generated from local.properties -->
+                <!-- Dropbox app key scheme - automatically generated from key.properties -->
                 <data android:scheme="db-${dropboxAppKey}" />
 
                 <action android:name="android.intent.action.VIEW" />
