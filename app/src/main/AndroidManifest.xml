@@ -28,9 +28,7 @@
 
     <!-- System permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".app.FinancistoApp"
@@ -39,38 +37,6 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-
-        <receiver android:name=".activity.ScheduledAlarmReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name=".SCHEDULED_BACKUP" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <receiver android:name=".activity.PackageReplaceReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REPLACED" />
-                <data
-                    android:path="ru.orangesoftware.financisto"
-                    android:scheme="package" />
-            </intent-filter>
-        </receiver>
-
-
-        <service
-            android:name=".service.FinancistoService"
-            android:exported="true"
-            android:enabled="true"
-            android:permission="android.permission.BIND_JOB_SERVICE">
-            <intent-filter>
-                <action android:name=".SCHEDULE_ONE" />
-                <action android:name=".SCHEDULE_ALL" />
-                <action android:name=".ACTION_SCHEDULE_AUTO_BACKUP" />
-                <action android:name=".ACTION_AUTO_BACKUP" />
-            </intent-filter>
-        </service>
 
         <provider
             android:name="androidx.core.content.FileProvider"
