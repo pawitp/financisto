@@ -10,11 +10,11 @@
  ******************************************************************************/
 package ru.orangesoftware.financisto.activity;
 
-import android.Manifest;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Intent.ShortcutIconResource;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -22,17 +22,12 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 
 import ru.orangesoftware.financisto.R;
-import ru.orangesoftware.financisto.dialog.FolderBrowser;
-import ru.orangesoftware.financisto.export.Export;
 import ru.orangesoftware.financisto.export.dropbox.Dropbox;
 import ru.orangesoftware.financisto.rates.ExchangeRateProviderFactory;
 import ru.orangesoftware.financisto.utils.MyPreferences;
-
-import static ru.orangesoftware.financisto.activity.RequestPermission.isRequestingPermission;
+import ru.orangesoftware.financisto.utils.SafStorageHelper;
 
 public class PreferencesActivity extends PreferenceActivity {
-
-    private static final int SELECT_DATABASE_FOLDER = 100;
 
     Preference pOpenExchangeRatesAppId;
 
@@ -65,9 +60,6 @@ public class PreferencesActivity extends PreferenceActivity {
         });
         Preference pDatabaseBackupFolder = preferenceScreen.findPreference("database_backup_folder");
         pDatabaseBackupFolder.setOnPreferenceClickListener(arg0 -> {
-            if (isRequestingPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                return false;
-            }
             selectDatabaseBackupFolder();
             return true;
         });
@@ -108,9 +100,7 @@ public class PreferencesActivity extends PreferenceActivity {
     }
 
     private void selectDatabaseBackupFolder() {
-        Intent intent = new Intent(this, FolderBrowser.class);
-        intent.putExtra(FolderBrowser.PATH, getDatabaseBackupFolder());
-        startActivityForResult(intent, SELECT_DATABASE_FOLDER);
+        SafStorageHelper.openDirectoryPicker(this);
     }
 
     private void enableOpenExchangeApp() {
@@ -118,7 +108,11 @@ public class PreferencesActivity extends PreferenceActivity {
     }
 
     private String getDatabaseBackupFolder() {
-        return Export.getBackupFolder(this).getAbsolutePath();
+        if (SafStorageHelper.hasDirectoryAccess(this)) {
+            return SafStorageHelper.getDirectoryDisplayName(this);
+        } else {
+            return getString(R.string.no_folder_selected);
+        }
     }
 
     private void setCurrentDatabaseBackupFolder() {
@@ -132,10 +126,15 @@ public class PreferencesActivity extends PreferenceActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case SELECT_DATABASE_FOLDER:
-                    String databaseBackupFolder = data.getStringExtra(FolderBrowser.PATH);
-                    MyPreferences.setDatabaseBackupFolder(this, databaseBackupFolder);
-                    setCurrentDatabaseBackupFolder();
+                case SafStorageHelper.REQUEST_CODE_OPEN_DIRECTORY:
+                    if (data != null) {
+                        Uri uri = data.getData();
+                        if (uri != null) {
+                            SafStorageHelper.persistUriPermissions(this, uri);
+                            MyPreferences.setDatabaseBackupFolderUri(this, uri.toString());
+                            setCurrentDatabaseBackupFolder();
+                        }
+                    }
                     break;
             }
         }

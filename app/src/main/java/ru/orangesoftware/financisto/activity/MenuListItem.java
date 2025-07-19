@@ -1,20 +1,14 @@
 package ru.orangesoftware.financisto.activity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
-import androidx.core.content.FileProvider;
 import android.widget.ListAdapter;
+import androidx.documentfile.provider.DocumentFile;
 
-import java.io.File;
-import ru.orangesoftware.financisto.BuildConfig;
 import ru.orangesoftware.financisto.R;
-import static ru.orangesoftware.financisto.activity.RequestPermission.isRequestingPermission;
-import static ru.orangesoftware.financisto.activity.RequestPermission.isRequestingPermissions;
 import ru.orangesoftware.financisto.backup.Backup;
 import ru.orangesoftware.financisto.bus.GreenRobotBus;
 import ru.orangesoftware.financisto.db.DatabaseAdapter;
@@ -26,6 +20,7 @@ import ru.orangesoftware.financisto.export.csv.CsvExportTask;
 import ru.orangesoftware.financisto.utils.EntityEnum;
 import ru.orangesoftware.financisto.utils.EnumUtils;
 import ru.orangesoftware.financisto.utils.IntegrityFix;
+import ru.orangesoftware.financisto.utils.SafStorageHelper;
 import ru.orangesoftware.financisto.utils.SummaryEntityEnum;
 
 public enum MenuListItem implements SummaryEntityEnum {
@@ -45,10 +40,7 @@ public enum MenuListItem implements SummaryEntityEnum {
                     .setAdapter(adapter, (dialog, which) -> {
                         dialog.dismiss();
                         MenuEntities e = entities[which];
-                        if (e.getPermissions() == null
-                                || !isRequestingPermissions(activity, e.getPermissions())) {
-                            activity.startActivity(new Intent(activity, e.getActivityClass()));
-                        }
+                        activity.startActivity(new Intent(activity, e.getActivityClass()));
                     })
                     .create();
             d.setTitle(R.string.entities);
@@ -58,7 +50,8 @@ public enum MenuListItem implements SummaryEntityEnum {
     MENU_BACKUP(R.string.backup_database, R.string.backup_database_summary, R.drawable.actionbar_db_backup) {
         @Override
         public void call(Activity activity) {
-            if (isRequestingPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            if (!SafStorageHelper.hasDirectoryAccess(activity)) {
+                showSelectFolderMessage(activity);
                 return;
             }
             ProgressDialog d = ProgressDialog.show(activity, null, activity.getString(R.string.backup_database_inprogress), true);
@@ -68,7 +61,8 @@ public enum MenuListItem implements SummaryEntityEnum {
     MENU_RESTORE(R.string.restore_database, R.string.restore_database_summary, R.drawable.actionbar_db_restore) {
         @Override
         public void call(final Activity activity) {
-            if (isRequestingPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            if (!SafStorageHelper.hasDirectoryAccess(activity)) {
+                showSelectFolderMessage(activity);
                 return;
             }
             final String[] backupFiles = Backup.listBackups(activity);
@@ -92,7 +86,8 @@ public enum MenuListItem implements SummaryEntityEnum {
     DROPBOX_BACKUP(R.string.backup_database_online_dropbox, R.string.backup_database_online_dropbox_summary, R.drawable.actionbar_dropbox) {
         @Override
         public void call(Activity activity) {
-            if (isRequestingPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            if (!SafStorageHelper.hasDirectoryAccess(activity)) {
+                showSelectFolderMessage(activity);
                 return;
             }
             GreenRobotBus.getInstance().post(new MenuListActivity.StartDropboxBackup());
@@ -101,7 +96,8 @@ public enum MenuListItem implements SummaryEntityEnum {
     DROPBOX_RESTORE(R.string.restore_database_online_dropbox, R.string.restore_database_online_dropbox_summary, R.drawable.actionbar_dropbox) {
         @Override
         public void call(Activity activity) {
-            if (isRequestingPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            if (!SafStorageHelper.hasDirectoryAccess(activity)) {
+                showSelectFolderMessage(activity);
                 return;
             }
             GreenRobotBus.getInstance().post(new MenuListActivity.StartDropboxRestore());
@@ -110,7 +106,8 @@ public enum MenuListItem implements SummaryEntityEnum {
     MENU_BACKUP_TO(R.string.backup_database_to, R.string.backup_database_to_summary, R.drawable.actionbar_share) {
         @Override
         public void call(final Activity activity) {
-            if (isRequestingPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            if (!SafStorageHelper.hasDirectoryAccess(activity)) {
+                showSelectFolderMessage(activity);
                 return;
             }
             ProgressDialog d = ProgressDialog.show(activity, null, activity.getString(R.string.backup_database_inprogress), true);
@@ -118,12 +115,14 @@ public enum MenuListItem implements SummaryEntityEnum {
             t.setShowResultMessage(false);
             t.setListener(result -> {
                 String backupFileName = t.backupFileName;
-                File file = Export.getBackupFile(activity, backupFileName);
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                Uri backupFileUri = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID, file);
-                intent.putExtra(Intent.EXTRA_STREAM, backupFileUri);
-                intent.setType("text/plain");
-                activity.startActivity(Intent.createChooser(intent, activity.getString(R.string.backup_database_to_title)));
+                DocumentFile documentFile = Export.getBackupFile(activity, backupFileName);
+                if (documentFile != null) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_STREAM, documentFile.getUri());
+                    intent.setType(Export.BACKUP_MIME_TYPE);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    activity.startActivity(Intent.createChooser(intent, activity.getString(R.string.backup_database_to_title)));
+                }
             });
             t.execute((String[]) null);
         }
@@ -131,7 +130,8 @@ public enum MenuListItem implements SummaryEntityEnum {
     MENU_IMPORT_EXPORT(R.string.csv_export, R.string.csv_export_summary, R.drawable.actionbar_export) {
         @Override
         public void call(Activity activity) {
-            if (isRequestingPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            if (!SafStorageHelper.hasDirectoryAccess(activity)) {
+                showSelectFolderMessage(activity);
                 return;
             }
             Intent intent = new Intent(activity, CsvExportActivity.class);
@@ -180,6 +180,18 @@ public enum MenuListItem implements SummaryEntityEnum {
     public static final int ACTIVITY_CHANGE_PREFERENCES = 6;
 
     public abstract void call(Activity activity);
+
+    private static void showSelectFolderMessage(Activity activity) {
+        new AlertDialog.Builder(activity)
+                .setTitle(R.string.select_folder_required)
+                .setMessage(R.string.select_folder_required_message)
+                .setPositiveButton(R.string.select_folder, (dialog, which) -> {
+                    Intent intent = new Intent(activity, PreferencesActivity.class);
+                    activity.startActivity(intent);
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
 
     private enum MenuEntities implements EntityEnum {
 

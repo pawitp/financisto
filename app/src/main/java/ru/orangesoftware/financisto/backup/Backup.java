@@ -11,10 +11,11 @@
 package ru.orangesoftware.financisto.backup;
 
 import android.content.Context;
-import ru.orangesoftware.financisto.export.Export;
+import androidx.documentfile.provider.DocumentFile;
+import ru.orangesoftware.financisto.utils.SafStorageHelper;
 
-import java.io.File;
 import java.util.Arrays;
+import java.util.Comparator;
 
 import static ru.orangesoftware.financisto.db.DatabaseHelper.*;
 
@@ -44,14 +45,11 @@ public final class Backup {
     }
 
     public static String[] listBackups(Context context) {
-        File backupPath = Export.getBackupFolder(context);
-        String[] files = backupPath.list((dir, filename) -> filename.endsWith(".backup"));
-        if (files != null) {
-            Arrays.sort(files, (s1, s2) -> s2.compareTo(s1));
-            return files;
-        } else {
-            return new String[0];
-        }
+        return Arrays.stream(SafStorageHelper.listFiles(context))
+                .map(DocumentFile::getName)
+                .filter(name -> name != null && name.endsWith(".backup"))
+                .sorted(Comparator.reverseOrder())
+                .toArray(String[]::new);
     }
 
     public static boolean tableHasSystemIds(String tableName) {

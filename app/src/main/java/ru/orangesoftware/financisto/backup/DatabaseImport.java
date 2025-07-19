@@ -14,17 +14,17 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import androidx.documentfile.provider.DocumentFile;
 
 import com.dropbox.core.util.IOUtil;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PushbackInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,6 +35,7 @@ import ru.orangesoftware.financisto.db.DatabaseAdapter;
 import ru.orangesoftware.financisto.db.DatabaseSchemaEvolution;
 import ru.orangesoftware.financisto.export.Export;
 import ru.orangesoftware.financisto.export.dropbox.Dropbox;
+import ru.orangesoftware.financisto.utils.SafStorageHelper;
 
 import static ru.orangesoftware.financisto.backup.Backup.RESTORE_SCRIPTS;
 import static ru.orangesoftware.financisto.backup.Backup.tableHasOrder;
@@ -48,9 +49,14 @@ public class DatabaseImport extends FullDatabaseImport {
     private final InputStream backupStream;
 
     public static DatabaseImport createFromFileBackup(Context context, DatabaseAdapter dbAdapter, String backupFile) throws FileNotFoundException {
-        File backupPath = Export.getBackupFolder(context);
-        File file = new File(backupPath, backupFile);
-        FileInputStream inputStream = new FileInputStream(file);
+        DocumentFile documentFile = Export.getBackupFile(context, backupFile);
+        if (documentFile == null) {
+            throw new FileNotFoundException("Backup file not found: " + backupFile);
+        }
+        InputStream inputStream = SafStorageHelper.openInputStream(context, documentFile);
+        if (inputStream == null) {
+            throw new FileNotFoundException("Cannot open backup file: " + backupFile);
+        }
         return new DatabaseImport(context, dbAdapter, inputStream);
     }
 
@@ -71,7 +77,7 @@ public class DatabaseImport extends FullDatabaseImport {
     @Override
     protected void restoreDatabase() throws IOException {
         InputStream s = decompressStream(backupStream);
-        InputStreamReader isr = new InputStreamReader(s, "UTF-8");
+        InputStreamReader isr = new InputStreamReader(s, StandardCharsets.UTF_8);
         BufferedReader br = new BufferedReader(isr, 65535);
         try {
             recoverDatabase(br);

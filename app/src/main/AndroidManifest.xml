@@ -31,12 +31,9 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".app.FinancistoApp"
-        android:allowBackup="true"
         android:description="@string/app_description"
         android:hardwareAccelerated="true"
         android:icon="@drawable/icon"
@@ -300,9 +297,6 @@
             android:name=".activity.SplitTransferActivity"
             android:label="@string/split_transfer" />
 
-        <activity
-            android:name=".dialog.FolderBrowser"
-            android:label="@string/select_folder" />
         <activity
             android:name=".activity.CategorySelectorActivity"
             android:label="@string/select_category" />

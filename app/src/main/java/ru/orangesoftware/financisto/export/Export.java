@@ -10,31 +10,29 @@
  ******************************************************************************/
 package ru.orangesoftware.financisto.export;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.Environment;
+import android.net.Uri;
+import androidx.documentfile.provider.DocumentFile;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.zip.GZIPOutputStream;
 
 import ru.orangesoftware.financisto.R;
-import ru.orangesoftware.financisto.activity.RequestPermission;
 import ru.orangesoftware.financisto.export.dropbox.Dropbox;
-import ru.orangesoftware.financisto.utils.MyPreferences;
+import ru.orangesoftware.financisto.utils.SafStorageHelper;
 
 public abstract class Export {
 
-    public static final File DEFAULT_EXPORT_PATH = Environment.getExternalStoragePublicDirectory("financisto");
     public static final String BACKUP_MIME_TYPE = "application/x-gzip";
 
     private final Context context;
@@ -46,13 +44,22 @@ public abstract class Export {
     }
 
     public String export() throws Exception {
-        if (!RequestPermission.checkPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            throw new ImportExportException(R.string.request_permissions_storage_not_granted);
+        if (!SafStorageHelper.hasDirectoryAccess(context)) {
+            throw new ImportExportException(R.string.select_folder_required);
         }
-        File path = getBackupFolder(context);
+        
         String fileName = generateFilename();
-        File file = new File(path, fileName);
-        FileOutputStream outputStream = new FileOutputStream(file);
+        String mimeType = useGzip ? BACKUP_MIME_TYPE : "text/plain";
+        DocumentFile documentFile = SafStorageHelper.createFileInDirectory(context, fileName, mimeType);
+        if (documentFile == null) {
+            throw new ImportExportException(R.string.cannot_create_backup_file);
+        }
+        
+        OutputStream outputStream = SafStorageHelper.openOutputStream(context, documentFile);
+        if (outputStream == null) {
+            throw new ImportExportException(R.string.cannot_create_backup_file);
+        }
+        
         try {
             if (useGzip) {
                 export(new GZIPOutputStream(outputStream));
@@ -83,7 +90,7 @@ public abstract class Export {
     }
 
     private void generateBackup(OutputStream outputStream) throws Exception {
-        OutputStreamWriter osw = new OutputStreamWriter(outputStream, "UTF-8");
+        OutputStreamWriter osw = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
         try (BufferedWriter bw = new BufferedWriter(osw, 65536)) {
             writeHeader(bw);
             writeBody(bw);
@@ -99,27 +106,36 @@ public abstract class Export {
 
     protected abstract String getExtension();
 
-    public static File getBackupFolder(Context context) {
-        String path = MyPreferences.getDatabaseBackupFolder(context);
-        File file = new File(path);
-        file.mkdirs();
-        if (file.isDirectory() && file.canWrite()) {
-            return file;
+    public static DocumentFile getBackupFile(Context context, String backupFileName) {
+        Uri directoryUri = SafStorageHelper.getPersistedDirectoryUri(context);
+        if (directoryUri == null) return null;
+        
+        DocumentFile directory = DocumentFile.fromTreeUri(context, directoryUri);
+        if (directory == null || !directory.exists()) {
+            return null;
         }
-        file = Export.DEFAULT_EXPORT_PATH;
-        file.mkdirs();
-        return file;
-    }
-
-    public static File getBackupFile(Context context, String backupFileName) {
-        File path = getBackupFolder(context);
-        return new File(path, backupFileName);
+        
+        return directory.findFile(backupFileName);
     }
 
     public static void uploadBackupFileToDropbox(Context context, String backupFileName) throws Exception {
-        File file = getBackupFile(context, backupFileName);
-        Dropbox dropbox = new Dropbox(context);
-        dropbox.uploadFile(file);
+        DocumentFile documentFile = getBackupFile(context, backupFileName);
+        if (documentFile == null) {
+            throw new ImportExportException(R.string.cannot_create_backup_file);
+        }
+        
+        String fileName = documentFile.getName();
+        if (fileName == null) {
+            throw new ImportExportException(R.string.cannot_create_backup_file);
+        }
+        
+        try (InputStream inputStream = SafStorageHelper.openInputStream(context, documentFile)) {
+            if (inputStream == null) {
+                throw new ImportExportException(R.string.cannot_create_backup_file);
+            }
+            Dropbox dropbox = new Dropbox(context);
+            dropbox.uploadFile(inputStream, fileName);
+        }
     }
 
 }

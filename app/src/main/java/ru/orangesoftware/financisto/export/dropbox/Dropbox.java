@@ -15,7 +15,6 @@ import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.android.Auth;
 import com.dropbox.core.http.OkHttp3Requestor;
-import com.dropbox.core.util.IOUtil;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.ListFolderResult;
@@ -27,8 +26,6 @@ import ru.orangesoftware.financisto.R;
 import ru.orangesoftware.financisto.export.ImportExportException;
 import ru.orangesoftware.financisto.utils.MyPreferences;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.*;
 
@@ -88,17 +85,12 @@ public class Dropbox {
         return false;
     }
 
-    public FileMetadata uploadFile(File file) throws Exception {
+    public FileMetadata uploadFile(InputStream inputStream, String fileName) throws Exception {
         if (authSession()) {
             try {
-                InputStream is = new FileInputStream(file);
-                try {
-                    FileMetadata fileMetadata = dropboxClient.files().uploadBuilder("/" + file.getName()).withMode(WriteMode.ADD).uploadAndFinish(is);
-                    Log.i("Financisto", "Dropbox: The uploaded file's rev is: " + fileMetadata.getRev());
-                    return fileMetadata;
-                } finally {
-                    IOUtil.closeInput(is);
-                }
+                FileMetadata fileMetadata = dropboxClient.files().uploadBuilder("/" + fileName).withMode(WriteMode.ADD).uploadAndFinish(inputStream);
+                Log.i("Financisto", "Dropbox: The uploaded file's rev is: " + fileMetadata.getRev());
+                return fileMetadata;
             } catch (Exception e) {
                 Log.e("Financisto", "Dropbox: Something wrong", e);
                 throw new ImportExportException(R.string.dropbox_error, e);
@@ -111,7 +103,7 @@ public class Dropbox {
     List<String> listFiles() throws Exception {
         if (authSession()) {
             try {
-                List<String> files = new ArrayList<String>();
+                List<String> files = new ArrayList<>();
                 ListFolderResult listFolderResult = dropboxClient.files().listFolder("");
                 for (Metadata metadata : listFolderResult.getEntries()) {
                     String name = metadata.getName();
@@ -119,12 +111,7 @@ public class Dropbox {
                         files.add(name);
                     }
                 }
-                Collections.sort(files, new Comparator<String>() {
-                    @Override
-                    public int compare(String s1, String s2) {
-                        return s2.compareTo(s1);
-                    }
-                });
+                files.sort(Comparator.reverseOrder());
                 return files;
             } catch (Exception e) {
                 Log.e("Financisto", "Dropbox: Something wrong", e);

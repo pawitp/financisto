@@ -2,20 +2,16 @@ package ru.orangesoftware.financisto.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Locale;
 
-import ru.orangesoftware.financisto.export.Export;
 import ru.orangesoftware.financisto.export.ImportExportException;
 import ru.orangesoftware.financisto.model.Currency;
-import ru.orangesoftware.financisto.model.TransactionStatus;
 import ru.orangesoftware.financisto.rates.ExchangeRateProvider;
 import ru.orangesoftware.financisto.rates.ExchangeRateProviderFactory;
 
@@ -422,12 +418,22 @@ public class MyPreferences {
 
     public static String getDatabaseBackupFolder(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getString("database_backup_folder", Export.DEFAULT_EXPORT_PATH.getAbsolutePath());
+        return sharedPreferences.getString("database_backup_folder", "");
     }
 
     public static void setDatabaseBackupFolder(Context context, String databaseBackupFolder) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         sharedPreferences.edit().putString("database_backup_folder", databaseBackupFolder).commit();
+    }
+
+    public static String getDatabaseBackupFolderUri(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString("database_backup_folder_uri", null);
+    }
+
+    public static void setDatabaseBackupFolderUri(Context context, String folderUri) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPreferences.edit().putString("database_backup_folder_uri", folderUri).commit();
     }
 
     public static String[] getReportPreferences(Context context) {
