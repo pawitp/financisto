@@ -662,6 +662,38 @@ public class RunningBalanceTest extends AbstractDbTest {
     }
 
     @Test
+    public void should_update_running_balance_when_swapping_account_on_existing_transfer() {
+        Transaction t11 = TransactionBuilder.withDb(db).account(a1).amount(1000).dateTime(DateTime.today().at(11, 0, 0, 0)).create();
+        Transaction t21 = TransactionBuilder.withDb(db).account(a2).amount(500).dateTime(DateTime.today().at(11, 0, 0, 0)).create();
+        Transaction transfer = TransferBuilder.withDb(db).fromAccount(a1).fromAmount(-200).toAccount(a2).toAmount(200).dateTime(DateTime.today().at(12, 0, 0, 0)).create();
+        
+        db.rebuildRunningBalances();
+        
+        // Verify initial state
+        assertAccountBalanceForTransaction(t11, a1, 1000);
+        assertAccountBalanceForTransaction(transfer, a1, 800);
+        assertFinalBalanceForAccount(a1, 800);
+
+        assertAccountBalanceForTransaction(t21, a2, 500);
+        assertAccountBalanceForTransaction(transfer, a2, 700);
+        assertFinalBalanceForAccount(a2, 700);
+        
+        // Swap the transfer: change from a1->a2 to a2->a1
+        transfer.fromAccountId = a2.id;
+        transfer.toAccountId = a1.id;
+        db.insertOrUpdate(transfer);
+        
+        // Verify final state
+        assertAccountBalanceForTransaction(t11, a1, 1000);
+        assertAccountBalanceForTransaction(transfer, a1, 1200);
+        assertFinalBalanceForAccount(a1, 1200);
+        
+        assertAccountBalanceForTransaction(t21, a2, 500);
+        assertAccountBalanceForTransaction(transfer, a2, 300);
+        assertFinalBalanceForAccount(a2, 300);
+    }
+
+    @Test
     public void should_update_accounts_last_transaction_date() {
         TransactionBuilder.withDb(db).account(a1).amount(1000).dateTime(DateTime.today().at(11, 0, 0, 0)).create();
         TransactionBuilder.withDb(db).account(a1).amount(-500).dateTime(DateTime.today().at(11, 5, 0, 0)).create();
