@@ -174,17 +174,6 @@
         </PreferenceScreen>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/home_screen">
-        <Preference
-            android:key="shortcut_new_transaction"
-            android:summary="@string/shortcut_summary"
-            android:title="@string/shortcut_new_transaction" />
-        <Preference
-            android:key="shortcut_new_transfer"
-            android:summary="@string/shortcut_summary"
-            android:title="@string/shortcut_new_transfer" />
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/database_backup">
         <Preference
             android:key="database_backup_folder"

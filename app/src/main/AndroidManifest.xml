@@ -23,9 +23,6 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
-    <!-- Custom permissions -->
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-
     <!-- System permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />

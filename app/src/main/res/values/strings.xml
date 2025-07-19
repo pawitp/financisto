@@ -360,9 +360,6 @@
     <string name="day_sat">Sat</string>
     <string name="day_sun">Sun</string>
     <string name="home_screen">Home Screen</string>
-    <string name="shortcut_new_transaction">\'New Transaction\' shortcut</string>
-    <string name="shortcut_new_transfer">\'New Transfer\' shortcut</string>
-    <string name="shortcut_summary">Add the shortcut to the Home Screen</string>
     <string name="no_data">No data</string>
     <string name="calculating">Calculating…</string>
     <string name="budget_mode">Ease conditions</string>

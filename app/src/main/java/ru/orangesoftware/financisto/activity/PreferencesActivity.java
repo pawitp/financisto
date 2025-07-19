@@ -10,10 +10,8 @@
  ******************************************************************************/
 package ru.orangesoftware.financisto.activity;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.Intent.ShortcutIconResource;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -46,16 +44,6 @@ public class PreferencesActivity extends PreferenceActivity {
         pLocale.setOnPreferenceChangeListener((preference, newValue) -> {
             String locale = (String) newValue;
             MyPreferences.switchLocale(PreferencesActivity.this, locale);
-            return true;
-        });
-        Preference pNewTransactionShortcut = preferenceScreen.findPreference("shortcut_new_transaction");
-        pNewTransactionShortcut.setOnPreferenceClickListener(arg0 -> {
-            addShortcut(".activity.TransactionActivity", R.string.transaction, R.drawable.icon_transaction);
-            return true;
-        });
-        Preference pNewTransferShortcut = preferenceScreen.findPreference("shortcut_new_transfer");
-        pNewTransferShortcut.setOnPreferenceClickListener(arg0 -> {
-            addShortcut(".activity.TransferActivity", R.string.transfer, R.drawable.icon_transfer);
             return true;
         });
         Preference pDatabaseBackupFolder = preferenceScreen.findPreference("database_backup_folder");
@@ -138,25 +126,6 @@ public class PreferencesActivity extends PreferenceActivity {
                     break;
             }
         }
-    }
-
-    private void addShortcut(String activity, int nameId, int iconId) {
-        Intent intent = createShortcutIntent(activity, getString(nameId), Intent.ShortcutIconResource.fromContext(this, iconId),
-                "com.android.launcher.action.INSTALL_SHORTCUT");
-        sendBroadcast(intent);
-    }
-
-    private Intent createShortcutIntent(String activity, String shortcutName, ShortcutIconResource shortcutIcon, String action) {
-        Intent shortcutIntent = new Intent();
-        shortcutIntent.setComponent(new ComponentName(this.getPackageName(), activity));
-        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        Intent intent = new Intent();
-        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortcutName);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, shortcutIcon);
-        intent.setAction(action);
-        return intent;
     }
 
     Dropbox dropbox = new Dropbox(this);
