@@ -51,7 +51,6 @@ Financisto is an Android personal finance tracker written in Java using traditio
    - List-based interfaces for entity management
 
 3. **Dependency Injection**
-   - Uses AndroidAnnotations framework (@EBean, @EApplication)
    - EventBus for component communication
 
 ### Financial Features
@@ -98,12 +97,10 @@ Key entities in `model/` package:
 - Database tests verify CRUD operations and calculations
 
 ### Key Dependencies
-- AndroidAnnotations 4.6.0 for DI and code generation
 - GreenRobot EventBus for component communication
-- Various Google Play Services for cloud integration
 - Robolectric for Android unit testing
 
 ### Legacy Considerations
-- Uses deprecated `TabActivity` pattern (consider migrating to ViewPager/Fragments)
+- Uses deprecated `TabActivity` pattern
 - Migrating from API level 28 to API level 34
 - Uses older Android support libraries (some migration to AndroidX started)
