@@ -233,7 +233,6 @@ public class BlotterActivity extends AbstractListActivity {
         transactionActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_action_edit, R.string.edit));
         transactionActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_action_trash, R.string.delete));
         transactionActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_action_copy, R.string.duplicate));
-        transactionActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_action_tick, R.string.clear));
         transactionActionGrid.addQuickAction(new MyQuickAction(this, R.drawable.ic_action_double_tick, R.string.reconcile));
         transactionActionGrid.setOnQuickActionClickListener(transactionActionListener);
     }
@@ -254,9 +253,6 @@ public class BlotterActivity extends AbstractListActivity {
                     duplicateTransaction(selectedId, 1);
                     break;
                 case 4:
-                    clearTransaction(selectedId);
-                    break;
-                case 5:
                     reconcileTransaction(selectedId);
                     break;
             }
@@ -294,10 +290,6 @@ public class BlotterActivity extends AbstractListActivity {
         }
     };
 
-    private void clearTransaction(long selectedId) {
-        new BlotterOperations(this, db, selectedId).clearTransaction();
-        recreateCursor();
-    }
 
     private void reconcileTransaction(long selectedId) {
         new BlotterOperations(this, db, selectedId).reconcileTransaction();

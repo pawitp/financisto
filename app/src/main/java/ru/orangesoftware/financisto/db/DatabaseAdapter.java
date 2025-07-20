@@ -1128,17 +1128,6 @@ public class DatabaseAdapter extends MyEntityManager {
         }
     }
 
-
-    /**
-     * Sets status=CL (Cleared) for the selected transactions
-     *
-     * @param ids selected transactions' ids
-     */
-    public void clearSelectedTransactions(long[] ids) {
-        String sql = "UPDATE " + TRANSACTION_TABLE + " SET " + TransactionColumns.status + "='" + TransactionStatus.CL + "'";
-        runInTransaction(sql, ids);
-    }
-
     /**
      * Sets status=RC (Reconciled) for the selected transactions
      *
@@ -1225,7 +1214,7 @@ public class DatabaseAdapter extends MyEntityManager {
                 }
                 t.id = -1;
                 t.dateTime = rt.dateTime.getTime();
-                t.status = TransactionStatus.RS;
+                t.status = TransactionStatus.UR;
                 t.isTemplate = 0;
                 restoredIds[i] = insertOrUpdate(t);
                 t.id = transactionId;
@@ -1663,7 +1652,7 @@ public class DatabaseAdapter extends MyEntityManager {
         newTransaction.fromAmount = balance;
         Payee payee = findOrInsertEntityByTitle(Payee.class, context.getString(R.string.purge_account_payee));
         newTransaction.payeeId = payee != null ? payee.id : 0;
-        newTransaction.status = TransactionStatus.CL;
+        newTransaction.status = TransactionStatus.RC;
         return newTransaction;
     }
 

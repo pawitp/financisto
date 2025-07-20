@@ -205,7 +205,7 @@ public class AccountPurgeTest extends AbstractDbTest {
         Transaction t = assertOldestTransaction(account, date, expectedAmount);
         Payee payee = db.get(Payee.class, t.payeeId);
         assertEquals(getContext().getString(R.string.purge_account_payee), payee.title);
-        assertEquals(TransactionStatus.CL, t.status);
+        assertEquals(TransactionStatus.RC, t.status);
     }
 
     private Transaction getOldestTransaction(Account account) {

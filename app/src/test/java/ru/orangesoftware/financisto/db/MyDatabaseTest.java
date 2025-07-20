@@ -153,7 +153,7 @@ public class MyDatabaseTest extends AbstractDbTest {
         Transaction t = TransactionBuilder.withDb(db).account(a1).amount(1000)
                 .withSplit(categoriesMap.get("A1"), 100)
                 .withSplit(categoriesMap.get("A2"), 900)
-                .withStatus(TransactionStatus.CL)
+                .withStatus(TransactionStatus.RC)
                 .create();
         // then
         List<Transaction> splits = db.getSplitsForTransaction(t.id);
@@ -170,7 +170,7 @@ public class MyDatabaseTest extends AbstractDbTest {
                 .withSplit(categoriesMap.get("A2"), 900)
                 .create();
         // when
-        t.status = TransactionStatus.CL;
+        t.status = TransactionStatus.RC;
         db.insertOrUpdate(t);
         // then
         List<Transaction> splits = db.getSplitsForTransaction(t.id);
@@ -185,13 +185,6 @@ public class MyDatabaseTest extends AbstractDbTest {
         Transaction t1 = TransactionBuilder.withDb(db).account(a1).amount(1000).create();
         Transaction t2 = TransactionBuilder.withDb(db).account(a1).amount(-2000).create();
         long[] ids = {t1.id, t2.id};
-
-        // when
-        db.clearSelectedTransactions(ids);
-        // then
-        for (TransactionInfo info : db.getTransactionsForAccount(a1.id)) {
-            assertEquals(info.status, TransactionStatus.CL);
-        }
 
         // when
         db.reconcileSelectedTransactions(ids);

@@ -92,10 +92,6 @@ public class BlotterOperations {
         db.duplicateTransactionAsTemplate(targetTransaction.id);
     }
 
-    public void clearTransaction() {
-        db.updateTransactionStatus(targetTransaction.id, TransactionStatus.CL);
-    }
-
     public void reconcileTransaction() {
         db.updateTransactionStatus(targetTransaction.id, TransactionStatus.RC);
     }

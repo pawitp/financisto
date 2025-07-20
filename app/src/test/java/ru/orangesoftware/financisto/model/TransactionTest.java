@@ -185,7 +185,7 @@ public class TransactionTest extends AbstractDbTest {
         t.latitude = -11.0;
         t.isCCardPayment = 1;
         t.note = "My note";
-        t.status = TransactionStatus.RS;
+        t.status = TransactionStatus.UR;
         long id = db.saveOrUpdate(t);
         assertTrue(id > 0);
         Transaction restored = db.load(Transaction.class, id);
